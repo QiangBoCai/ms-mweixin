@@ -272,8 +272,9 @@
 						</resource>
 					</webResources>
 					<attachClasses>true</attachClasses>
+					<failOnMissingWebXml>true</failOnMissingWebXml>
 					<!-- <warSourceExcludes> */web.xml,static</warSourceExcludes>
-					<failOnMissingWebXml>false</failOnMissingWebXml>
+					
 					<packagingExcludes>ms.install,html/,static/,temp,upgrader,WEB-INF/web.xml,WEB-INF/lib/,templets/,WEB-INF/classes/*.xml,WEB-INF/classes/*.properties,*.sh</packagingExcludes>
 					 <overlays>
 						<overlay>
