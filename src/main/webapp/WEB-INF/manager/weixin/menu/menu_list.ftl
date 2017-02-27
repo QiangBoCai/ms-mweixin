@@ -56,17 +56,18 @@
 		}
 	</style>
 </head>
-<body>
+<body style="height:100%">
 	<@ms.content>
 		<@ms.contentBody>
-			<@ms.contentNav title="微信菜单">
-				<button type="button" class="btn btn-primary" data-ajax-url="${base}${baseManager}/weixin/menu/generateMenu.do"  id="publishOrStop" data-placement="bottom">发布</button>
-				<button type="button" class="btn btn-danger" data-ajax-url="${base}${baseManager}/weixin/menu/stopMenu.do" id="publishOrStop">停用</button>
-			</@ms.contentNav >
 			<@ms.contentPanel>
 				<div class="row margin20" id="menuList">
 					<!--菜单显示区域开始-->
 					<div class="col-md-3">
+						<div class="ms-content-body-title">
+        					<span style="float:left;font-weight:900;">微信菜单</span>    
+            				<button type="button" class="btn btn-primary" data-ajax-url="${base}${baseManager}/weixin/menu/generateMenu.do"  id="publishOrStop" data-placement="bottom">发布</button>
+							<button type="button" class="btn btn-danger" data-ajax-url="${base}${baseManager}/weixin/menu/stopMenu.do" id="publishOrStop">停用</button>
+        				</div>
 						<ul id="menuTree" class="ztree">
 						</ul>
 					</div>
@@ -397,7 +398,7 @@
     	iframeHeight =  $("#menuList").height();
    		if(defaults.url!=''){
    			$("#menuDetail .alert").hide();
-			$("#menuDetail").html('<iframe class="box-iframe" height="'+iframeHeight+'" data-key="iframe"  id="detail" name="detail" src="'+defaults.url+'" frameborder="0" scrolling="yes" data-parent-id="'+defaults.pId+'"></iframe>');
+			$("#menuDetail").html('<iframe class="box-iframe" height="700px" data-key="iframe"  id="detail" name="detail" src="'+defaults.url+'" frameborder="0" scrolling="yes" data-parent-id="'+defaults.pId+'"></iframe>');
 		}
    	}   		   
 	//显示图文选择模态框

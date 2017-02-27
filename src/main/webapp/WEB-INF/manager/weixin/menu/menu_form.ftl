@@ -78,53 +78,49 @@
 			width:100%;height:100%
 		}
 	</style>
-	
-				<@ms.form isvalidation=true name="menuForm"  action="">
-					<@ms.hidden name="menuMenuId" value="" />
-					<@ms.text  name="menuTitle"   label="菜单名称:" value="${menu.menuTitle?default('')}" title="菜单名称:" placeholder="请输入菜单名称" validation={"required":"true", "maxlength":"7","data-bv-stringlength-message":"长度介于1-7个字符!","data-bv-notempty-message":"必填项目"}/>
-					<@ms.select  name="menuStyle"   label="菜单类型:" list={"1":"文本","2":"图文","4":"外连接"}  value="${menu.menuStyle?default(1)}" listKey="menuStyle" listValue="menuStyleValue" validation={"required":"true", "data-bv-notempty-message":"必填项目"} />	
-					<!---文本内容开始---->
-					<div class=" menuText r-module" data-style="1" style="display:block">
-						<@ms.textarea  style="height:150px" name="replyText" label="文本内容:" id="replyText" value="${replyText?default('')}" wrap="Soft" size="12" placeholder="请输入文本内容" validation={"required":"true", "maxlength":"255","data-bv-stringlength-message":"长度介于1-255个字符!","data-bv-notempty-message":"必填项目"}/>
-					</div>
-					<!---文本内容结束---->				
-					<!---图文开始---->
-					<div class="form-group r-module" data-style="2" style="display:none;" >
-						<label class="col-md-5 control-label col-xs-2">图文预览:</label>
-						<div class="col-md-7  col-xs-10">
-							<div id="article_reply" >
-	    						<div class="msg-item-wrapper">              
-									<div class="msg-item">           
-										<h4 class="msg-t"><a href="#" class="i-title" target="_blank"></a></h4>           
-										<p class="msg-meta"><span class="msg-date"></span></p>
-										<div class="cover">
-											<p class="default-tip" style="display:none">封面图片</p>
-											<img src="" class="i-img">
-										</div>
-										<p class="msg-text"></p>      
-									</div>
-								</div> 							 
-	    					</div>
-	    					<button class="btn btn-big selArticle">选择图文</button>
-						</div>
-						<input type="hidden" name="picTextId" value="0" data-ajax-url=""/>
-					</div>
-					<!---图文结束---->			
-					<!---外连接开始---->
-					<div class="r-module" style="display:none;" data-style="4">
-						<@ms.text  name="source_url"   label="外连接:" value="${sourceUrl?default('')}" title="外连接" placeholder="请输入外连接" validation={"required":"true", "maxlength":"200","data-bv-stringlength-message":"长度介于1-200个字符!","data-bv-notempty-message":"必填项目"}/>
-					</div>
-					<!---外连接结束---->
-					<@ms.formRow>
-							<button type="button"class="btn btn-success btn-md" id="saveOrUpdate" data-save = "true"><#if menuId?has_content>更新<#else>保存</#if></button>
-					</@ms.formRow>
-					<div id="hideMenuId"></div>
-				</@ms.form>		
+		<@ms.nav title="">
+			<@ms.button class="btn btn-success"  id="saveOrUpdateWeixin"  value="更新"/>
+		</@ms.nav>
+		<@ms.form isvalidation=true name="menuForm"  action="">
+			<@ms.hidden name="menuMenuId" value="" />
+			<@ms.text  name="menuTitle"   label="菜单名称:" value="${menu.menuTitle?default('')}" title="菜单名称:" placeholder="请输入菜单名称" validation={"required":"true", "maxlength":"7","data-bv-stringlength-message":"长度介于1-7个字符!","data-bv-notempty-message":"必填项目"}/>
+			<@ms.select  name="menuStyle"   label="菜单类型:" list={"1":"文本","2":"图文","4":"外连接"}  value="${menu.menuStyle?default(1)}" listKey="menuStyle" listValue="menuStyleValue" validation={"required":"true", "data-bv-notempty-message":"必填项目"} />	
+			<!---文本内容开始---->
+			<div class=" menuText r-module" data-style="1" style="display:block">
+				<@ms.textarea  style="height:150px" name="replyText" label="文本内容:" id="replyText" value="${replyText?default('')}" wrap="Soft" size="12" placeholder="请输入文本内容" validation={"required":"true", "maxlength":"255","data-bv-stringlength-message":"长度介于1-255个字符!","data-bv-notempty-message":"必填项目"}/>
+			</div>
+			<!---文本内容结束---->				
+			<!---图文开始---->
+			<div class="form-group r-module" data-style="2" style="display:none;" >
+				<label class="col-md-5 control-label col-xs-2">图文预览:</label>
+				<div class="col-md-7  col-xs-10">
+					<div id="article_reply" >
+	    				<div class="msg-item-wrapper">              
+							<div class="msg-item">           
+								<h4 class="msg-t"><a href="#" class="i-title" target="_blank"></a></h4>           
+								<p class="msg-meta"><span class="msg-date"></span></p>
+								<div class="cover">
+									<p class="default-tip" style="display:none">封面图片</p>
+									img src="" class="i-img">
+								</div>
+								<p class="msg-text"></p>      
+							</div>
+						</div> 							 
+	    			</div>
+	    			<button class="btn btn-big selArticle">选择图文</button>
+				</div>
+					<input type="hidden" name="picTextId" value="0" data-ajax-url=""/>
+			</div>
+			<!---图文结束---->			
+			<!---外连接开始---->
+			<div class="r-module" style="display:none;" data-style="4">
+				<@ms.text  name="source_url"   label="外连接:" value="${sourceUrl?default('')}" title="外连接" placeholder="请输入外连接" validation={"required":"true", "maxlength":"200","data-bv-stringlength-message":"长度介于1-200个字符!","data-bv-notempty-message":"必填项目"}/>
+			</div>
+			<!---外连接结束---->
+			<div id="hideMenuId"></div>
+		</@ms.form>		
 	</@ms.panel>
 </@ms.html5>
-
-
-
 	<#noparse>
 	<!---被选中的图文模板---->
 	<script id="selectedArticle" type="text/x-jquery-tmpl">

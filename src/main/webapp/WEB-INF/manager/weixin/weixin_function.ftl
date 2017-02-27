@@ -4,14 +4,12 @@
 	<#include "${managerViewPath}/include/meta.ftl"/>
 	<style>
 		.ztree{
-			margin-top:5px;
+			margin-top:45px;
 		}
 		body .ms-content-body{
 			width:85%;
 		}
-		.ms-content-body-title{
-			overflow:hidden;
-		}
+		
 		body .ms-content-body-panel{
 			margin:0;
 			padding:0;
@@ -19,11 +17,11 @@
 		}
 	</style>
 </head>
-<body>
+<body style="height:100%;">
 	<@ms.content>
 		<@ms.contentMenu>
-			<div class="ms-content-body-title">
-        		<span>${weixinName?default('暂无')}</span>    
+			<div class="ms-content-body-title" style="background:none;">
+        		<span style="float:left;font-weight:900;">${weixinName?default('暂无')}</span>    
 			</div>
 		 	<ul id="menuTree" class="ztree">
 			</ul> 

@@ -13,15 +13,16 @@
 	<@ms.content>
 		<@ms.contentBody>
 			<!--title对应板块名称-->
-			<@ms.contentNav title="关键字回复"></@ms.contentNav>
-			<@ms.contentPanel>
+			<@ms.contentNav title="关键字回复">
 				<@ms.panelNav empty=false>
 					<!--列表操作按钮，添加和删除-->
 					<@ms.panelNavBtnGroup>
 						<@ms.panelNavBtnAdd id="addButton" value="" />
 						<@ms.panelNavBtnDel id="delButton" value="" />
 					</@ms.panelNavBtnGroup>													
-				</@ms.panelNav>		
+				</@ms.panelNav>
+			</@ms.contentNav>
+			<@ms.contentPanel>		
 				<!--表格标题-->	
 				<@ms.table head=["<th style='width:5%'><input type='checkbox' value='' onclick='selectAll(this)' /></th>",'关键字','回复内容',"<th style='text-align:center'>素材类型</th>"]>
 					<!--若表格有数据-->

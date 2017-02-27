@@ -191,18 +191,18 @@
 				<@ms.contentNav title="编辑关键字回复">
 					<@ms.button class="btn btn-success"  id="saveOrUpdateMessage"  value="更新"/>
 					<@ms.contentNavBack onclick="javascript:history.go(-1)"  class="btn btn-default" value="返回" />
-				</@ms.contentNav >
+				</@ms.contentNav>
 			<#else>
 				<@ms.contentNav title="新增关键字回复">
 					<@ms.button class="btn btn-success" id="saveOrUpdateMessage"  value="保存"/>
 					<@ms.contentNavBack onclick="javascript:history.go(-1)"  class="btn btn-default" value="返回" />
-				</@ms.contentNav >
+				</@ms.contentNav>
 			</#if>
 			<@ms.contentPanel> 			  		
 				<@ms.form name="replyForm"  isvalidation=true>		
 				   	<div class="ms-weixin-message"> 
 				   		<!--关键词-->
-			   			<@ms.text name="passiveMessageKey" width="400"  label="关键词:" value="${passiveMessage.passiveMessageKey?default('')}" title="关键词" placeholder="请输入关键词" validation={"required":"true","maxlength":"300","data-bv-stringlength-message":"关键字在300个字符以内!", "data-bv-notempty-message":"必填项目"}/>
+			   			<@ms.text name="passiveMessageKey" width="706"  label="关键词:" value="${passiveMessage.passiveMessageKey?default('')}" title="关键词" placeholder="请输入关键词" validation={"required":"true","maxlength":"300","data-bv-stringlength-message":"关键字在300个字符以内!", "data-bv-notempty-message":"必填项目"}/>
 				   		<@ms.formRow label="回复内容">
 					   		<div class="replyContent">
 						    	<div class="bar"> 

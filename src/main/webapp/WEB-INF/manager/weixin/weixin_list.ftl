@@ -1,54 +1,52 @@
 <@ms.html5>
-	<@ms.nav title="公众号列表"></@ms.nav>
 	<@ms.panel>
-			<@ms.panelNav empty=false>
-					<!--列表操作按钮，添加和删除 开始 -->
-					<@ms.panelNavBtnGroup>
-						<@ms.panelNavBtnAdd id="addButton" value="" /><!-- 新增按钮 -->
-						<@ms.panelNavBtnDel id="delButton" value="" /><!-- 删除按钮 -->
-					</@ms.panelNavBtnGroup>		
-					<!--列表操作按钮，添加和删除结束 -->											
-				</@ms.panelNav>		
-				<!--表格标题-->	
-				<@ms.table head=["<th style='width:2%'><input type='checkbox' value='' onclick='selectAll(this)' /></th>","编号","微信号","公众号名称","公众号类型","微信token","网页2.0授权地址"]>
-					<!--若表格有数据-->
-					<#if weixinList?has_content>
-						<!--微信列表信息开始-->
-						<#list weixinList as weixinList>
-							<tr>
-								<td>
-									<input type="checkbox" name="weixinIds" value="${weixinList.weixinId?c?default()}" />
-								</td>
-								<!--编号-->
-								<td style="text-align:center;width:5%">${weixinList.weixinId?default('')}</td>
-								<!--微信号-->
-								<td style="width:15%">${weixinList.weixinNo?default('暂无')}</td>
-								<!--公众号名称-->
-								<td style="width:15%" class="weixinName" data-weixinId=${weixinList.weixinId}>
-									<a class="btn btn-xs red tooltips editWeixin" data-id="${weixinList.weixinId}" data-toggle="tooltip"  data-original-title="编辑">
-					            		${weixinList.weixinName}
-					            	</a>
-								</td>
-								<!--微信号类型开始 0 服务号,1订阅号-->
-								<td><#if weixinList.weixinType==0>服务号<#else>订阅号</#if></td>
-								<!--微信token-->
-								<td style="width:10%;">${weixinList.weixinToken?default('暂无')}</td>
-								<!--网页2.0授权地址-->
-								<td style="width:25%;">${weixinList.weixinOauthUrl?default('暂无')}</td>	
-							</tr>
-						</#list>
-					<!--微信列表信息结束-->
-					<!--若表格无数据-->	
-					<#else>
-						<tr>
-							<td colspan="1330px" style="text-align:center">
-								<@ms.nodata content="列表下空空如也!"/>
-							</td>
-						</tr>
-					</#if>
-				</@ms.table>
-				<!--分页-->
-	   			<@ms.showPage page=page/>		
+		<@ms.contentNav title="公众号列表">
+				<@ms.panelNavBtnGroup>
+					<@ms.panelNavBtnAdd  id="totalAdd" title=""/>
+					<@ms.panelNavBtnDel  id="totalDelete"/>
+				</@ms.panelNavBtnGroup>
+		</@ms.contentNav>	
+		<!--表格标题-->	
+		<@ms.table head=["<th style='width:2%'><input type='checkbox' value='' onclick='selectAll(this)' /></th>","编号","微信号","公众号名称","公众号类型","微信token","网页2.0授权地址"]>
+			<!--若表格有数据-->
+			<#if weixinList?has_content>
+				<!--微信列表信息开始-->
+				<#list weixinList as weixinList>
+					<tr>
+						<td>
+							<input type="checkbox" name="weixinIds" value="${weixinList.weixinId?c?default()}" />
+						</td>
+						<!--编号-->
+						<td style="text-align:center;width:5%">${weixinList.weixinId?default('')}</td>
+						<!--微信号-->
+						<td style="width:15%">${weixinList.weixinNo?default('暂无')}</td>
+						<!--公众号名称-->
+						<td style="width:15%" class="weixinName" data-weixinId=${weixinList.weixinId}>
+							<a class="btn btn-xs red tooltips editWeixin" data-id="${weixinList.weixinId}" data-toggle="tooltip"  data-original-title="编辑">
+					            ${weixinList.weixinName}
+					        </a>
+						</td>
+						<!--微信号类型开始 0 服务号,1订阅号-->
+						<td><#if weixinList.weixinType==0>服务号<#else>订阅号</#if></td>
+						<!--微信token-->
+						<td style="width:10%;">${weixinList.weixinToken?default('暂无')}</td>
+						<!--网页2.0授权地址-->
+						<td style="width:25%;">${weixinList.weixinOauthUrl?default('暂无')}</td>	
+					</tr>
+				</#list>
+				<!--微信列表信息结束-->
+				<!--若表格无数据-->	
+				<#else>
+					<tr>
+						<td colspan="1330px" style="text-align:center">
+							<@ms.nodata content="列表下空空如也!"/>
+						</td>
+					</tr>
+				
+			</#if>
+		</@ms.table>
+		<!--分页-->
+	   	<@ms.showPage page=page/>		
 	</@ms.panel>
 </@ms.html5>
 
