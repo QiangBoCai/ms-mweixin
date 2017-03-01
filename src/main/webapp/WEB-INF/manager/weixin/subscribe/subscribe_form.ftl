@@ -158,7 +158,7 @@
     		height: 450px;
 		}
 		body .col-md-12{
-			padding-left:0;
+			padding:0;
 		}
 	</style>
 </head>
@@ -347,8 +347,8 @@
 				data:"content="+content+"&replyType="+replyType,
 				url:url,
 				func:function(data) {
-					var obj = jQuery.parseJSON(data);
-					if(obj.result == true){
+					var obj = data.result;
+					if(obj == true){
 						<#if news?has_content>
 							alert("更新成功");
 						<#else>

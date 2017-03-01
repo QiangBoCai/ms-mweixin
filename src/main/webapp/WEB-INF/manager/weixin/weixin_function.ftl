@@ -4,7 +4,7 @@
 	<#include "${managerViewPath}/include/meta.ftl"/>
 	<style>
 		.ztree{
-			margin-top:45px;
+			margin-top:0px;
 		}
 		body .ms-content-body{
 			width:85%;
@@ -15,21 +15,31 @@
 			padding:0;
 			overflow-y: hidden;
 		}
+		.ms-content--body-title{
+		border-bottom: 1px solid #d3d7db;
+   		background: #fff;
+   		color: #666;
+   		line-height: 45px;
+   		padding: 0 10px;
+    	width: 100%;
+    	z-index: 1500;
+    	text-align: center;
+		font-weight:900;
+		}
 	</style>
 </head>
 <body style="height:100%;">
 	<@ms.content>
 		<@ms.contentMenu>
-			<div class="ms-content-body-title" style="background:none;">
-        		<span style="float:left;font-weight:900;">${weixinName?default('暂无')}</span>    
-			</div>
+			<div class="ms-content--body-title" style="background:none;">${weixinName?default('暂无')}</div>
 		 	<ul id="menuTree" class="ztree">
 			</ul> 
 			<!-- 树形模块菜单结束 -->
 		</@ms.contentMenu>
 		<@ms.contentBody style="width:85%">
 			<@ms.contentPanel>
-				<iframe src="" style="width:100%;maring:0;padding:0;border:none;height:100%;background-image: url(${static}/skin/manager/${manager_ui}/images/loading.gif);  background-repeat: no-repeat;  background-position: center;" id="listFrame" target="listFrame" ></iframe>
+				<iframe src="${managerPath}/weixin/weixinPeople/list.do" style="width:100%;maring:0;padding:0;border:none;height:100%;background-image: url(${static}/skin/manager/${manager_ui}/images/loading.gif);  background-repeat: no-repeat;  background-position: center;" id="listFrame" target="listFrame" ></iframe>
+				
 			</@ms.contentPanel>
 		</@ms.contentBody>
 	</@ms.content>

@@ -202,7 +202,7 @@
 				<@ms.form name="replyForm"  isvalidation=true>		
 				   	<div class="ms-weixin-message"> 
 				   		<!--关键词-->
-			   			<@ms.text name="passiveMessageKey" width="706"  label="关键词:" value="${passiveMessage.passiveMessageKey?default('')}" title="关键词" placeholder="请输入关键词" validation={"required":"true","maxlength":"300","data-bv-stringlength-message":"关键字在300个字符以内!", "data-bv-notempty-message":"必填项目"}/>
+			   			<@ms.text name="passiveMessageKey" width="613"  label="关键词:" value="${passiveMessage.passiveMessageKey?default('')}" title="关键词" placeholder="请输入关键词" validation={"required":"true","maxlength":"300","data-bv-stringlength-message":"关键字在300个字符以内!", "data-bv-notempty-message":"必填项目"}/>
 				   		<@ms.formRow label="回复内容">
 					   		<div class="replyContent">
 						    	<div class="bar"> 
@@ -380,11 +380,11 @@
 						data:"content="+content+"&replyType="+replyType+"&passiveMessageKey="+passiveMessageKey,
 						url:url,
 						func:function(data) {
-							var obj = jQuery.parseJSON(data);
-							if(obj.result == true){
+							var obj = data.result;
+							if(obj == true){
 								<#if news?has_content>
 									alert("更新成功");
-									location.href="${managerPath}/weixin/messagekey/"+obj.resultData; 	
+									location.href="${managerPath}/weixin/messagekey/"+data.resultData; 	
 								<#else>
 									alert("保存成功");								
 									location.href="${managerPath}/weixin/messagekey/list.do";

@@ -4,7 +4,7 @@
 	<#include "${managerViewPath}/include/meta.ftl"/>
 	<style> 	
 		body .row{
-			margin-top:10px;
+			margin-top:0px;
 			margin-bottom:20px;
 		}
 		/*模态框部分*/
@@ -17,8 +17,9 @@
 		body .form-horizontal .form-group{margin:0}
 		/*素材列表*/
 		.newsList{
+			margin-left:2%;
 			width:30%;
-			margin-right:2%;
+			margin-right:1%;
 			float:left;
 			margin-bottom: 20px;
 			border: 1px solid #e7e7eb;
@@ -60,7 +61,7 @@
 			color: #666
 		}
 		.appmsg_thumb_wrp {
-			height: 156px;
+			height: 135px;
 			overflow: hidden
 		}
 		/*素材主图文缩略图*/
@@ -163,17 +164,31 @@
 		.dialog_wrp .appmsg:hover {
 			cursor: pointer
 		}
+		.ms-content--body-title{
+			color: rgb(102, 102, 102);
+    		line-height: 45px;
+    		width: 100%;
+    		z-index: 1500;
+    		position: fixed;
+    		right: 0px;
+    		top: 45px;
+   			text-align: right;
+    		border-bottom: 1px solid rgb(211, 215, 219);
+    		background: rgb(255, 255, 255);
+    		padding: 0px 10px;
+		}
 	</style>
 </head>
 <body>
 	 <@ms.content>
         <@ms.contentBody>
             <!--title对应板块名称-->
-            <@ms.contentNav title="素材管理"></@ms.contentNav>
-            <@ms.contentPanel>
-				<button type="button" class="btn btn-success col-md" id="addSingleNews" >新增单图文&nbsp;<span class="glyphicon glyphicon-file"></span></button>
+            <@ms.contentNav title="素材管理">
+            	<button type="button" class="btn btn-success col-md" id="addSingleNews" >新增单图文&nbsp;<span class="glyphicon glyphicon-file"></span></button>
 				<button type="button" class="btn btn-success col-md" id="addManyNews" >新增多图文&nbsp;<span class="glyphicon glyphicon-th-list"></span></button>
 				<button type="button" class="btn btn-success col-md" id="addTextNews">新增文本&nbsp;<span class="glyphicon glyphicon-list-alt"></span></button>
+            </@ms.contentNav>
+            <@ms.contentPanel>
 				<!--列表开始-->
 				<div class="row" id="newsListContainer">	
 		   			<#if newsList?has_content>
@@ -358,7 +373,7 @@
 			  		$("#deleteNews").attr("disabled",true);
 			  	},
 			    success: function(msg){
-			   		if($.parseJSON(msg).result == true){
+			   		if(msg.result == true){
 			   			location.href = base+"${baseManager}/weixin/news/list.do"; 
 			   		}else{
 			   			alert("该素材已被绑定，请先删除其绑定内容!");
@@ -393,11 +408,11 @@
 				  		$("#saveOrUpdateButton").attr("disabled","disabled");
 				  	},
 				    success: function(msg){
-				    	var obj = $.parseJSON(msg);
-				   		if(obj.result == true){
+				    	var obj = msg.result;
+				   		if(obj == true){
 				   			if($("#saveOrUpdateButton").attr("data-type")=="update") {
 								alert("更新成功!");
-								location.href="${managerPath}/weixin/news/"+obj.resultData; 	
+								location.href="${managerPath}/weixin/news/"+msg.resultData; 	
 							}else{
 								alert("保存成功!");
 								location.href = base+"${baseManager}/weixin/news/list.do"; 

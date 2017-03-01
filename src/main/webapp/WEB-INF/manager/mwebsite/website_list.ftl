@@ -1,14 +1,15 @@
 <@ms.html5>
-	<@ms.nav title="站点管理"></@ms.nav>
 	<@ms.panel>
-		<@ms.panelNav>
-			<@ms.buttonGroup>
-				<@ms.addButton url="${base}${baseManager}/website/add.do"/>
-				<@ms.delButton id="delWebsiteBtn" fieldName="websiteId" onclick="remove"/>
-			</@ms.buttonGroup>
-			<@ms.menuButton links=[{"click":"setManager","name":"设置管理员"}] name="操作"/>
-		</@ms.panelNav>
-		<@ms.table head=['编号','标题','域名','状态,180','手机端,180','续费日期,200'] checkbox="websiteId" id="websiteTable"> 
+		<@ms.nav title="站点管理">
+			<@ms.panelNav>
+				<@ms.buttonGroup>
+					<@ms.addButton url="${base}${baseManager}/website/add.do"/>
+					<@ms.delButton id="delWebsiteBtn" fieldName="websiteId" onclick="remove"/>
+				</@ms.buttonGroup>
+				<@ms.menuButton links=[{"click":"setManager","name":"设置管理员"}] name="操作"/>
+			</@ms.panelNav>
+		</@ms.nav>
+		<@ms.table head=['编号,60','标题','域名,300','状态,120','手机端,120','续费日期,120'] checkbox="websiteId" id="websiteTable"> 
        			<#if websiteList?has_content>
 	           		<#list websiteList as website>
 					<tr>
@@ -44,7 +45,7 @@
 
 	<!--添加或编辑站点管理员-->
 	<@ms.modal modalName="addAndEdit" title="管理员设置">
-		 <@ms.modalBody height="400">
+		 <@ms.modalBody height="300">
 			<@ms.form isvalidation=true name="managerForm" action="${managerPath}/website/manager/update.do" redirect="${base}${baseManager}/website/list.do">
 				<@ms.hidden name="managerWebsiteId"/>
 				<@ms.hidden name="modelIds"/>

@@ -1,5 +1,5 @@
 <@ms.html5>
-	<@ms.nav title="站点信息">
+	<@ms.nav title="站点信息" back=true>
 		<@ms.saveButton  postForm="websiteForm"/>
 	</@ms.nav>
 	<@ms.panel>

@@ -213,6 +213,19 @@
     		padding: 0 12px;
     		line-height: 34px;
 		}
+		.ms-content--body-title{
+			color: rgb(102, 102, 102);
+    		line-height: 45px;
+    		width: 100%;
+    		z-index: 1500;
+    		position: fixed;
+    		right: 0px;
+    		top: 45px;
+   			text-align: right;
+    		border-bottom: 1px solid rgb(211, 215, 219);
+    		background: rgb(255, 255, 255);
+    		padding: 0px 10px;
+		}
 	</style>
 </head>
 <body>
@@ -596,7 +609,7 @@
 					$("#saveOrUpdateNews").attr("disabled","disabled");
 			   },
 			   success: function(msg){
-			   		if($.parseJSON(msg).result == true){
+			   		if(msg.result == true){
 			   			<#if news?has_content>							
 			   				alert("更新成功!");
 			   			<#else>
