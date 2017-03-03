@@ -5,6 +5,8 @@
 	<style>
 		.ztree{
 			margin-top:0px;
+			padding-left:40px;
+			padding-right:40px;
 		}
 		body .ms-content-body{
 			width:85%;
@@ -39,11 +41,9 @@
 		<@ms.contentBody style="width:85%">
 			<@ms.contentPanel>
 				<iframe src="${managerPath}/weixin/weixinPeople/list.do" style="width:100%;maring:0;padding:0;border:none;height:100%;background-image: url(${static}/skin/manager/${manager_ui}/images/loading.gif);  background-repeat: no-repeat;  background-position: center;" id="listFrame" target="listFrame" ></iframe>
-				
 			</@ms.contentPanel>
 		</@ms.contentBody>
 	</@ms.content>
-	
 </body>
 </html>
 <script>
@@ -82,7 +82,8 @@
 		{ "id":1, "name":"微信用户", "url":"", "click":"$('#listFrame').attr('src','${managerPath}/weixin/weixinPeople/list.do')"},
 		{ "id":1, "name":"群发消息", "url":"", "click":"$('#listFrame').attr('src','${managerPath}/weixin/message/index.do')"},
 		{ "id":1, "name":"关注回复", "url":"", "click":"$('#listFrame').attr('src','${managerPath}/weixin/subscribe/subscribe.do')"},
-		{ "id":1, "name":"关键字回复", "url":"", "click":"$('#listFrame').attr('src','${managerPath}/weixin/messagekey/list.do')"}
+		{ "id":1, "name":"关键字回复", "url":"", "click":"$('#listFrame').attr('src','${managerPath}/weixin/messagekey/list.do')"},
+		{ "id":1, "name":"返回", "url":"", "click":"$('#listFrame').attr('src','${managerPath}/weixin/list.do'),$('.ms-content-menu').hide(),$('.ms-content-body').css('width','100%')"}
 	]
 	/******设置节点信息结束******/
 </script>

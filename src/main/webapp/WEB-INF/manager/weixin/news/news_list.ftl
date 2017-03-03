@@ -70,7 +70,12 @@
 			height:100%;
 		}
 		.appmsg_desc {
-			padding: 5px 0 10px;
+			overflow: hidden;
+			text-overflow: ellipsis; 
+			-webkit-line-clamp: 2;
+			-webkit-box-orient: vertical;
+			display: -webkit-box;
+			padding: 13px 0 5px;
 			word-wrap: break-word;
 			word-break: break-all
 		}

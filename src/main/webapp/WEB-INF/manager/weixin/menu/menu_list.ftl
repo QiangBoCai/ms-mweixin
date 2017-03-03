@@ -54,25 +54,35 @@
 		body .modal-dialog .modal-content{
 			width:100%;
 		}
+		.ms-content--body-title{
+		border-bottom: 1px solid #d3d7db;
+   		background: #fff;
+   		color: #666;
+   		line-height: 50px;
+   		padding: 0 10px;
+    	width: 100%;
+    	z-index: 1500;
+    	text-align: right;
+		font-weight:900;
+		}
 	</style>
 </head>
 <body style="height:100%">
 	<@ms.content>
 		<@ms.contentBody>
-			<@ms.contentPanel>
 				<div class="row margin20" id="menuList">
 					<!--菜单显示区域开始-->
-					<div class="col-md-3">
-						<div class="ms-content-body-title">
-        					<span style="float:left;font-weight:900;">微信菜单</span>    
-            				<button type="button" class="btn btn-primary" data-ajax-url="${base}${baseManager}/weixin/menu/generateMenu.do"  id="publishOrStop" data-placement="bottom">发布</button>
-							<button type="button" class="btn btn-danger" data-ajax-url="${base}${baseManager}/weixin/menu/stopMenu.do" id="publishOrStop">停用</button>
+					<div class="col-md-3" style="padding-left:0px;padding-right:0px;">
+						<div class="ms-content--body-title" style="background:none;">
+							<span style="float:left;">微信菜单</span>
+            				<button type="button" style="margin-right:10px;" class="btn btn-primary" data-ajax-url="${base}${baseManager}/weixin/menu/generateMenu.do"  id="publishOrStop" data-placement="bottom">发布</button>
+							<button type="button" style="margin-top:9px;float:right;" class="btn btn-danger" data-ajax-url="${base}${baseManager}/weixin/menu/stopMenu.do" id="publishOrStop">停用</button>
         				</div>
 						<ul id="menuTree" class="ztree">
 						</ul>
 					</div>
 					<!--菜单显示区域结束-->
-					<div class="col-md-9" id="menuDetail">
+					<div class="col-md-9" id="menuDetail" style="padding-top:10px;">
 					</div>
 				</div>
 				<!--删除菜单模态框开始-->
@@ -97,7 +107,6 @@
 					</@ms.modalButton>
 				</@ms.modal>	
 				<!--选取素材模态框结束-->								
-			</@ms.contentPanel>
 		</@ms.contentBody>
 	</@ms.content>
 	<#noparse>
@@ -360,7 +369,7 @@
 		$.fn.zTree.init($("#menuTree"), setting, zNodes);
 		treeObj = $.fn.zTree.getZTreeObj("menuTree");		
 		//点击发布按钮，开始菜单的发布
-		$(".ms-content-body-title #publishOrStop").click(function(){
+		$(".ms-content--body-title #publishOrStop").click(function(){
 			var html = $(this).text();
 			$(this).text(html+"中");
 			$(this).attr("disabled","disabled");
@@ -398,7 +407,7 @@
     	iframeHeight =  $("#menuList").height();
    		if(defaults.url!=''){
    			$("#menuDetail .alert").hide();
-			$("#menuDetail").html('<iframe class="box-iframe" height="700px" data-key="iframe"  id="detail" name="detail" src="'+defaults.url+'" frameborder="0" scrolling="yes" data-parent-id="'+defaults.pId+'"></iframe>');
+			$("#menuDetail").html('<iframe class="box-iframe" height="'+iframeHeight+'" data-key="iframe"  id="detail" name="detail" src="'+defaults.url+'" frameborder="0" scrolling="yes" data-parent-id="'+defaults.pId+'"></iframe>');
 		}
    	}   		   
 	//显示图文选择模态框

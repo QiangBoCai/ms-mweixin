@@ -45,7 +45,7 @@
 
 	<!--添加或编辑站点管理员-->
 	<@ms.modal modalName="addAndEdit" title="管理员设置">
-		 <@ms.modalBody height="300">
+		 <@ms.modalBody>
 			<@ms.form isvalidation=true name="managerForm" action="${managerPath}/website/manager/update.do" redirect="${base}${baseManager}/website/list.do">
 				<@ms.hidden name="managerWebsiteId"/>
 				<@ms.hidden name="modelIds"/>

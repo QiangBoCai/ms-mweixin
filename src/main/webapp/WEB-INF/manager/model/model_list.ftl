@@ -32,13 +32,12 @@
 	</script>
 <@ms.content>
 <@ms.contentBody >
-	<@ms.contentNav title="模块管理列表" ></@ms.contentNav >
+	<@ms.contentNav title="模块管理列表" >
+		<@ms.panelNavBtnGroup>
+			<@ms.panelNavBtnAdd/>
+		</@ms.panelNavBtnGroup>
+	</@ms.contentNav >
 	<@ms.contentPanel>
-		<@ms.panelNav >
-			<@ms.panelNavBtnGroup>
-				<@ms.panelNavBtnAdd/>
-			</@ms.panelNavBtnGroup>
-		</@ms.panelNav>
 		<@ms.nodata style="text-align:left;" content="模块编码:8位整型组成，00-00-00-00-00,表示：项目-模块-子功能-CURDO(查:0添:1删:2改:3等其他)
 			<br/>
 			特别说明： 通用模块编号：分类(99) 文章(98) 订单(97) 订单状态(96) 支付方式(95) 配送方式(94)  前端模块(93)  "/>
