@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
+	<link rel="stylesheet" href="bootstrap.min.css">
+	<link rel="stylesheet" href="bootstrap-table.css">
     <#include "${managerViewPath}/include/macro.ftl"/>
     <#include "${managerViewPath}/include/meta.ftl"/> 
     <style>
@@ -9,6 +11,19 @@
     	}
     	body .form-horizontal .form-group{margin:0}
     	textarea{resize: none;};
+    	.ms-content--body-title{
+			color: rgb(102, 102, 102);
+    		line-height: 45px;
+    		width: 100%;
+    		z-index: 1500;
+    		position: fixed;
+    		right: 0px;
+    		top: 45px;
+   			text-align: right;
+    		border-bottom: 1px solid rgb(211, 215, 219);
+    		background: rgb(255, 255, 255);
+    		padding: 0px 10px;
+		}
     </style>
 </head>
 <body>
@@ -22,16 +37,40 @@
             	<@ms.panelNav empty=true>												
 				</@ms.panelNav>	
                 <!--表格标题--> 
-                <@ms.table head=["<th style='width:20%;text-align:center'>用户头像</th>",'用户昵称','用户所在地','用户电话',"<th class='text-center'>操作</th>"]>
-                	<tr class="text_blank">
+                <table data-toggle="table">
+    				<thead>
+        				<tr>
+            				<th class="text-center">用户头像</th>
+            				<th class="text-center">用户昵称</th>
+            				<th class="text-center">用户所在地</th>
+            				<th class="text-center">用户电话</th>
+            				<th class="text-center">操作</th>
+        				</tr>
+    				</thead>
+    				<tbody>
+					<tr class="text_blank">
 						<td colspan="1330px" style="text-align:center">
 							<@ms.nodata content="列表下空空如也!"/>
 						</td>
 					</tr>
-                </@ms.table>       
+					
+    				</tbody>
+				</table>      
                 <!--列表分页-->
                 <#if page?has_content>
-                    <@showPage page=page/>
+                    <ul class="pagination" style="float:right;">
+  						<li class="prev <#if (page.pageNo+1)==1> disabled" ><a<#else> "><a href="${page.previousUrl}" </#if> target="_self"><i class="fa fa-angle-left">上一页</i></a></li>
+  						<#if ((page.pageCount) <= 10)>
+							<#list 1..page.pageCount as i>
+								<li <#if page.pageNo+1==i>class="active" ><a<#else> ><a href='${page.linkUrl}pageNo=${i}'</#if>  target="_self">${i}</a></li>
+							</#list>
+						<#else>
+							<#list page.pageNo+1..page.pageNo+10 as i>
+								<li <#if page.pageNo+1==i>class="active" ><a<#else> ><a href='${page.linkUrl}pageNo=${i}'</#if>  target="_self">${i}</a></li>
+							</#list>
+						</#if>
+						<li class="next <#if page.pageNo+1 == page.pageCount>disabled" ><a<#else> "><a href="${page.nextUrl}"</#if>  target="_self"><i class="fa fa-angle-right">下一页</i></a></li>  						
+					</ul>
                 </#if>                                  
             </@ms.contentPanel>
         </@ms.contentBody>
@@ -49,7 +88,6 @@
 		</@ms.modalButton>
 	</@ms.modal>
     <script>
-    
         $(function(){
         	//计算当前用户的状态
             /**
@@ -116,7 +154,7 @@
         	$.ajax({
         		type:"post",
         		dataType: "json",
-        		url:"${base}${baseManager}/weixin/weixinPeople/importPeople.do",
+        		url:"${managerPath}/weixin/weixinPeople/importPeople.do",
         		beforeSend:function(){
         			$("#synchronousPeople").text("同步中..");
         			$(".sendMessage").attr("disabled","true");
@@ -166,6 +204,5 @@
         });
     </script>
 </body>
-
 </html>
 
