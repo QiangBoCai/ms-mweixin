@@ -36,42 +36,21 @@
             <@ms.contentPanel>
             	<@ms.panelNav empty=true>												
 				</@ms.panelNav>	
-                <!--表格标题--> 
-                <table data-toggle="table">
-    				<thead>
-        				<tr>
-            				<th class="text-center">用户头像</th>
-            				<th class="text-center">用户昵称</th>
-            				<th class="text-center">用户所在地</th>
-            				<th class="text-center">用户电话</th>
-            				<th class="text-center">操作</th>
-        				</tr>
-    				</thead>
-    				<tbody>
-					<tr class="text_blank">
-						<td colspan="1330px" style="text-align:center">
-							<@ms.nodata content="列表下空空如也!"/>
-						</td>
-					</tr>
-					
-    				</tbody>
-				</table>      
+                <!--表格标题-->
+                
+                <table id="orderTable"
+			 
+			data-show-refresh="true"
+	        data-show-columns="true"
+	        data-show-export="true"
+			data-method="post" 
+			data-detail-formatter="detailFormatter" 
+			data-pagination="true"
+			data-page-size="1"
+			data-side-pagination="server">
+		</table>      
                 <!--列表分页-->
-                <#if page?has_content>
-                    <ul class="pagination" style="float:right;">
-  						<li class="prev <#if (page.pageNo+1)==1> disabled" ><a<#else> "><a href="${page.previousUrl}" </#if> target="_self"><i class="fa fa-angle-left">上一页</i></a></li>
-  						<#if ((page.pageCount) <= 10)>
-							<#list 1..page.pageCount as i>
-								<li <#if page.pageNo+1==i>class="active" ><a<#else> ><a href='${page.linkUrl}pageNo=${i}'</#if>  target="_self">${i}</a></li>
-							</#list>
-						<#else>
-							<#list page.pageNo+1..page.pageNo+10 as i>
-								<li <#if page.pageNo+1==i>class="active" ><a<#else> ><a href='${page.linkUrl}pageNo=${i}'</#if>  target="_self">${i}</a></li>
-							</#list>
-						</#if>
-						<li class="next <#if page.pageNo+1 == page.pageCount>disabled" ><a<#else> "><a href="${page.nextUrl}"</#if>  target="_self"><i class="fa fa-angle-right">下一页</i></a></li>  						
-					</ul>
-                </#if>                                  
+                                                 
             </@ms.contentPanel>
         </@ms.contentBody>
     </@ms.content>
@@ -87,6 +66,36 @@
 			<@ms.button  value="发送"  id="sendMessageButton"  />
 		</@ms.modalButton>
 	</@ms.modal>
+	<script>
+	$(function() {
+		//对应bootstrap-table框架的控制
+        $("#orderTable").bootstrapTable({
+        		
+        		url:"${managerPath}/weixin/weixinPeople/list.do",
+        		contentType : "application/x-www-form-urlencoded",
+        		queryParams:function(params) {
+					return  $.param(params)+"&pageSize="+ params.limit+"&pageNo="+(params.offset+1);
+				},
+			    columns: [{
+			        field: 'weixinPeopleHeadimgUrl',
+			        title: '用户头像'
+			    }, {
+			        field: 'peopleUserNickName',
+			        title: '用户昵称'
+			    }, {
+			        field: 'weixinPeopleProvince',
+			        title: '用户所在地'
+			    }, {
+			        field: 'peoplePhone',
+			        title: '用户电话'
+			    }, {
+			        field: '',
+			        title: '操作'
+			    }]
+			    
+        }); 		
+	})	   
+ </script>
     <script>
         $(function(){
         	//计算当前用户的状态
@@ -133,10 +142,6 @@
 				<#if peopleList?has_content>
 					$(".text_blank").hide();
 					$("tbody").append('<tr>'+
-		        		'<td class="text-center"><img src="'+listPeople[i].weixinPeopleHeadimgUrl+'" style="border-radius: 12px;width:25px;height:25px;"></td>'+
-		        		'<td style="width:20%">'+listPeople[i].peopleUserNickName+'</td>'+
-		        		'<td style="width:20%">'+listPeople[i].weixinPeopleProvince+'/'+listPeople[i].weixinPeopleCity+'</td>'+
-			           	'<td style="width:20%">'+listPeople[i].peoplePhone+'</td>'+
 			            '<td class="text-center"><button style="line-height: 9px"  type="button" class="btn btn-success col-md sendMessage" data-id="'+listPeople[i].weixinPeopleOpenId+'">发送消息</button></td>'+ 
 			        '</tr>');
 			        //点击发送信息按钮，弹出消息框
