@@ -91,6 +91,15 @@
 	</delete>
 	<!-- 删除用户结束 -->
 	
+	<select id="query" resultMap="resultMap" parameterType="com.mingsoft.weixin.entity.WeixinPeopleEntity">
+		select <include refid="column_list"/>
+		from wx_people wp 
+		left join  people p on wp.PW_PEOPLE_ID=p.people_id
+		left join people_user pu on pu.pu_people_id=wp.PW_PEOPLE_ID
+		where wp.PW_APP_ID = #{weixinPeopleAppId} and wp.PW_WEIXIN_ID = #{weixinPeopleWeixinId}
+	</select>
+	
+	
 	<!-- 根据应用ID和微信id查询微信用户实体列表开始 -->
 	<select id="queryList" resultMap="resultMap">
 		select <include refid="column_list"/>

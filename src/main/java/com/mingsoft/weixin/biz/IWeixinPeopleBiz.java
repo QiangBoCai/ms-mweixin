@@ -25,6 +25,7 @@ public interface IWeixinPeopleBiz  extends IPeopleUserBiz  {
 	 * @param order :排序方式   false:从大到小  true:从小到大
 	 * @return 微信用户集合
 	 */
+	@Deprecated
 	List<WeixinPeopleEntity> queryList(int appId,int weixinId,PageUtil page, String orderBy,boolean order);
 	
 	/**
@@ -33,6 +34,7 @@ public interface IWeixinPeopleBiz  extends IPeopleUserBiz  {
 	 * @param weixinId 微信ID 
 	 * @return 微信用户列表
 	 */
+	@Deprecated
 	List<WeixinPeopleEntity> queryListByAppIdAndWeixinId(int appId,int weixinId);
 	
 	
@@ -42,6 +44,7 @@ public interface IWeixinPeopleBiz  extends IPeopleUserBiz  {
 	 * @param weixinId 微信ID
 	 * @return 微信用户总数
 	 */
+	@Deprecated
 	int queryCount(int appId,int weixinId);
 	
 	/**

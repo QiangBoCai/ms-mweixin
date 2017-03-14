@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.mingsoft.base.entity.BaseEntity;
 import com.mingsoft.basic.constant.Const;
 import com.mingsoft.basic.constant.e.CookieConstEnum;
 import com.mingsoft.util.PageUtil;
@@ -21,6 +22,7 @@ import com.mingsoft.weixin.entity.WeixinEntity;
 import com.mingsoft.weixin.entity.WeixinPeopleEntity;
 
 import net.mingsoft.basic.bean.EUListBean;
+import net.mingsoft.basic.util.BasicUtil;
 
 /**
  * 微信基用户控制层
@@ -41,6 +43,18 @@ public class WeixinPeopleAction extends BaseAction{
 	private IWeixinPeopleBiz weixinPeopleBiz;
 	
 	private static final int PEOPLE_NUM = 200;
+	
+	/**
+	 * 微信用户管理主界面
+	 * @param request
+	 * @param response 
+	 * @return 页面
+	 */
+	@RequestMapping("/index")
+	public String index(HttpServletRequest request, HttpServletResponse response){
+		return view("/weixin/people/index");
+	}
+	
 	/**
 	 * 分页查询所有的微信用户信息
 	 * @param request
@@ -51,55 +65,18 @@ public class WeixinPeopleAction extends BaseAction{
 	@SuppressWarnings("static-access")
 	@RequestMapping("/list")
 	@ResponseBody
-	public void list(HttpServletRequest request,ModelMap mode, HttpServletResponse response){
+	public void list(WeixinPeopleEntity weixinPeople, HttpServletRequest request,ModelMap mode, HttpServletResponse response){
 		//取出微信实体
 		WeixinEntity weixin = this.getWeixinSession(request);
-		//获取应用ID 
-		int appId = this.getAppId(request);
-		//获取当前页码
-		int pageNo = this.getPageNo(request);
-		//查询总记录数
-		int recordCount =weixinPeopleBiz.queryCount(appId,weixin.getWeixinId());
-		//创建分页对象
-		PageUtil page=new PageUtil(pageNo,recordCount,"list.do?");
-		//保存cookie值
-		this.setCookie(request, response, CookieConstEnum.PAGENO_COOKIE, String.valueOf(pageNo));
-		//分页查询
-		List<WeixinPeopleEntity> listPeople =weixinPeopleBiz.queryList(appId,weixin.getWeixinId(), page, "wp.PW_OPEN_ID", false);
-		JSONObject json = new JSONObject();
-		mode.addAttribute("peopleList",json.toJSON(listPeople).toString());
-		mode.addAttribute("page",page);
-		EUListBean _list = new EUListBean(listPeople, listPeople.size());
+		weixinPeople.setWeixinPeopleAppId(BasicUtil.getAppId());
+		weixinPeople.setWeixinPeopleWeixinId(weixin.getWeixinId());
+		BasicUtil.startPage();
+		List listPeople = weixinPeopleBiz.query(weixinPeople);
+		EUListBean _list = new EUListBean(listPeople,(int) BasicUtil.endPage(listPeople).getTotal());
 		this.outJson(response, JSONArray.toJSONString(_list));
 		
 	}
-	/**
-	 * 中转接口
-	 * @param request
-	 * @param response 
-	 * @return 页面
-	 */
-	@RequestMapping("/index")
-	public String index(HttpServletRequest request, HttpServletResponse response){
-		//取出微信实体
-		WeixinEntity weixin = this.getWeixinSession(request);
-		//获取应用ID 
-		int appId = this.getAppId(request);
-		//获取当前页码
-		int pageNo = this.getPageNo(request);
-		//查询总记录数
-		int recordCount =weixinPeopleBiz.queryCount(appId,weixin.getWeixinId());
-		//创建分页对象
-		PageUtil page=new PageUtil(pageNo,recordCount,"list.do?");
-		//保存cookie值
-		this.setCookie(request, response, CookieConstEnum.PAGENO_COOKIE, String.valueOf(pageNo));
-		//分页查询
-		List<WeixinPeopleEntity> listPeople =weixinPeopleBiz.queryList(appId,weixin.getWeixinId(), page, "wp.PW_OPEN_ID", false);
-		//返回people_list.ftl
-		request.setAttribute("listPeople", listPeople);
-		return view("/weixin/people/people_list");
-		
-	}
+
 		
 	
 	/**
