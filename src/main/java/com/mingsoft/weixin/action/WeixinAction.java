@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSONArray;
 import com.mingsoft.basic.biz.IModelBiz;
 import com.mingsoft.basic.biz.IRoleModelBiz;
 import com.mingsoft.basic.entity.ModelEntity;
@@ -26,6 +27,9 @@ import com.mingsoft.weixin.biz.IWeixinBiz;
 import com.mingsoft.weixin.constant.SessionConst;
 import com.mingsoft.weixin.constant.e.WeixinTypeEnum;
 import com.mingsoft.weixin.entity.WeixinEntity;
+
+import net.mingsoft.basic.bean.EUListBean;
+import net.mingsoft.basic.util.BasicUtil;
 
 /**
  * 
@@ -52,14 +56,24 @@ public class WeixinAction extends BaseAction {
 	private IRoleModelBiz roleModelBiz;
 
 	/**
-	 * 查询微信列表
-	 * 
 	 * @param request
 	 * @param mode
 	 * @return manager/weixin/weixin_list.ftl
 	 */
 	@RequestMapping("/list")
-	public String queryList(HttpServletRequest request, ModelMap mode) {
+	public String list(HttpServletRequest request, ModelMap mode,HttpServletResponse response) {
+		return view("/weixin/weixin_list");
+	}
+	/**
+	 * 
+	 * @param request
+	 * @param mode
+	 * @param response
+	 * @return 微信实体数据outjson形式
+	 */
+	@RequestMapping("/index")
+	@ResponseBody
+	public void index(HttpServletRequest request, ModelMap mode,HttpServletResponse response) {
 		// 得到appId
 		int appId = this.getAppId(request);
 		// 获取当前页码
@@ -79,10 +93,9 @@ public class WeixinAction extends BaseAction {
 		mode.addAttribute("weixinList", weixinList);
 		mode.addAttribute("weixinTypeList", weixinTypeList);
 		mode.addAttribute("page", page);
-		// 返回manager/weixin/weixin_list.ftl
-		return view("/weixin/weixin_list");
+		EUListBean _list = new EUListBean(weixinList,(int) BasicUtil.endPage(weixinList).getTotal());
+		this.outJson(response, JSONArray.toJSONString(_list));
 	}
-
 	/**
 	 * 返回新增页面
 	 * 
