@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSONArray;
 import com.mingsoft.basic.constant.Const;
 import com.mingsoft.basic.constant.e.CookieConstEnum;
 import com.mingsoft.util.PageUtil;
@@ -24,6 +25,9 @@ import com.mingsoft.weixin.constant.e.PassiveMessageTypeEnum;
 import com.mingsoft.weixin.entity.NewsEntity;
 import com.mingsoft.weixin.entity.PassiveMessageEntity;
 import com.mingsoft.weixin.entity.WeixinEntity;
+
+import net.mingsoft.basic.bean.EUListBean;
+import net.mingsoft.basic.util.BasicUtil;
 
 /** 
  * 关键字回复控制层
@@ -231,28 +235,29 @@ public class MessageKeyAction extends BaseAction{
 	 * @param response
 	 * @param request
 	 * @param mode
-	 * @return 关键字回复列表
+	 * @return 关键字回复列表的数据
 	 */
 	@RequestMapping("/list")
-	public String list(HttpServletResponse response,HttpServletRequest request,ModelMap mode){
-		//查询当前页码
-		int pageNo = this.getPageNo(request);
-		//查询应用ID
-		int appId = this.getAppId(request);
+	public void list(PassiveMessageEntity message,HttpServletResponse response,HttpServletRequest request,ModelMap mode){
 		//取出微信实体,得到微信Id
 		WeixinEntity weixin = this.getWeixinSession(request);
-		//获取微信ID
-		int weixinId = weixin.getWeixinId();
-		//查询记录总数
-		int recordCount = this.passiveMessageBiz.queryCountByCustom(PassiveMessageEventEnum.TEXT.toInt(),appId,weixinId, null);
-		//分页查询
-		PageUtil page=new PageUtil(pageNo,recordCount,"list.do?");
+		message.setPassiveMessageAppId(BasicUtil.getAppId());
+		message.setPassiveMessageMessageId(weixin.getWeixinId());
+		BasicUtil.startPage();
 		//根据被动回复关键字查询列表
-		List<PassiveMessageEntity> messageKeyList = this.passiveMessageBiz.queryListByEvent(PassiveMessageEventEnum.TEXT,appId,weixinId,null,page);
-		//压入url地址
-		this.setCookie(request, response, CookieConstEnum.BACK_COOKIE,"list.do?&pageNo="+pageNo);
-		mode.addAttribute("messageKeyList",messageKeyList);
-		mode.addAttribute("page",page);
-		return Const.VIEW+"/weixin/messagekey/messagekey_list";
+		List messageKeyList = this.passiveMessageBiz.query(message);
+		EUListBean _list = new EUListBean(messageKeyList,(int) BasicUtil.endPage(messageKeyList).getTotal());
+		this.outJson(response, JSONArray.toJSONString(_list));
+	}
+	/**
+	 * 关键字回复列表页面
+	 * @param request
+	 * @param mode
+	 * @return manager//weixin/messagekey/messagekey_list.ftl的界面
+	 */
+	@RequestMapping("/index")
+	
+	public String index(HttpServletRequest request,HttpServletResponse response) {
+		return view("/weixin/messagekey/messagekey_list");
 	}
 }
