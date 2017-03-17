@@ -70,7 +70,9 @@ public class WeixinPeopleAction extends BaseAction{
 		WeixinEntity weixin = this.getWeixinSession(request);
 		weixinPeople.setWeixinPeopleAppId(BasicUtil.getAppId());
 		weixinPeople.setWeixinPeopleWeixinId(weixin.getWeixinId());
+		//分页开始
 		BasicUtil.startPage();
+		//分页查询
 		List listPeople = weixinPeopleBiz.query(weixinPeople);
 		EUListBean _list = new EUListBean(listPeople,(int) BasicUtil.endPage(listPeople).getTotal());
 		this.outJson(response, JSONArray.toJSONString(_list));
