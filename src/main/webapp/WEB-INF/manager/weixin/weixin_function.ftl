@@ -1,7 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<#include "${managerViewPath}/include/meta.ftl"/>
+<@ms.html5>
 	<style>
 		.ztree{
 			margin-top:0px;
@@ -29,8 +26,6 @@
 		font-weight:900;
 		}
 	</style>
-</head>
-<body style="height:100%;">
 	<@ms.content>
 		<@ms.contentMenu>
 			<div class="ms-content--body-title" style="background:none;">${weixinName?default('暂无')}</div>
@@ -40,12 +35,11 @@
 		</@ms.contentMenu>
 		<@ms.contentBody style="width:85%">
 			<@ms.contentPanel>
-				<iframe src="${managerPath}/weixin/weixinPeople/index.do" style="width:100%;maring:0;padding:0;border:none;height:100%;background-image: url(${static}/skin/manager/${manager_ui}/images/loading.gif);  background-repeat: no-repeat;  background-position: center;" id="listFrame" target="listFrame" ></iframe>
+				<iframe src="${managerPath}/weixin/weixinPeople/index.do" style="width:100%;maring:0;padding:0;border:none;height:100%; " id="listFrame" target="listFrame" ></iframe>
 			</@ms.contentPanel>
 		</@ms.contentBody>
 	</@ms.content>
-</body>
-</html>
+</@ms.html5>
 <script>
 	$(function(){
 		$.fn.zTree.init($("#menuTree"),setting,nodes);
@@ -83,7 +77,7 @@
 		{ "id":1, "name":"群发消息", "url":"", "click":"$('#listFrame').attr('src','${managerPath}/weixin/message/index.do')"},
 		{ "id":1, "name":"关注回复", "url":"", "click":"$('#listFrame').attr('src','${managerPath}/weixin/subscribe/subscribe.do')"},
 		{ "id":1, "name":"关键字回复", "url":"", "click":"$('#listFrame').attr('src','${managerPath}/weixin/messagekey/index.do')"},
-		{ "id":1, "name":"返回", "url":"", "click":"$('#listFrame').attr('src','${managerPath}/weixin/list.do'),$('.ms-content-menu').hide(),$('.ms-content-body').css('width','100%')"}
+		{ "id":1, "name":"返回", "url":"", "click":"$('#listFrame').attr('src','${managerPath}/weixin/index.do'),$('.ms-content-menu').hide(),$('.ms-content-body').css('width','100%')"}
 	]
 	/******设置节点信息结束******/
 </script>
