@@ -9,40 +9,17 @@
 				<@ms.menuButton links=[{"click":"setManager","name":"设置管理员"}] name="操作"/>
 			</@ms.panelNav>
 		</@ms.nav>
-		<@ms.table head=['编号,60','标题','域名,300','状态,120','手机端,120','续费日期,120'] checkbox="websiteId" id="websiteTable"> 
-       			<#if websiteList?has_content>
-	           		<#list websiteList as website>
-					<tr>
-						<td> 
-							<input type="checkbox" name="websiteId" value="${website.websiteId}" data-manager-id="${website.websiteManagerId}" data-website-name="${website.websiteName}"/>
-						</td>
-                        <td>${website.websiteId?c?default(0)}</td>
-			            <td style="width:100px">
-			            	<a class="btn btn-xs red tooltips" data-rid="" data-toggle="tooltip"  data-original-title="编辑站点" href="${base}${baseManager}/website/${website.websiteId?default(0)}/edit.do" data-id="${website.websiteId?c?default(0)}">
-			            		${website.websiteName?default(0)}
-			            	</a>
-			            </td>
-			            <td>
-			            	<#list website.websiteUrl?split('\r') as url>
-			            		<a href="${url}" target="_blank"  data-toggle="tooltip"  data-original-title="点击查看">${url}<a><br/>
-			            	</#list>
-			            </td>
-			            <td><#if website.websiteState==0><font color="green">运行中</font><#else><font color="red">已停止</font></#if></td>
-			            <td><#if website.websiteMobileState==0><font color="green">已启用</font><#else><font color="red">未启用</font></#if></td>
-			            <td title="${website.websitePay?default('')}">${(website.websitePayDate?string('yyyy-MM-dd'))!''}</td>
-                	</tr>
-             		</#list>
-             		<#else>
-	  			 	<tr>
-			            <td colspan="7">
-			            	<@ms.nodata content="您还没有添加站点，请添加站点" />
-						</td>
-		          	</tr>
-    			</#if>  
-        </@ms.table>
+		<table id="websiteListTable"
+			data-show-refresh="true"
+	        data-show-columns="true"
+	        data-show-export="true"
+			data-method="post" 
+			data-detail-formatter="detailFormatter" 
+			data-pagination="true"
+			data-page-size="1"
+			data-side-pagination="server">
+		</table>
 	</@ms.panel>		
-
-
 	<!--添加或编辑站点管理员-->
 	<@ms.modal modalName="addAndEdit" title="管理员设置">
 		 <@ms.modalBody>
@@ -61,21 +38,80 @@
 	 			<@ms.saveButton postForm="managerForm" postBefor="setModelIds" postAfter="closeModal"/>  
 	 	</@ms.modalButton>
 	</@ms.modal>
-
-
-
+</@ms.html5>
 <script>	
-
-function setManager() {
-	if ($('input[name="websiteId"]:checked').length > 1) {
-		<@ms.notify msg="只能选择一条站点！"/>
-	} else if ($('input[name="websiteId"]:checked').length == 0) {
-		<@ms.notify msg="请选择需要设置站点！"/>
-	} else {	
-		$("input[name='managerPassword']").val("");
-		var website = $('#websiteTable input[name="websiteId"]:checked:first');
-		var websiteId = website.val();
-		ms.post("${managerPath}/website/manager/"+websiteId+"/edit.do",null,function(manager){
+	$(function() {
+		//对应bootstrap-table框架的控制
+        $("#websiteListTable").bootstrapTable({
+    		url:"${managerPath}/website/list.do",
+    		contentType : "application/x-www-form-urlencoded",
+    		queryParams:function(params) {
+				return  $.param(params)+"&pageSize="+ params.limit+"&pageNo="+(params.offset+1)+"&"+$("#searchForm").serialize();
+			},
+		    columns: [{ checkbox: true},{
+		        field: 'websiteId',
+		        title: '编号'
+		    }, {
+		        field: 'websiteName',
+		         formatter: function(value,row,index){
+		        	return "<a class='btn btn-xs red tooltips' data-rid='' data-toggle='tooltip'  data-original-title='编辑站点' href='${base}${baseManager}/website/"+row.websiteId+"/edit.do' data-id='"+row.websiteId+"'>"+value+"</a>"
+		        },
+		        title: '标题'
+		    }, {
+		        field: 'websiteUrl',
+		        formatter: function(value,row,index){
+		        	var urlList = [];
+		        	urlList = value.split("\r");
+		        	var url;
+		        	for(var i = 0 ; i < urlList.length ; i++){
+		        		url = urlList[i];
+		        		return "<a href='"+url+"' target='_blank'  data-toggle='tooltip'  data-original-title='点击查看'>"+url+"<a><br/>"
+		        	}
+		        },
+		        title: '域名'
+		    }, {
+		        field: 'websiteState',
+		        formatter: function(value,row,index){
+		        	if(value == 0){
+		        		return "<font color='green'>运行中</font>"
+		        	}else{
+		        		return "<font color='red'>已停止</font>"
+		        	}
+		        },
+		        title: '状态'
+		    }, {
+		        field: 'websiteMobileState',
+		        formatter: function(value,row,index){
+		        	if(value == 0){
+		        		return "<font color='green'>已启用</font>"
+		        	}else{
+		        		return "<font color='red'>未启用</font>"
+		        	}
+		        },
+		        title: '手机端'
+		    }, {
+		        field: 'websitePayDate',
+		        formatter: function(value,row,index){
+		        	var timeList = [];
+		        	timeList = value.split(" ");
+		        	var time = timeList[0];
+		        	return time
+		        },
+		        title: '续费日期'
+		    }]
+        }); 		
+	})
+	function setManager() {
+		var rows =  $("#websiteListTable").bootstrapTable("getSelections");
+		if (rows.length > 1) {
+			<@ms.notify msg="只能选择一条站点！"/>
+		} else if (rows.length == 0) {
+			<@ms.notify msg="请选择需要设置站点！"/>
+		} else {	
+			$("input[name='managerPassword']").val("");
+			var website = rows[0];
+			var websiteId = website.websiteId;
+			ms.post("${managerPath}/website/manager/"+websiteId+"/edit.do",null,function(manager){
 				$("input[name='managerWebsiteId']").val(websiteId);
 				if (manager.managerId>0) {
 					$("input[name='managerName']").val(manager.managerName);
@@ -87,7 +123,6 @@ function setManager() {
 						for (i=0;i<models.length;i++) {
 							tempModels.push(models[i].modelId);
 						}
-						
 						if (models != null) {
 							var nodes = modelListTree.getNodes();
 							modelListTree.checkAllNodes(false);
@@ -104,18 +139,14 @@ function setManager() {
 										modelListTree.checkNode(nodes[i], true, true);
 									}							
 								}
-
 							}
-							
 						}
 					});					
-					
 				} else {
 					$("input[name='managerNickName']").val(website.data("website-name"));
 					modelListTree.checkAllNodes(false)
 					$("input[name='managerName']").removeAttr("readonly");
 				}
-	
 		});		
 		$(".addAndEdit").modal();//打开该模态框
 				
@@ -139,7 +170,7 @@ function setModelIds() {
 
 //删除站点的ajax
 function remove(ids) {
-	ms.post("${base}${baseManager}/website//batchDelete.do","websiteIds="+ids,function(msg){
+	ms.post("${base}${baseManager}/website/batchDelete.do","websiteIds="+ids,function(msg){
 			if(msg.result){
 				location.href="${base}${baseManager}/website/list.do";
 			}
@@ -147,5 +178,5 @@ function remove(ids) {
 }
 	
 </script>
-</@ms.html5>
+
 

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mchange.v1.util.ArrayUtils;
 import com.mingsoft.base.entity.BaseEntity;
+import com.mingsoft.base.filter.DoubleValueFilter;
 import com.mingsoft.basic.biz.IManagerBiz;
 import com.mingsoft.basic.biz.IModelBiz;
 import com.mingsoft.basic.biz.IRoleBiz;
@@ -37,6 +38,9 @@ import com.mingsoft.parser.IParserRegexConstant;
 import com.mingsoft.util.PageUtil;
 import com.mingsoft.util.StringUtil;
 
+import net.mingsoft.basic.bean.EUListBean;
+import net.mingsoft.basic.util.BasicUtil;
+
 /**
  * 网站基本信息控制层
  * @author 史爱华
@@ -46,7 +50,7 @@ import com.mingsoft.util.StringUtil;
  * 历史修订：<br/>
  */
 @Controller
-@RequestMapping("/${managerPath}/website/")
+@RequestMapping("/${managerPath}/website")
 public class WebsiteAction extends BaseAction{
 	
 	/**
@@ -68,8 +72,13 @@ public class WebsiteAction extends BaseAction{
 	 * @param response 响应对象
 	 * @return 站点列表显示页面
 	 */
+	@RequestMapping("/index")
+	public String index(HttpServletRequest request,ModelMap mode,HttpServletResponse response){
+		return view("/mwebsite/index");
+	}
+	
 	@RequestMapping("/list")
-	public String queryList(HttpServletRequest request,ModelMap mode,HttpServletResponse response){
+	public void list(HttpServletRequest request,HttpServletResponse response){
 		ManagerEntity managerSession = (ManagerEntity) getSession(request, SessionConstEnum.MANAGER_SESSION);
 		int pageNo=1;
 		//查询总记录数
@@ -84,10 +93,11 @@ public class WebsiteAction extends BaseAction{
 		this.setCookie(request, response, CookieConstEnum.PAGENO_COOKIE, String.valueOf(pageNo));
 		//分页查询
 		List<BaseEntity> websiteList = websiteBiz.queryByPage(page, orderBy,false);
-		mode.addAttribute("websiteList",websiteList);
-		mode.addAttribute("page",page);
-		mode.addAttribute("managerSession", managerSession);
-		return view("/mwebsite/website_list");
+		request.setAttribute("websiteList",websiteList);
+		request.setAttribute("page",page);
+		request.setAttribute("managerSession", managerSession);
+		EUListBean _list = new EUListBean(websiteList, (int) BasicUtil.endPage(websiteList).getTotal());
+		this.outJson(response, net.mingsoft.base.util.JSONArray.toJSONString(_list, new DoubleValueFilter()));
 	}
 	
 	/**
