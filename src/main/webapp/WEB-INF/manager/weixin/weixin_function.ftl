@@ -40,7 +40,7 @@
 		</@ms.contentMenu>
 		<@ms.contentBody style="width:85%">
 			<@ms.contentPanel>
-				<iframe src="${managerPath}/weixin/weixinPeople/list.do" style="width:100%;maring:0;padding:0;border:none;height:100%;background-image: url(${static}/skin/manager/${manager_ui}/images/loading.gif);  background-repeat: no-repeat;  background-position: center;" id="listFrame" target="listFrame" ></iframe>
+				<iframe src="${managerPath}/weixin/weixinPeople/index.do" style="width:100%;maring:0;padding:0;border:none;height:100%;background-image: url(${static}/skin/manager/${manager_ui}/images/loading.gif);  background-repeat: no-repeat;  background-position: center;" id="listFrame" target="listFrame" ></iframe>
 			</@ms.contentPanel>
 		</@ms.contentBody>
 	</@ms.content>
@@ -79,10 +79,10 @@
 		{ "id":0, "name":"微信设置", "url":"", "click":"$('#listFrame').attr('src','${managerPath}/weixin/'+${weixinId}+'/edit.do')"},
 		{ "id":1, "name":"微信菜单", "url":"", "click":"$('#listFrame').attr('src','${managerPath}/weixin/menu/list.do')"},
 		{ "id":1, "name":"素材列表", "url":"", "click":"$('#listFrame').attr('src','${managerPath}/weixin/news/list.do')"},
-		{ "id":1, "name":"微信用户", "url":"", "click":"$('#listFrame').attr('src','${managerPath}/weixin/weixinPeople/list.do')"},
+		{ "id":1, "name":"微信用户", "url":"", "click":"$('#listFrame').attr('src','${managerPath}/weixin/weixinPeople/index.do')"},
 		{ "id":1, "name":"群发消息", "url":"", "click":"$('#listFrame').attr('src','${managerPath}/weixin/message/index.do')"},
 		{ "id":1, "name":"关注回复", "url":"", "click":"$('#listFrame').attr('src','${managerPath}/weixin/subscribe/subscribe.do')"},
-		{ "id":1, "name":"关键字回复", "url":"", "click":"$('#listFrame').attr('src','${managerPath}/weixin/messagekey/list.do')"},
+		{ "id":1, "name":"关键字回复", "url":"", "click":"$('#listFrame').attr('src','${managerPath}/weixin/messagekey/index.do')"},
 		{ "id":1, "name":"返回", "url":"", "click":"$('#listFrame').attr('src','${managerPath}/weixin/list.do'),$('.ms-content-menu').hide(),$('.ms-content-body').css('width','100%')"}
 	]
 	/******设置节点信息结束******/
