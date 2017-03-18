@@ -107,7 +107,7 @@
 	<!-- 更新website结束 -->
 
 	<!-- 查询所有website开始 -->
-	<select id="queryAll" resultMap="resultMap">
+	<select id="query" resultMap="resultMap">
 		select * from app order by
 		app_id desc
 	</select>

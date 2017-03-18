@@ -3,7 +3,7 @@
 		<@ms.saveButton  postForm="websiteForm"/>
 	</@ms.nav>
 	<@ms.panel>
-			<@ms.form isvalidation=true name="websiteForm" action="${base}${baseManager}/website/${autoCURD}.do" redirect="${base}${baseManager}/website/list.do">
+			<@ms.form isvalidation=true name="websiteForm" action="${base}${baseManager}/website/${autoCURD}.do" redirect="${base}${baseManager}/website/index.do">
 				<@ms.hidden name="websiteMobileStyle" value="${website.websiteMobileStyle?default('')}"/>
 				<@ms.hidden name="websiteId" value="${website.websiteId}"/>
 				<@ms.text name="websiteName" label="网站标题" width="500" value="${website.websiteName?default('')}" maxlength="60"  title="网站标题" placeholder="请输入网站标题" validation={"maxlength":"50","required":"true", "data-bv-notempty-message":"必填项目","data-bv-stringlength-message":"网站标题在50个字符以内!"}/>

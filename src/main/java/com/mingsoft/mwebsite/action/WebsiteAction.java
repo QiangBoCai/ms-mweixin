@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mchange.v1.util.ArrayUtils;
 import com.mingsoft.base.entity.BaseEntity;
+import com.mingsoft.base.filter.DateValueFilter;
 import com.mingsoft.base.filter.DoubleValueFilter;
 import com.mingsoft.basic.biz.IManagerBiz;
 import com.mingsoft.basic.biz.IModelBiz;
@@ -39,6 +40,7 @@ import com.mingsoft.util.PageUtil;
 import com.mingsoft.util.StringUtil;
 
 import net.mingsoft.basic.bean.EUListBean;
+import net.mingsoft.basic.bean.ListBean;
 import net.mingsoft.basic.util.BasicUtil;
 
 /**
@@ -80,24 +82,10 @@ public class WebsiteAction extends BaseAction{
 	@RequestMapping("/list")
 	public void list(HttpServletRequest request,HttpServletResponse response){
 		ManagerEntity managerSession = (ManagerEntity) getSession(request, SessionConstEnum.MANAGER_SESSION);
-		int pageNo=1;
-		//查询总记录数
-		int recordCount = websiteBiz.queryCount();
-		//排序依据字段
-		String orderBy="app_id";
-		if(request.getParameter("pageNo")!=null){
-			pageNo=Integer.parseInt(request.getParameter("pageNo").toString());
-		}
-		PageUtil page=new PageUtil(pageNo,10000,recordCount,getUrl(request)+"/manager/app/list.do");
-		//保存cookie值
-		this.setCookie(request, response, CookieConstEnum.PAGENO_COOKIE, String.valueOf(pageNo));
-		//分页查询
-		List<BaseEntity> websiteList = websiteBiz.queryByPage(page, orderBy,false);
-		request.setAttribute("websiteList",websiteList);
-		request.setAttribute("page",page);
-		request.setAttribute("managerSession", managerSession);
+		BasicUtil.startPage();
+		List<BaseEntity> websiteList = websiteBiz.query();
 		EUListBean _list = new EUListBean(websiteList, (int) BasicUtil.endPage(websiteList).getTotal());
-		this.outJson(response, net.mingsoft.base.util.JSONArray.toJSONString(_list, new DoubleValueFilter()));
+		this.outJson(response, net.mingsoft.base.util.JSONArray.toJSONString(_list, new DoubleValueFilter(),new DateValueFilter("yyyy-MM-dd")));
 	}
 	
 	/**

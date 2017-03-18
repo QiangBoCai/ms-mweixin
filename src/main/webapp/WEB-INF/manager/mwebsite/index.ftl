@@ -4,7 +4,7 @@
 			<@ms.panelNav>
 				<@ms.buttonGroup>
 					<@ms.addButton url="${base}${baseManager}/website/add.do"/>
-					<@ms.delButton id="delWebsiteBtn" fieldName="websiteId" onclick="remove"/>
+					<@ms.panelNavBtnDel id="delButton" value="" />
 				</@ms.buttonGroup>
 				<@ms.menuButton links=[{"click":"setManager","name":"设置管理员"}] name="操作"/>
 			</@ms.panelNav>
@@ -16,10 +16,19 @@
 			data-method="post" 
 			data-detail-formatter="detailFormatter" 
 			data-pagination="true"
-			data-page-size="1"
+			data-page-size="10"
 			data-side-pagination="server">
 		</table>
-	</@ms.panel>		
+	</@ms.panel>	
+	<@ms.modal  modalName="deleteModal" title="删除站点" >
+		<@ms.modalBody>
+			删除站点
+		</@ms.modalBody>
+		<@ms.modalButton>
+			<!--模态框按钮组-->
+			<@ms.button  value="确认删除？"  id="deletewebsite"  />
+		</@ms.modalButton>
+	</@ms.modal>	
 	<!--添加或编辑站点管理员-->
 	<@ms.modal modalName="addAndEdit" title="管理员设置">
 		 <@ms.modalBody>
@@ -45,8 +54,9 @@
         $("#websiteListTable").bootstrapTable({
     		url:"${managerPath}/website/list.do",
     		contentType : "application/x-www-form-urlencoded",
+    		queryParamsType : "undefined",
     		queryParams:function(params) {
-				return  $.param(params)+"&pageSize="+ params.limit+"&pageNo="+(params.offset+1)+"&"+$("#searchForm").serialize();
+				return  $.param(params)+"&pageNo="+ params.pageNumber+"&"+$("#websiteListTable").serialize();
 			},
 		    columns: [{ checkbox: true},{
 		        field: 'websiteId',
@@ -147,11 +157,56 @@
 					modelListTree.checkAllNodes(false)
 					$("input[name='managerName']").removeAttr("readonly");
 				}
-		});		
-		$(".addAndEdit").modal();//打开该模态框
-				
+			});		
+			$(".addAndEdit").modal();//打开该模态框
+		}
 	}
-}
+	//判断打开删除模态框的条件
+	$("#delButton").click(function(){
+		//没有选中checkbox
+		var rows =  $("#websiteListTable").bootstrapTable("getSelections");
+		if(rows.length <= 0){
+    		  $('.ms-notifications').offset({top:43}).notify({
+    		    type:'warning',
+			    message: { text:'请选择删除的站点'}
+			 }).show();
+		//点击全选，但是列表为空
+		}else if(rows.length == 0){
+			 $('.ms-notifications').offset({top:43}).notify({
+    		    type:'warning',
+			    message: { text:'请选择删除的站点'}
+			 }).show();
+		}else{
+			$(".deleteModal").modal();
+		}
+	})
+	//批量删除
+	$("#deletewebsite").click(function(){
+		var rows =  $("#websiteListTable").bootstrapTable("getSelections");
+		var websiteIds = [];
+		for(var i = 0;i<rows.length;i++){
+			websiteIds[i] = rows[i].websiteId;
+		}
+		$.ajax({		
+		    type:"GET",
+			url:"${base}${baseManager}/website/batchDelete.do",
+		    data:"websiteIds="+websiteIds,
+		    success:function(msg) { 
+				if (msg.result == false) {
+					$('.ms-notifications').offset({top:43}).notify({
+		    		    type:'fail',
+					    message: { text:'删除失败'}
+					 }).show();
+				}else{
+					location.href = base+"${baseManager}/website/index.do";
+					$('.ms-notifications').offset({top:43}).notify({
+						type:'success',
+						message: { text:'删除成功！' }
+					}).show();
+				}
+			}
+		});	
+	})
 
 function closeModal(msg) {
 	$(".addAndEdit").modal("hide");
