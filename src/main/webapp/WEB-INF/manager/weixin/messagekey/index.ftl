@@ -15,11 +15,12 @@
 			data-show-refresh="true"
 	        data-show-columns="true"
 	        data-show-export="true"
-			data-method="post" 
-			data-detail-formatter="detailFormatter" 
+			data-method="post"
 			data-pagination="true"
+			data-page-size="2" 
+			data-detail-formatter="detailFormatter" 
 			data-side-pagination="server">
-		</table>	
+		</table>
 	</@ms.panel>
 	<@ms.modal  modalName="delMessagekeyModal" title="删除关键字回复" >
 		<@ms.modalBody>
@@ -38,7 +39,7 @@
         	contentType : "application/x-www-form-urlencoded",
         	queryParamsType : "undefined",
         	queryParams:function(params) {
-				return  $.param(params);
+				return  $.param(params)+"&pageNo="+params.pageNumber+"&pageSize="+params.pageSize;
 			},
 			columns: [{checkbox:'true'},
 			{
@@ -52,10 +53,10 @@
 			    title: '回复内容',
 			    formatter:function(value,row,index){
 			    	if(row.newsEntity.newsType == 0){
-			    		return "<a style='cursor: pointer;'  class='editMessage' data-original-title='修改' data-id=" + row.passiveMessageId + ">" + row.newsEntity.newsMasterArticle.basicTitle + "</a>";
+			    		return "<a style='cursor: pointer;'  class='editMessage' data-original-title='修改' data-id=" + row.passiveMessageId + ">" + row.basicEntity.basicTitle + "</a>";
 			    	}
 			    	else if(row.newsEntity.newsType == 1){
-			    		return "<a style='cursor: pointer;'  class='editMessage' data-original-title='修改' data-id=" + row.passiveMessageId + ">主图文标题：" + row.newsEntity.newsMasterArticle.basicTitle + "</a>";
+			    		return "<a style='cursor: pointer;'  class='editMessage' data-original-title='修改' data-id=" + row.passiveMessageId + ">主图文标题：" + row.basicEntity.basicTitle +  "</a>";
 			    	}
 			    	else if(row.newsEntity.newsType == 2){
 			    		return "<a style='cursor: pointer;'  class='editMessage'   data-original-title='修改' data-id=" + row.passiveMessageId + ">" + row.newsEntity.newsContent + "</a>";

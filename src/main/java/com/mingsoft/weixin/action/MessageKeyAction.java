@@ -8,13 +8,16 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONArray;
+import com.mingsoft.basic.biz.IRoleModelBiz;
 import com.mingsoft.basic.constant.Const;
 import com.mingsoft.basic.constant.e.CookieConstEnum;
+import com.mingsoft.cms.biz.IArticleBiz;
 import com.mingsoft.util.PageUtil;
 import com.mingsoft.util.StringUtil;
 import com.mingsoft.weixin.biz.INewsBiz;
@@ -52,6 +55,7 @@ public class MessageKeyAction extends BaseAction{
 	 */
 	@Autowired
 	private INewsBiz newsBiz;
+	
 	
 	/**
 	 * 保存关键字回复内容
@@ -210,17 +214,9 @@ public class MessageKeyAction extends BaseAction{
 	@RequestMapping("/delete")
 	@ResponseBody
 	public void delete(HttpServletResponse response,HttpServletRequest request){		
-		String[] keyMessageIds = request.getParameterValues("keyMessageIds");
-		//判断数组是否为空
-		if(StringUtil.isBlank(keyMessageIds)){
-			this.outJson(response, null, false);
-			return;
-		}
-		//判断字符串数组是否转成integer型数组
-		if(!StringUtil.isIntegers(keyMessageIds)){
-			this.outJson(response, null, false);
-			return;
-		}
+		String[] keyIds = request.getParameterValues("keyMessageIds");
+		//分割字符串
+		String[] keyMessageIds = keyIds[0].split(",");
 		//得到ID数组并将字符串数组转化为int型数组
 		int[] ids = StringUtil.stringsToInts(keyMessageIds);
 		//根据ID批量删除
@@ -228,7 +224,6 @@ public class MessageKeyAction extends BaseAction{
 		//返回json数据
 		this.outJson(response, null, true);
 	}
-	
 	
 	/**
 	 * 关键字回复列表
@@ -239,25 +234,27 @@ public class MessageKeyAction extends BaseAction{
 	 */
 	@RequestMapping("/list")
 	public void list(PassiveMessageEntity message,HttpServletResponse response,HttpServletRequest request,ModelMap mode){
-		//取出微信实体,得到微信Id
+		
 		WeixinEntity weixin = this.getWeixinSession(request);
 		message.setPassiveMessageAppId(BasicUtil.getAppId());
-		message.setPassiveMessageMessageId(weixin.getWeixinId());
+		message.setPassiveMessageWeixinId(weixin.getWeixinId());
+		//开始分页	
 		BasicUtil.startPage();
-		//根据被动回复关键字查询列表
-		List messageKeyList = this.passiveMessageBiz.query(message);
-		EUListBean _list = new EUListBean(messageKeyList,(int) BasicUtil.endPage(messageKeyList).getTotal());
+		//分页查询
+		List messageKey = passiveMessageBiz.query(message);
+
+		EUListBean _list = new EUListBean(messageKey,(int) BasicUtil.endPage(messageKey).getTotal());
 		this.outJson(response, JSONArray.toJSONString(_list));
 	}
 	/**
 	 * 关键字回复列表页面
 	 * @param request
 	 * @param mode
-	 * @return manager//weixin/messagekey/messagekey_list.ftl的界面
+	 * @return manager/weixin/messagekey/index.ftl的界面
 	 */
 	@RequestMapping("/index")
 	
 	public String index(HttpServletRequest request,HttpServletResponse response) {
-		return view("/weixin/messagekey/messagekey_list");
+		return view("/weixin/messagekey/index");
 	}
 }

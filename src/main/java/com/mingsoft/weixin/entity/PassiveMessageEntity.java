@@ -4,6 +4,7 @@
 package com.mingsoft.weixin.entity;
 
 import com.mingsoft.base.entity.BaseEntity;
+import com.mingsoft.basic.entity.BasicEntity;
 import com.mingsoft.weixin.constant.e.PassiveMessageEventEnum;
 import com.mingsoft.weixin.constant.e.PassiveMessageTypeEnum;
 
@@ -27,7 +28,11 @@ public class PassiveMessageEntity extends BaseEntity {
 	 * 被动消息回复关联的素材
 	 */
 	private NewsEntity newsEntity;
-	
+	/**
+	 * 被动消息回复关联的素材
+	 */
+	private BasicEntity basicEntity;
+
 	/**
 	 * 关联应用ID
 	 */
@@ -106,7 +111,20 @@ public class PassiveMessageEntity extends BaseEntity {
 	public NewsEntity getNewsEntity() {
 		return newsEntity;
 	}
-
+	/**
+	 *获取basicEntity
+	 * @return basicEntity
+	 */
+	public BasicEntity getBasicEntity() {
+		return basicEntity;
+	}
+	/**
+	 * 设置 basicEntity
+	 * @param basicEntity
+	 */
+	public void setBasicEntity(BasicEntity basicEntity) {
+		this.basicEntity = basicEntity;
+	}
 	/**
 	 * 获取passiveMessageAppId
 	 * @return  passiveMessageAppId
