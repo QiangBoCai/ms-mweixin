@@ -72,7 +72,8 @@
 					if (msg.result == true) {
 			     		<#if weixin.weixinId!=0>
 			     			alert("更新成功");	
-			     			$("#saveOrUpdateWeixin").text("更新");
+			     			
+			     			location.href = "${managerPath}/weixin/index.do";
 		     			<#else>
 			     			alert("保存成功");
 			     			location.href = "${managerPath}/weixin/index.do"; 	

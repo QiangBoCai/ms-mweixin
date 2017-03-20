@@ -1,7 +1,9 @@
 <@ms.html5>
 	<@ms.panel>	
 		<!--title对应板块名称-->
-		<@ms.contentNav title="关键字回复">
+		<@ms.nav title="关键字回复"></@ms.nav>
+		<!--使用bootstrap-table的toolbar添加按钮-->
+		<div id="toolbar">
 			<@ms.panelNav empty=false>
 				<!--列表操作按钮，添加和删除-->
 				<@ms.panelNavBtnGroup>
@@ -9,7 +11,7 @@
 					<@ms.panelNavBtnDel id="delButton" value="" />
 				</@ms.panelNavBtnGroup>													
 			</@ms.panelNav>
-		</@ms.contentNav>
+		</div>
 		<!--表格标题-->	
 		<table id="messagekeyListTable"
 			data-show-refresh="true"
@@ -38,6 +40,7 @@
         	url:"${managerPath}/weixin/messagekey/list.do",
         	contentType : "application/x-www-form-urlencoded",
         	queryParamsType : "undefined",
+        	toolbar: "#toolbar",
         	queryParams:function(params) {
 				return  $.param(params)+"&pageNo="+params.pageNumber+"&pageSize="+params.pageSize;
 			},
@@ -97,12 +100,20 @@
 	})
 	//判断打开删除模态框的条件
 	$("#delButton").click(function(){
+		//获取CheckBox选中的数据
+		var rows = $("#messagekeyListTable").bootstrapTable("getSelections");
 		//没有选中checkbox
-		if($("input[type=checkbox]:checked").length <= 0){
-			alert("请选择要删除的关键字回复");
+		if(rows.length <= 0){
+			 $('.ms-notifications').offset({top:43}).notify({
+    		    type:'warning',
+			    message: { text:'请选择删除的关键字回复'}
+			 }).show();
 		//点击全选，但是列表为空
-		}else if($("input[name='btSelectItem']:checked").length == 0){
-			alert("没有可删除的关键字回复");
+		}else if(rows.length == 0){
+			$('.ms-notifications').offset({top:43}).notify({
+    		    type:'warning',
+			    message: { text:'请选择删除的关键字回复'}
+			 }).show();
 		}else{
 			$(".delMessagekeyModal").modal();
 		}
@@ -122,9 +133,15 @@
 		    data:"keyMessageIds="+keyMessageIds,
 		    success:function(msg) { 
 				if (msg.result == false) {
-					alert("删除失败");
+					$('.ms-notifications').offset({top:43}).notify({
+    		    		type:'fail',
+			    		message: { text:'删除失败'}
+			 		}).show();
 				}else{
-					alert("删除成功");
+					$('.ms-notifications').offset({top:43}).notify({
+    		    		type:'success',
+			    		message: { text:'删除成功'}
+			 		}).show();
 					location.href = base+"${baseManager}/weixin/messagekey/index.do";
 				}
 			}

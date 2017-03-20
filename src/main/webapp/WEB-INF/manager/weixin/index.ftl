@@ -1,13 +1,15 @@
 <@ms.html5>
 	<@ms.panel>
-		<@ms.contentNav title="公众号列表">
+		<@ms.nav title="公众号列表"></@ms.nav>
+		<!--使用bootstrap-table的toolbar添加按钮-->
+		<div id="toolbar">
 			<!--列表操作按钮，添加和删除 开始 -->
 			<@ms.panelNavBtnGroup>
 				<@ms.panelNavBtnAdd id="addButton" value="" /><!-- 新增按钮 -->
 				<@ms.panelNavBtnDel id="delButton" value="" /><!-- 删除按钮 -->
 			</@ms.panelNavBtnGroup>		
-			<!--列表操作按钮，添加和删除结束 -->											
-		</@ms.contentNav>	
+			<!--列表操作按钮，添加和删除结束 -->
+		</div>
 		<!--微信列表-->
 		<table id="weixinListTable"
 			data-show-refresh="true"
@@ -36,8 +38,9 @@
         	url:"${managerPath}/weixin/list.do",
         	contentType : "application/x-www-form-urlencoded",
         	queryParamsType : "undefined",
+        	toolbar:"#toolbar",
         	queryParams:function(params) {
-				return  $.param(params);
+				return  $.param(params)+"&pageNo="+params.pageNumber+"&pageSize="+params.pageSize;
 			},
 			columns: [{checkbox:'true'},
 			{
@@ -82,12 +85,20 @@
 	})
 	//判断打开删除模态框条件
 	$("#delButton").click(function(){
+		//获取checkbox选中的数据
+		var rows = $("#weixinListTable").bootstrapTable("getSelections");
 		//没有选中checkbox
-		if($("input[type=checkbox]:checked").length <= 0){
-			alert("请选择要删除的微信");
+		if(rows.length <= 0){
+			 $('.ms-notifications').offset({top:43}).notify({
+    		    type:'warning',
+			    message: { text:'请选择删除的微信'}
+			 }).show();
 		//点击全选，但是列表为空
-		}else if($("input[name='btSelectItem']:checked").length == 0){
-			alert("没有可删除的微信");
+		}else if(rows.length == 0){
+			$('.ms-notifications').offset({top:43}).notify({
+    		    type:'warning',
+			    message: { text:'没有可删除的微信'}
+			 }).show();
 		}else{
 			$(".delWeixinModal").modal();
 		}
@@ -107,9 +118,15 @@
 		    data:"weixinIds="+weixinIds,
 		    success:function(msg) { 
 				if(msg.result == true) {
-					alert("删除成功");
+					$('.ms-notifications').offset({top:43}).notify({
+		    		    type:'success',
+					    message: { text:'删除成功'}
+					 }).show();
 				}else{
-					alert("删除失败");
+					$('.ms-notifications').offset({top:43}).notify({
+		    		    type:'fail',
+					    message: { text:'删除失败'}
+					 }).show();
 				}
 				location.reload();
 			}

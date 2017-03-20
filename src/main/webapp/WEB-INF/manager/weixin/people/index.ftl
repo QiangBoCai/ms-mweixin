@@ -1,15 +1,18 @@
 <@ms.html5> 
 	<@ms.panel>
     	<!--title对应板块名称-->
-        <@ms.nav title="微信用户">
+        <@ms.nav title="微信用户"></@ms.nav>
+        <!--使用bootstrap-table的toolbar添加按钮-->
+        <div id="toolbar">
         	<@ms.button class="btn btn-success"  id="synchronousPeople"  value="一键同步"/>
-        </@ms.nav>
+        </div>
        	<!--表格标题-->
         <table id="peopleListTable"
 			data-show-refresh="true"
 	        data-show-columns="true"
 	        data-show-export="true"
 			data-method="post" 
+			data-search="true"
 			data-detail-formatter="detailFormatter" 
 			data-pagination="true"
 			data-page-size="50"
@@ -35,8 +38,9 @@
         	url:"${managerPath}/weixin/weixinPeople/list.do",
         	contentType : "application/x-www-form-urlencoded",
         	queryParamsType : "undefined",
+        	toolbar:"#toolbar",
         	queryParams:function(params) {
-				return  $.param(params);
+				return  $.param(params)+"&pageNo="+params.pageNumber+"&pageSize="+params.pageSize;
 			},
 			columns: [{
 				align:'center',
