@@ -1,8 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<#include "${managerViewPath}/include/meta.ftl"/>
-</head>
+<@ms.html5>
 	<style> 
 		hr{margin:0;padding:0;}
 		/*弹出窗口样式*/
@@ -51,13 +47,12 @@
     		height: 450px;
 		}
 	</style>
-<body>
 	<@ms.content>
 		<@ms.contentBody>
-				<@ms.contentNav title="群发消息">
-					<@ms.button class="btn btn-primary"  id="sendMessageBtn"  value="发送"/>
-					<@ms.button class="btn btn-success"  id="sendMessageMassBtn"  value="官方群发"/>
-				</@ms.contentNav>
+			<@ms.contentNav title="素材管理">
+				<@ms.button class="btn btn-primary"  id="sendMessageBtn"  value="发送"/>
+				<@ms.button class="btn btn-success"  id="sendMessageMassBtn"  value="官方群发"/>
+			</@ms.contentNav>
 			<@ms.contentPanel>				
 			  	<div class="row margin20"> 		  		
 					<div class="col-md-12">
@@ -89,157 +84,156 @@
 		<script id="groupListTempl" type="text/x-jquery-tmpl">
 			<option value="${errcode}" >${errmsg}</option>
 		</script>
- 	</#noparse>
-	<script>
-		//获取文章列表的弹出层
-		function getArticleList(){
-			$.ajax({
-			   type: "Post",
-			   data:$("#messageForm").serialize(),
-			   url:  base+"${baseManager}/weixin/news/listAjax.do",
-			   success: function(html){
-					$(".newsMessageListModal").modal();
-			   		$(".modal-body").append(html);
-					$(".newsList").delegate(".appmsg","click",function(){
-						$(".appmsg").find(".mask").hide();
-						$(".appmsg").attr("contenteditable","false");
-						$(".appmsg").find(".icon").hide();
-						$(".appmsg").removeClass("msgSel");
+	</#noparse>
+</@ms.html5>
+<script>
+	//获取文章列表的弹出层
+	function getArticleList(){
+		$.ajax({
+			type: "Post",
+			data:$("#messageForm").serialize(),
+			url:  base+"${baseManager}/weixin/news/listAjax.do",
+			success: function(html){
+				$(".newsMessageListModal").modal();
+			   	$(".modal-body").append(html);
+				$(".newsList").delegate(".appmsg","click",function(){
+					$(".appmsg").find(".mask").hide();
+					$(".appmsg").attr("contenteditable","false");
+					$(".appmsg").find(".icon").hide();
+					$(".appmsg").removeClass("msgSel");
+					$(this).find(".mask").show();
+					$(this).find(".icon").show();
+					$(this).addClass("msgSel");
+				});
+				$(".appmsg").hover(
+					function () {
 						$(this).find(".mask").show();
-						$(this).find(".icon").show();
-						$(this).addClass("msgSel");
-					});
-					$(".appmsg").hover(
-					  function () {
-					    $(this).find(".mask").show();
-					  },
-					  function () {
-					  	if (!$(this).hasClass("msgSel")) {
+					},
+					function () {
+						if (!$(this).hasClass("msgSel")) {
 					    	$(this).find(".mask").hide();
-					    }
-					  }
-					);											
-			   },
-			   error:function(e) {
-			   		alert("找不到相关素材");
-			   }
-			});	
-		}
-		//点击消息类别切换背景为黑色
-		$(".bar li").click(function() {
-			$(".bar li").removeClass("sel");
-			$(this).addClass("sel");
-			$(".content").html("");
-			if($(this).attr("data-msg-type")=="mpnews"){
-				getArticleList();
-				$(".modal-body").html("");
+						}
+					}
+				);											
+			},
+			error:function(e) {
+				alert("找不到相关素材");
 			}
-		});
-		//选择图文消息后点击“确定”按钮事件
-		$("#newsMessageOk").click(function() {
-			$(".content").html("");
-			var obj = $(".modal-body").find("div.msgSel").parent().html();
-			$($.parseHTML(obj, document, true)).width(300).appendTo($(".content")); 
-			$(".content").find(".mask").hide();
-			$(".newsMessageListModal").modal('hide');
-			$(".appmsg_content").css("border","none");
-			$(".bar li").removeClass("sel");
-			$(".bar .news").addClass("sel");
-		});
+		});	
+	}
+	//点击消息类别切换背景为黑色
+	$(".bar li").click(function() {
+		$(".bar li").removeClass("sel");
+		$(this).addClass("sel");
+		$(".content").html("");
+		if($(this).attr("data-msg-type")=="mpnews"){
+			getArticleList();
+			$(".modal-body").html("");
+		}
+	});
+	//选择图文消息后点击“确定”按钮事件
+	$("#newsMessageOk").click(function() {
+		$(".content").html("");
+		var obj = $(".modal-body").find("div.msgSel").parent().html();
+		$($.parseHTML(obj, document, true)).width(300).appendTo($(".content")); 
+		$(".content").find(".mask").hide();
+		$(".newsMessageListModal").modal('hide');
+		$(".appmsg_content").css("border","none");
+		$(".bar li").removeClass("sel");
+		$(".bar .news").addClass("sel");
+	});
 		
-		//点击发送按钮进行消息的群发
-		$("#sendMessageBtn").click(function() {
-			//默认是输入框里的文本内容
-			var content;
-			var url;
-			//若为图文，取msgType值为0.content取素材ID
-			if ($(".bar li.sel").hasClass("news")) {
-				content = $(".content>div").attr("data-id");
-				if(content == undefined || content == ""){
-					alert("请选择素材！");
-					return;
-				}
-				url = base+"${baseManager}/weixin/message/guiseSendAllNews.do";
-			}else{
-				content = $.trim($(".content").text());
-				if(content == undefined || content == ""){
-					alert("请输入内容！");
-					return;
-				}else if(content.length > 300){
-					alert("内容过长！");
-					return;
-				}
-				url = base+"${baseManager}/weixin/message/guiseSendAllText.do";
+	//点击发送按钮进行消息的群发
+	$("#sendMessageBtn").click(function() {
+		//默认是输入框里的文本内容
+		var content;
+		var url;
+		//若为图文，取msgType值为0.content取素材ID
+		if ($(".bar li.sel").hasClass("news")) {
+			content = $(".content>div").attr("data-id");
+			if(content == undefined || content == ""){
+				alert("请选择素材！");
+				return;
+			}
+			url = base+"${baseManager}/weixin/message/guiseSendAllNews.do";
+		}else{
+			content = $.trim($(".content").text());
+			if(content == undefined || content == ""){
+				alert("请输入内容！");
+				return;
+			}else if(content.length > 300){
+				alert("内容过长！");
+				return;
+			}
+			url = base+"${baseManager}/weixin/message/guiseSendAllText.do";
+		}
+		$.ajax({
+		   	type: "POST",
+		   	data:"content="+content,
+		   	dataType:"json",
+		   	url: url,
+			beforeSend:function() {
+		   		$("#sendMessageBtn").text("发送中");
+		   		$("#sendMessageBtn").attr("disabled","disabled");
+			},
+		   	success: function(msg){
+		   		if(msg.result){
+		   			//得到发送失败的用户数组
+			   		var objFail = jQuery.parseJSON(msg.resultMsg);
+			   		var objSucess = jQuery.parseJSON(msg.resultData);
+			   		if(objFail.length == 0){
+			   			alert("发送成功！");
+			   		}else{   				
+			   			alert("发送失败："+objFail.length+"个,发送成功："+objSucess.length+"个");
+			   		}	
+		   		}else{
+		   			alert("发送失败！");
+		   		}	
+		   		$("#sendMessageBtn").text("发送");
+		   		$("#sendMessageBtn").attr("disabled",false);
+		   	},
+		   	error:function(XMLHttpRequest, textStatus, errorThrown){
+		   		alert("a"+textStatus);
+		   		location.reload();
+		   	}	
+		});	
+	});	
+		
+	//调用微信官方群发接口群发，只支持图文发送
+	$("#sendMessageMassBtn").click(function() {
+		//若为图文，取msgType值为0.content取素材ID
+		if ($(".bar li.sel").hasClass("news")) {
+			var content = $(".content>div").attr("data-id");
+			if(content == undefined || content == ""){
+				alert("素材不能为空！")
+				return;
 			}
 			$.ajax({
-		   		type: "POST",
-		   		data:"content="+content,
-		   		dataType:"json",
-		   		url: url,
-			   	beforeSend:function() {
-		   			$("#sendMessageBtn").text("发送中");
-		   			$("#sendMessageBtn").attr("disabled","disabled");
+			   	type: "POST",
+			   	data:"content="+content,
+			   	dataType:"json",
+			   	url: base+"${baseManager}/weixin/messageMass/sendToAll.do",
+				beforeSend:function() {
+			   		$("#sendMessageMassBtn").text("发送中");
+			   		$("#sendMessageMassBtn").attr("disabled","disabled");
+				},
+			   	success: function(msg){
+			   		if(msg.result == true){
+			   			alert("发送成功!");
+			   		}else{   				
+			   			alert("发送失败!");
+			   		}
+			   		$("#sendMessageMassBtn").text("官方群发");
+			   		$("#sendMessageMassBtn").attr("disabled",false);
 			   	},
-		   		success: function(msg){
-		   			if(msg.result){
-		   				//得到发送失败的用户数组
-			   			var objFail = jQuery.parseJSON(msg.resultMsg);
-			   			var objSucess = jQuery.parseJSON(msg.resultData);
-			   			if(objFail.length == 0){
-			   				alert("发送成功！");
-			   			}else{   				
-			   				alert("发送失败："+objFail.length+"个,发送成功："+objSucess.length+"个");
-			   			}	
-		   			}else{
-		   				alert("发送失败！");
-		   			}	
-		   			$("#sendMessageBtn").text("发送");
-		   			$("#sendMessageBtn").attr("disabled",false);
-		   		},
-		   		error:function(XMLHttpRequest, textStatus, errorThrown){
-		   			alert("a"+textStatus);
-		   			location.reload();
-		   		}	
-			});	
-		});	
-		
-		//调用微信官方群发接口群发，只支持图文发送
-		$("#sendMessageMassBtn").click(function() {
-			//若为图文，取msgType值为0.content取素材ID
-			if ($(".bar li.sel").hasClass("news")) {
-				var content = $(".content>div").attr("data-id");
-				if(content == undefined || content == ""){
-					alert("素材不能为空！")
-					return;
-				}
-				$.ajax({
-			   		type: "POST",
-			   		data:"content="+content,
-			   		dataType:"json",
-			   		url: base+"${baseManager}/weixin/messageMass/sendToAll.do",
-				   	beforeSend:function() {
-			   			$("#sendMessageMassBtn").text("发送中");
-			   			$("#sendMessageMassBtn").attr("disabled","disabled");
-				   	},
-			   		success: function(msg){
-			   			if(msg.result == true){
-			   				alert("发送成功!");
-			   			}else{   				
-			   				alert("发送失败!");
-			   			}
-			   			$("#sendMessageMassBtn").text("官方群发");
-			   			$("#sendMessageMassBtn").attr("disabled",false);
-			   		},
-			   		error:function(XMLHttpRequest, textStatus, errorThrown){
-			   			alert("a"+textStatus);
-			   			location.reload();
-			   		}	
-				});		
-			}else{
-				alert("只能进行图文发送!")
-			}											
-		});	
-		
-	</script>
-</body>
-</html>
+			   	error:function(XMLHttpRequest, textStatus, errorThrown){
+			   		alert("a"+textStatus);
+			   		location.reload();
+			   	}	
+			});		
+		}else{
+			alert("只能进行图文发送!")
+		}											
+	});	
+</script>
+

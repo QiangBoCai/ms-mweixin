@@ -196,7 +196,7 @@
 				<form class="col-md-12">		
 				   	<div class="ms-weixin-message"> 
 				   		<!--关键词-->
-			   			<@ms.text name="passiveMessageKey" labelStyle="width:10%" style="width:35%;"  label="关键词:" value="" title="关键词" placeholder="请输入关键词"/>
+			   			<@ms.text name="passiveMessageKey"  labelStyle="width:10%" style="width:100%;"  label="关键词:" value="" title="关键词" placeholder="请输入关键词"/>
 				   		<div class="form-group">
 				   			<label style="width:10%">回复内容:</label>
 				   			<!--回复内容-->

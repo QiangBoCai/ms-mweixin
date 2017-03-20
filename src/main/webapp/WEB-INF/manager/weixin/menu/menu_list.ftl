@@ -1,112 +1,104 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<#include "${managerViewPath}/include/meta.ftl"/>
-	<style>
-		#menuTree span{
-			display: inline-block;
-		}
-		#menuTree i{
-			cursor: pointer;
-		}
-		iframe {
-			width: 100%;
-			z-index: 20;
-			border: 0;
-			margin: 0 auto;
-			display: block;
-			-moz-border-radius: 10px;
-			-webkit-border-radius: 10px;
-			border-radius: 10px;
-		}
-		.glyphicon {
-			position: relative;
-			top: 1px;
-			display: inline-block;
-			font-family: 'Glyphicons Halflings';
-			font-style: normal;
-			font-weight: normal;
-			line-height: 1;
-		}
-		.row,.col-md-3{
-			height:100%;
-		}
-		.col-md-3{
-			border-right: 1px solid #ccc;
-			float:left;
-			padding-top: 5px;
-			width:25%;
-		}
-		body .row{
-			margin-top:-10px
-		}
-		.newsMessageListModal  .modal-body{padding:0}
-		body .col-md-9{
-			width:75%;
-			float:left;
-			padding-left:0;
-			padding-right:0;
-		}
-		body .ms-content-body-panel{
-			padding-left:0;
-			padding-right:0;
-		}
-		body .modal-dialog .modal-content{
-			width:100%;
-		}
-		.ms-content--body-title{
-		border-bottom: 1px solid #d3d7db;
-   		background: #fff;
-   		color: #666;
-   		line-height: 50px;
-   		padding: 0 10px;
-    	width: 100%;
-    	z-index: 1500;
-    	text-align: right;
-		font-weight:900;
-		}
-	</style>
-</head>
+<@ms.html5>
+<style>
+	#menuTree span{
+		display: inline-block;
+	}
+	#menuTree i{
+		cursor: pointer;
+	}
+	iframe {
+		width: 100%;
+		z-index: 20;
+		border: 0;
+		margin: 0 auto;
+		display: block;
+		-moz-border-radius: 10px;
+		-webkit-border-radius: 10px;
+		border-radius: 10px;
+	}
+	.glyphicon {
+		position: relative;
+		top: 1px;
+		display: inline-block;
+		font-family: 'Glyphicons Halflings';
+		font-style: normal;
+		font-weight: normal;
+		line-height: 1;
+	}
+	.row,.col-md-3{
+		height:100%;
+	}
+	.col-md-3{
+		border-right: 1px solid #ccc;
+		float:left;
+		padding-top: 5px;
+		width:25%;
+	}
+	body .row{
+		margin-top:-10px
+	}
+	.newsMessageListModal  .modal-body{padding:0}
+	body .col-md-9{
+		width:75%;
+		float:left;
+		padding-left:0;
+		padding-right:0;
+	}
+	body .ms-content-body-panel{
+		padding-left:0;
+		padding-right:0;
+	}
+	body .modal-dialog .modal-content{
+		width:100%;
+	}
+	.ms-content--body-title{
+	border-bottom: 1px solid #d3d7db;
+   	background: #fff;
+   	color: #666;
+   	line-height: 50px;
+   	padding: 0 10px;
+    width: 100%;
+    z-index: 1500;
+    text-align: right;
+	font-weight:900;
+	}
+</style>
 <body style="height:100%">
 	<@ms.content>
 		<@ms.contentBody>
-				<div class="row margin20" id="menuList">
-					<!--菜单显示区域开始-->
-					<div class="col-md-3" style="padding-left:0px;padding-right:0px;">
-						<div class="ms-content--body-title" style="background:none;">
-							<span style="float:left;">微信菜单</span>
-            				<button type="button" style="margin-right:10px;" class="btn btn-primary" data-ajax-url="${base}${baseManager}/weixin/menu/generateMenu.do"  id="publishOrStop" data-placement="bottom">发布</button>
-							<button type="button" style="margin-top:9px;float:right;" class="btn btn-danger" data-ajax-url="${base}${baseManager}/weixin/menu/stopMenu.do" id="publishOrStop">停用</button>
-        				</div>
-						<ul id="menuTree" class="ztree">
-						</ul>
-					</div>
-					<!--菜单显示区域结束-->
-					<div class="col-md-9" id="menuDetail" style="padding-top:10px;">
-					</div>
+			<div class="row margin20" id="menuList">
+				<!--菜单显示区域开始-->
+				<div class="col-md-3" style="padding-left:0px;padding-right:0px;">
+					<div class="ms-content--body-title" style="background:none;">
+						<span style="float:left;">微信菜单</span>
+            			<button type="button" style="margin-right:10px;" class="btn btn-primary" data-ajax-url="${base}${baseManager}/weixin/menu/generateMenu.do"  id="publishOrStop" data-placement="bottom">发布</button>
+						<button type="button" style="margin-top:9px;float:right;" class="btn btn-danger" data-ajax-url="${base}${baseManager}/weixin/menu/stopMenu.do" id="publishOrStop">停用</button>
+        			</div>
+					<ul id="menuTree" class="ztree"></ul>
 				</div>
-				<!--删除菜单模态框开始-->
-				<@ms.modal  modalName="deleteModel" title="删除菜单" >
-					<@ms.modalBody>
-						确定要删除菜单？
-					</@ms.modalBody>
-					<@ms.modalButton>
-						<!--模态框按钮组-->
-						<@ms.button  value="确定" id="deleteMenu"/>
-					</@ms.modalButton>
-				</@ms.modal>
-				<!--删除菜单模态框结束-->			
-				<!--选取素材模态框开始-->
-				<@ms.modal modalName="newsMessageListModal" title="选择图文素材">
-					<@ms.modalBody>
-						<iframe class="box-iframe"  id="article_frame" name="article_frame"  data-key="iframe"   src="${base}${baseManager}/weixin/news/listSelect.do" frameborder="0" scrolling="yes"  height="400px;" width="900px;"></iframe>
-					</@ms.modalBody>
-					<@ms.modalButton>
-						<!--模态框按钮组-->
-						<@ms.button  value="确定" id="select"/>
-					</@ms.modalButton>
-				</@ms.modal>	
-				<!--选取素材模态框结束-->								
+				<!--菜单显示区域结束-->
+				<div class="col-md-9" id="menuDetail" style="padding-top:10px;"></div>
+			</div>
+			<!--删除菜单模态框开始-->
+			<@ms.modal  modalName="deleteModel" title="删除菜单" >
+				<@ms.modalBody>确定要删除菜单？</@ms.modalBody>
+				<@ms.modalButton>
+					<!--模态框按钮组-->
+					<@ms.button  value="确定" id="deleteMenu"/>
+				</@ms.modalButton>
+			</@ms.modal>
+			<!--删除菜单模态框结束-->			
+			<!--选取素材模态框开始-->
+			<@ms.modal modalName="newsMessageListModal" title="选择图文素材">
+				<@ms.modalBody>
+					<iframe class="box-iframe"  id="article_frame" name="article_frame"  data-key="iframe"   src="${base}${baseManager}/weixin/news/listSelect.do" frameborder="0" scrolling="yes"  height="400px;" width="900px;"></iframe>
+				</@ms.modalBody>
+				<@ms.modalButton>
+					<!--模态框按钮组-->
+					<@ms.button  value="确定" id="select"/>
+				</@ms.modalButton>
+			</@ms.modal>	
+			<!--选取素材模态框结束-->								
 		</@ms.contentBody>
 	</@ms.content>
 	<#noparse>
@@ -120,8 +112,7 @@
 			<div style="float:right;margin-left:8px;" id="diyBtnDelete_${id}" data-id="${id}"><i class="glyphicon glyphicon-remove" title="删除菜单"></i></div>
 	 	</script>
 	</#noparse>
-</body>
-</html>
+</@ms.html5>
 <script type="text/javascript">
 	var menuId = 0;
 	//进行字段删除的函数
@@ -205,9 +196,6 @@
 		} 
 	}
 	/*******在节点后面添加删除和编辑按钮结束*****/
-	
-	
-	
 	//移动菜单结束后的回调函数,更新后台数据
 	function zTreeOnDrop(event, treeId, treeNodes, targetNode, moveType) {
 		//当目标节点的子节点

@@ -1,7 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<#include "${managerViewPath}/include/meta.ftl"/>
+<@ms.html5>
 	<style> 	
 		body .row{
 			margin-top:0px;
@@ -114,7 +111,7 @@
 		.appmsg_item {
 			*zoom: 1;
 			position: relative;
-			padding: 20px 14px;
+			padding: 6px 14px;
 			border-top: 1px solid #e7e7eb
 		}	
 		.appmsg_item:after {
@@ -183,9 +180,7 @@
     		padding: 0px 10px;
 		}
 	</style>
-</head>
-<body>
-	 <@ms.content>
+	<@ms.content>
         <@ms.contentBody>
             <!--title对应板块名称-->
             <@ms.contentNav title="素材管理">
@@ -289,7 +284,7 @@
 				<!--列表结束--> 
                 <!--列表分页-->
                 <#if page?has_content>
-                    <@showPage page=page/>
+                  
                 </#if>                                  
             </@ms.contentPanel>
         </@ms.contentBody>
@@ -305,7 +300,6 @@
 		</@ms.modalButton>
 	</@ms.modal>
 	<!--删除文本素材模态框结束-->	
-	<@warnModal modalName="deleteModel"/>
 	<!--新增or编辑文本模态框-->
 	<@ms.modal  modalName="textModel" title="">
 		<@ms.modalBody>
@@ -319,6 +313,7 @@
 			<@ms.button  value=""  id="saveOrUpdateButton"  />
 		</@ms.modalButton>
 	</@ms.modal>
+</@ms.html5>	
 <script>
 	$(function(){	
 		var newsTextId = 0;
@@ -430,5 +425,3 @@
 	})
 	
 </script>	
-</body>
-</html>

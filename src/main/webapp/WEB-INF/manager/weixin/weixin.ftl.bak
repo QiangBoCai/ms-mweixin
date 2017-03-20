@@ -6,19 +6,15 @@
 </head>
 <body>
 	<@ms.content>
-		<@ms.contentBody>
+		<@ms.contentBody >
 			<#if weixin?has_content>
-				<@ms.contentNav title="微信设置">
-					<@ms.button class="btn btn-success"  id="saveOrUpdateWeixin"  value="更新"/>
-				</@ms.contentNav >
+				<@ms.nav title="文章列表" back=true></@ms.nav>
+				
 			<#else>
-				<@ms.contentNav title="微信设置">
-					<@ms.button class="btn btn-success"  id="saveOrUpdateWeixin"  value="保存"/>
-					<@ms.contentNavBack  class="btn btn-default returnList" value="返回" />
-				</@ms.contentNav >
+				
 			</#if>
 			<@ms.contentPanel>
-				<@ms.form isvalidation=true name="weixinForm" class="form-inline" action="${basePath}/manager/weixin/save.do">
+				<@ms.form isvalidation=true name="weixinForm" class="form-inline" style="height:100%;" action="${basePath}/manager/weixin/save.do">
 		    		<@ms.text labelStyle="width:17%" name="weixinNO" style="width: 20%;"  label="微信号:" value="" title="微信号" placeholder="请输入微信号"  validation={"required":"true","maxlength":"30","data-bv-stringlength-message":"微信号在30个字符以内!", "data-bv-notempty-message":"必填项目"}/>
 		    		<@ms.text labelStyle="width:17%" name="weixinOriginId" style="width:20% ;"  label="微信原始ID:" value="" title="微信原始ID" placeholder="请输入微信原始ID" validation={"required":"true", "maxlength":"30","data-bv-stringlength-message":"微信原始ID在30个字符以内!","data-bv-notempty-message":"必填项目"}/>
 		    		<@ms.text labelStyle="width:17%" name="weixinName" style="width: 20%;"  label="公众号名称:" value="" title="公众号名称:" placeholder="请输入公众号名称"  validation={"required":"true","maxlength":"30","data-bv-stringlength-message":"公众号名称在30个字符以内!", "data-bv-notempty-message":"必填项目"}/>

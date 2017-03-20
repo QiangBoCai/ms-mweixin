@@ -1,7 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<#include "${managerViewPath}/include/meta.ftl"/>
+<@ms.html5>
 	<style>	
 		i, cite, em, var, address, dfn {
 			font-style:normal;
@@ -227,45 +224,43 @@
     		padding: 0px 10px;
 		}
 	</style>
-</head>
-<body>
 	<@ms.content>
 		<@ms.contentBody>
-				<#if news?has_content>
-					<#if news.newsType == 0>
-						<@ms.contentNav title="编辑单图文">
-							<@ms.button class="btn btn-success"  id="saveOrUpdateNews"  value="更新"/>
-							<@ms.contentNavBack onclick="javascript:history.go(-1)"  class="btn btn-default" value="返回" />
-						</@ms.contentNav >
-					<#elseif news.newsType == 1>
-						<@ms.contentNav title="编辑多图文">
-							<@ms.button class="btn btn-success"  id="saveOrUpdateNews"  value="更新"/>
-							<@ms.contentNavBack onclick="javascript:history.go(-1)"  class="btn btn-default" value="返回" />
-						</@ms.contentNav >
-					</#if>
-				<#else>
-					<#if newsType == 0>
-						<@ms.contentNav title="新增单图文">
-							<@ms.button class="btn btn-success"  id="saveOrUpdateNews"  value="保存"/>
-							<@ms.contentNavBack onclick="javascript:history.go(-1)"  class="btn btn-default" value="返回" />
-						</@ms.contentNav >
-					<#else>
-						<@ms.contentNav title="新增多图文">
-							<@ms.button class="btn btn-success"  id="saveOrUpdateNews"  value="保存"/>
-							<@ms.contentNavBack onclick="javascript:history.go(-1)"  class="btn btn-default" value="返回" />
-						</@ms.contentNav >
-					</#if>
+			<#if news?has_content>
+				<#if news.newsType == 0>
+					<@ms.contentNav title="编辑单图文">
+						<@ms.button class="btn btn-success"  id="saveOrUpdateNews"  value="更新"/>
+						<@ms.contentNavBack onclick="javascript:history.go(-1)"  class="btn btn-default" value="返回" />
+					</@ms.contentNav >
+				<#elseif news.newsType == 1>
+					<@ms.contentNav title="编辑多图文">
+						<@ms.button class="btn btn-success"  id="saveOrUpdateNews"  value="更新"/>
+						<@ms.contentNavBack onclick="javascript:history.go(-1)"  class="btn btn-default" value="返回" />
+					</@ms.contentNav >
 				</#if>
-			<@ms.contentPanel>
-				<!---添加素材开始--->
-				<div class="row">
-					<!--==========左边开始==========-->
-					<div class="col-md-4 col-xs-6">
-						<!--显示图文开始-->
-						<div class="row">
-				            <#if newsType == 0  >
-			                    <!--单图文添加开始-->	
-			                    <div class="danTuWen marsterId" <#if news?has_content>data-id="${news.newsMasterArticle.basicId}"</#if>>
+			<#else>
+				<#if newsType == 0>
+					<@ms.contentNav title="新增单图文">
+						<@ms.button class="btn btn-success"  id="saveOrUpdateNews"  value="保存"/>
+						<@ms.contentNavBack onclick="javascript:history.go(-1)"  class="btn btn-default" value="返回" />
+					</@ms.contentNav >
+				<#else>
+					<@ms.contentNav title="新增多图文">
+						<@ms.button class="btn btn-success"  id="saveOrUpdateNews"  value="保存"/>
+						<@ms.contentNavBack onclick="javascript:history.go(-1)"  class="btn btn-default" value="返回" />
+					</@ms.contentNav >
+				</#if>
+			</#if>
+		<@ms.contentPanel>
+			<!---添加素材开始--->
+			<div class="row">
+				<!--==========左边开始==========-->
+				<div class="col-md-4 col-xs-6">
+					<!--显示图文开始-->
+					<div class="row">
+				           <#if newsType == 0  >
+			               		<!--单图文添加开始-->	
+			               		<div class="danTuWen marsterId" <#if news?has_content>data-id="${news.newsMasterArticle.basicId}"</#if>>
 			                        <p class="onl_tit title"><#if news?has_content>${news.newsMasterArticle.basicTitle?default("标题")}<#else>标题</#if></p>
 			                        <div class="onl_name newsImg img"> 
 			                            <#if news?has_content>
@@ -411,7 +406,8 @@
     		</span>
 	  	</p>
 	</div>
-	<script>
+</@ms.html5>	
+<script>
 	var targetNews=""; //保存当前用户点击的的编辑区域
 	<#if newsType == 0>
 		targetNews  = "danTuWen";
@@ -738,6 +734,3 @@
 		$(".mask .pen_img").attr("data-target","child"+$(this).index());
 	});	
 </script>
-	
-</body>
-</html>

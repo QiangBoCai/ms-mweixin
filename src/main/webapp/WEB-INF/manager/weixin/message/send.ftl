@@ -1,44 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<#include "${managerViewPath}/include/meta.ftl"/>
-</head>
+<@ms.html5>
 <style>
-.weixinEditer .editArea {
-  border: 1px solid #AAA;
-  border-top: 0;
-  padding: 20px;
-  background-color: #FFF;
-}
-
-.weixinEditer  .editArea div{
-  border: 1px solid #DDD;
-  width: 100%;
-     height: 80px;  
-}
-
-.weixinEditer .editArea textarea {
-     border: 1px solid #DDD;
-  width: 100%;
-  height: 80px;
-}
-
-.weixinEditer .functionBar {
-  height: 40px;
-  border: 1px solid #AAA;
-  padding: 10px 20px;
-  background-color: #FFF;
-  position: relative;
-  box-shadow: 0 3px 3px #ddd;
-  -moz-box-shadow: 0 3px 3px #ddd;
-  -webkit-box-shadow: 0 3px 3px #ddd;
-}
-
-.weixinEditer .functionBar .opt {
-  float: left;
-}
+	.weixinEditer .editArea {
+  		border: 1px solid #AAA;
+  		border-top: 0;
+		padding: 20px;
+  		background-color: #FFF;
+	}
+	.weixinEditer  .editArea div{
+ 	 	border: 1px solid #DDD;
+ 	 	width: 100%;
+     	height: 80px;  
+	}
+	.weixinEditer .editArea textarea {
+     	border: 1px solid #DDD;
+  		width: 100%;
+  		height: 80px;
+	}
+	.weixinEditer .functionBar {
+  		height: 40px;
+  		border: 1px solid #AAA;
+  		padding: 10px 20px;
+  		background-color: #FFF;
+  		position: relative;
+  		box-shadow: 0 3px 3px #ddd;
+  		-moz-box-shadow: 0 3px 3px #ddd;
+  		-webkit-box-shadow: 0 3px 3px #ddd;
+	}
+	.weixinEditer .functionBar .opt {
+  		float: left;
+	}
 </style>
-<body>
 	<div class="container-fluid" style="padding-right:0px;padding-left:7px;">
     	<!--头部开始-->
     	<@ms.contentNav title="关注回复">
@@ -84,22 +75,22 @@
     	</div>
     	<!--主体结束--> 
  	</div>
-	<script>
-		//点击发送按钮将信息发送给用户
-		$("#sendButton").click(function(){
-			var actionUrl =  "${managerPath}/weixin/message/"+$(this).attr("data-id")+"/sendText.do"; 
-			$("#messageContent").val($("#messageContent").next("div").text());
-	    	$(this).postForm("#messageForm",{action:actionUrl,func:function(data) {
-				if(data.result){
-					alert("发送成功");
-				}else{
-					alert(data.resultMsg);
-				}
-			}});
-		});
-		function save(target) {
+</@ms.html5>
+<script>
+	//点击发送按钮将信息发送给用户
+	$("#sendButton").click(function(){
+		var actionUrl =  "${managerPath}/weixin/message/"+$(this).attr("data-id")+"/sendText.do"; 
+		$("#messageContent").val($("#messageContent").next("div").text());
+	    $(this).postForm("#messageForm",{action:actionUrl,func:function(data) {
+			if(data.result){
+				alert("发送成功");
+			}else{
+				alert(data.resultMsg);
+			}
+		}});
+	});
+	function save(target) {
 	    	
-	    }		
-	</script>
-</body>
-</html>
+	}		
+</script>
+

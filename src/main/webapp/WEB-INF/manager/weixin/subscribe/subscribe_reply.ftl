@@ -226,7 +226,7 @@
 				   	</div>
 				</div>
 				<!--素材选择模态框-->
-				<@ms.modal modalName="newsMessageListModal" title="选择素材">
+				<@ms.modal modalName="newsMessageListModal" title="选择素材"style="margin-top:90px;">
 					<@ms.modalBody></@ms.modalBody>
 					<@ms.modalButton>
 						<!--模态框按钮组-->

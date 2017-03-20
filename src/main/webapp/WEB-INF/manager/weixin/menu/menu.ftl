@@ -77,9 +77,10 @@
 	</style>
 </head>
 <body>
+123456789
 	<@ms.content>
 		<@ms.contentBody>
-			<@ms.contentPanel>
+			<@ms.contentPanel style="margin-top:45px;">
 				<@ms.form isvalidation=true name="menuForm"  action="">
 					<@ms.hidden name="menuMenuId" value="0" />
 					<@ms.text  name="menuTitle"   label="菜单名称:" value="" title="菜单名称:" placeholder="请输入菜单名称" validation={"required":"true", "maxlength":"7","data-bv-stringlength-message":"长度介于1-7个字符!","data-bv-notempty-message":"必填项目"}/>

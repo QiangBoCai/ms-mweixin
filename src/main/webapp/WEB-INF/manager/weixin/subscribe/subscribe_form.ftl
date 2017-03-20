@@ -1,7 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<#include "${managerViewPath}/include/meta.ftl"/>
+<@ms.html5>
 	<style>
 		.ms-weixin-message .bar{
 			height: 40px;
@@ -161,18 +158,16 @@
 			padding:0;
 		}
 	</style>
-</head>
-<body>
 	<@ms.content>
-			<@ms.contentBody>
-				<@ms.contentNav title="关注回复">
-					<#if news?has_content>
-						<@ms.button class="btn btn-success"  id="saveOrUpdateMessage"  value="更新"/>
-					<#else>
-						<@ms.button class="btn btn-success" id="saveOrUpdateMessage"  value="保存"/>
-					</#if>
-				</@ms.contentNav>
-				<@ms.contentPanel> 			  		
+		<@ms.contentBody>
+			<@ms.contentNav title="关注回复">
+				<#if news?has_content>
+					<@ms.button class="btn btn-success"  id="saveOrUpdateMessage"  value="更新"/>
+				<#else>
+					<@ms.button class="btn btn-success" id="saveOrUpdateMessage"  value="保存"/>
+				</#if>
+			</@ms.contentNav>
+			<@ms.contentPanel> 			  		
 				<div class="col-md-12">					
 				   	<!--发送消息区域开始--> 
 				   	<div class="ms-weixin-message"> 
@@ -238,131 +233,130 @@
 			</@ms.contentPanel>		
 		</@ms.contentBody>
 	</@ms.content>
-	<#noparse>
+</@ms.html5>	
+<#noparse>
 	<!---被选中的图文模板---->
 	<script id="groupListTempl" type="text/x-jquery-tmpl">
 		<option value="${errcode}" >${errmsg}</option>
 	</script>
-	</#noparse>
-	<input type="hidden" name="newsId" value=""/>
-	<script src="${base}/jquery/masonry.pkgd.min.js"></script>
-	<script>
-		//获取文章列表的弹出层
-		function getArticleList(){
-			$(".modal-body").html("");
-			$(".newsMessageListModal").modal();
-			$.ajax({
-			   type: "Post",
-			   data:$("#messageForm").serialize(),
-			   url:  base+"${baseManager}/weixin/news/listAjax.do",
-			   success: function(html){
-			   		$(".modal-body").append(html);
-					$(".newsList").delegate(".appmsg","click",function(){
-						$(".appmsg").find(".mask").hide();
-						$(".appmsg").attr("contenteditable","false");
-						$(".appmsg").find(".icon").hide();
-						$(".appmsg").removeClass("msgSel");
+</#noparse>
+<input type="hidden" name="newsId" value=""/>
+<script src="${base}/jquery/masonry.pkgd.min.js"></script>
+<script>
+	//获取文章列表的弹出层
+	function getArticleList(){
+		$(".modal-body").html("");
+		$(".newsMessageListModal").modal();
+		$.ajax({
+			type: "Post",
+			data:$("#messageForm").serialize(),
+			url:  base+"${baseManager}/weixin/news/listAjax.do",
+			success: function(html){
+				$(".modal-body").append(html);
+				$(".newsList").delegate(".appmsg","click",function(){
+					$(".appmsg").find(".mask").hide();
+					$(".appmsg").attr("contenteditable","false");
+					$(".appmsg").find(".icon").hide();
+					$(".appmsg").removeClass("msgSel");
+					$(this).find(".mask").show();
+					$(this).find(".icon").show();
+					$(this).addClass("msgSel");
+				});
+				$(".appmsg").hover(
+					function () {
 						$(this).find(".mask").show();
-						$(this).find(".icon").show();
-						$(this).addClass("msgSel");
-					});
-					$(".appmsg").hover(
-					  function () {
-					    $(this).find(".mask").show();
-					  },
-					  function () {
-					  	if (!$(this).hasClass("msgSel")) {
+					},
+					function () {
+						if (!$(this).hasClass("msgSel")) {
 					    	$(this).find(".mask").hide();
 					    }
-					  }
-					);											
-			   },
-			   error:function(e) {
-			   		alert(e);
-			   }
-			});	
-		}
-		//编辑模式下图标对应素材类型
-		<#if news?has_content>
-			if(${news.newsType} == 2){
-				$(".bar ul li").removeClass("sel");
-				$(".bar ul li:first").addClass("sel");
-			}else{
-				$(".bar ul li").removeClass("sel");
-				$(".bar ul li:last").addClass("sel");
-			}
-		</#if>	
-		//点击文字or图文图标切换背景，若为图文按钮则打开素材选取框	
-		$(".bar li").click(function() {
-			$(".bar li").removeClass("sel");
-			$(this).addClass("sel");
-			$(".content").html("");
-			if($(this).attr("data-msg-type")=="1"){
-				getArticleList();
-			}
-		});
-		//选择图文消息后点击“确定”按钮事件
-		$("#newsMessageOk").click(function() {
-			$(".content").html("");
-			var obj = $(".modal-body").find("div.msgSel").parent().html();
-			$($.parseHTML(obj, document, true)).width(300).appendTo($(".content")); 
-			$(".content").find(".mask").hide();
-			$(".newsMessageListModal").modal('hide');
-			$(".appmsg_content").css("border","none");
-			$(".bar li").removeClass("sel");
-			$(".bar .news").addClass("sel");
-		});
-		//点击保存or更新关注回复内容
-		$("#saveOrUpdateMessage").click(function() {
-			var btnWord = $(this).text();
-			//回复类型
-			var replyType = $(".bar ul").find(".sel").attr("data-msg-type");
-			//回复内容
-			var content;
-			if ($(".bar li.sel").hasClass("news")) {
-				content = $(".content>div").attr("data-id");
-				if(content == undefined || content == ""){
-					alert("请选择素材！");
-					return;
-				}
-			}else{
-				content = $.trim($(".content").text());
-				if(content == undefined || content == ""){
-					alert("请输入内容！");
-					return;
-				}else if(content.length > 300){
-					alert("内容过长！");
-					return;
-				}
-			}		
-			var url = "${managerPath}/weixin/subscribe/save.do";
-			$(this).text("保存中");
-			<#if news?has_content>
-				url = "${managerPath}/weixin/subscribe/${passiveMessage.passiveMessageId}/update.do";
-				$(this).text("更新中");
-			</#if>
-			$(this).attr("disabled",true);
-			$(this).request({
-				method:"post",
-				data:"content="+content+"&replyType="+replyType,
-				url:url,
-				func:function(data) {
-					var obj = data.result;
-					if(obj == true){
-						<#if news?has_content>
-							alert("更新成功");
-						<#else>
-							alert("保存成功");						
-						</#if>							
-						location.reload();
-					}else{
-						alert("请重试!");
-						$("#saveOrUpdateMessage").attr("disabled",true);
-						$("#saveOrUpdateMessage").text(btnWord);
 					}
+				);											
+			},
+			error:function(e) {
+				alert(e);
+			}
+		});	
+	}
+	//编辑模式下图标对应素材类型
+	<#if news?has_content>
+		if(${news.newsType} == 2){
+			$(".bar ul li").removeClass("sel");
+			$(".bar ul li:first").addClass("sel");
+		}else{
+			$(".bar ul li").removeClass("sel");
+			$(".bar ul li:last").addClass("sel");
+		}
+	</#if>	
+	//点击文字or图文图标切换背景，若为图文按钮则打开素材选取框	
+	$(".bar li").click(function() {
+		$(".bar li").removeClass("sel");
+		$(this).addClass("sel");
+		$(".content").html("");
+		if($(this).attr("data-msg-type")=="1"){
+			getArticleList();
+		}
+	});
+	//选择图文消息后点击“确定”按钮事件
+	$("#newsMessageOk").click(function() {
+		$(".content").html("");
+		var obj = $(".modal-body").find("div.msgSel").parent().html();
+		$($.parseHTML(obj, document, true)).width(300).appendTo($(".content")); 
+		$(".content").find(".mask").hide();
+		$(".newsMessageListModal").modal('hide');
+		$(".appmsg_content").css("border","none");
+		$(".bar li").removeClass("sel");
+		$(".bar .news").addClass("sel");
+	});
+	//点击保存or更新关注回复内容
+	$("#saveOrUpdateMessage").click(function() {
+		var btnWord = $(this).text();
+		//回复类型
+		var replyType = $(".bar ul").find(".sel").attr("data-msg-type");
+		//回复内容
+		var content;
+		if ($(".bar li.sel").hasClass("news")) {
+			content = $(".content>div").attr("data-id");
+			if(content == undefined || content == ""){
+				alert("请选择素材！");
+				return;
+			}
+		}else{
+			content = $.trim($(".content").text());
+			if(content == undefined || content == ""){
+				alert("请输入内容！");
+				return;
+			}else if(content.length > 300){
+				alert("内容过长！");
+				return;
+			}
+		}		
+		var url = "${managerPath}/weixin/subscribe/save.do";
+		$(this).text("保存中");
+		<#if news?has_content>
+			url = "${managerPath}/weixin/subscribe/${passiveMessage.passiveMessageId}/update.do";
+			$(this).text("更新中");
+		</#if>
+		$(this).attr("disabled",true);
+		$(this).request({
+			method:"post",
+			data:"content="+content+"&replyType="+replyType,
+			url:url,
+			func:function(data) {
+				var obj = data.result;
+				if(obj == true){
+					<#if news?has_content>
+						alert("更新成功");
+					<#else>
+						alert("保存成功");						
+					</#if>							
+					location.reload();
+				}else{
+					alert("请重试!");
+					$("#saveOrUpdateMessage").attr("disabled",true);
+					$("#saveOrUpdateMessage").text(btnWord);
 				}
-			});
+			}
 		});
-	</script>
-</body>
-</html>
+	});
+</script>
