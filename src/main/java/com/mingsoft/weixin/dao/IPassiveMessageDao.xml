@@ -3,7 +3,8 @@
 <mapper namespace="com.mingsoft.weixin.dao.IPassiveMessageDao">
 	<sql id="column_list">
 		PM.PM_ID,PM.PM_EVENT_ID,PM.PM_NEWS_ID,PM.PM_APP_ID,PM.PM_WEIXIN_ID,
-		PM.PM_REPLY_NUM,PM.PM_KEY,PM.PM_TYPE,PM.PM_TAG,PM.PM_MESSAGE_ID
+		PM.PM_REPLY_NUM,PM.PM_KEY,PM.PM_TYPE,PM.PM_TAG,PM.PM_MESSAGE_ID,wn.news_content,wn.news_type,b.BASIC_TITLE,wn.news_master_article_id,b.BASIC_THUMBNAILS,
+		ca.ARTICLE_URL
 	</sql>
 	
 	<sql id="where">
@@ -27,6 +28,15 @@
 		<result column="PM_TYPE" property="passiveMessageType"/><!-- 回复属性:	1.最终回复;达到迭代次数之后的回复消息,2.拓展回复迭代回复(优先迭代回复) -->
 		<result column="PM_TAG" property="passiveMessageTag" />
 		<result column="PM_MESSAGE_ID" property="passiveMessageMessageId" />
+		<association property="newsEntity"  javaType = "com.mingsoft.weixin.entity.NewsEntity">
+			<result column="news_type" property="newsType" /><!-- 微信素材类别编号 -->
+			<result column="news_master_article_id" property="newsMasterArticleId" /><!-- 微信素材封面 -->
+			<result column="news_child_article_ids" property="newsChildArticleIds" /><!-- 微信素材多图文，文章编号集合，以逗号隔开 -->
+			<result column="news_content" property="newsContent" /><!-- 素材内容 -->
+		</association>
+		<association property="basicEntity"  javaType = "com.mingsoft.basic.entity.BasicEntity">
+			<result column="BASIC_TITLE" property="basicTitle" /><!-- 文章标题 -->		
+		</association>
 	</resultMap>
 	<!-- 关联被动消息回复实体结束 -->
 
@@ -159,4 +169,12 @@
 		</where>
 	</delete>	
 	<!--批量删除被动回复结束  -->
+	<select id="query" resultMap="resultMap" parameterType="com.mingsoft.weixin.entity.PassiveMessageEntity">
+		select <include refid="column_list"/>
+		from wx_passive_message PM  
+		LEFT JOIN wx_news wn ON PM.PM_NEWS_ID = wn.news_id
+		LEFT JOIN basic b ON b.BASIC_ID = wn.news_master_article_id
+		LEFT JOIN cms_article ca ON ca.ARTICLE_BASICID = b.BASIC_ID
+			where PM.PM_APP_ID = #{passiveMessageAppId} and PM.PM_WEIXIN_ID = #{passiveMessageWeixinId}
+	</select>
 </mapper>
