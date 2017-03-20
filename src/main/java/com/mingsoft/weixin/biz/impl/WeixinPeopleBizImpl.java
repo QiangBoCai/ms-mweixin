@@ -98,9 +98,7 @@ public class WeixinPeopleBizImpl  extends PeopleUserBizImpl implements IWeixinPe
 	public WeixinPeopleEntity getEntityByOpenIdAndAppIdAndWeixinId(String weixinPeopleOpenId,int appId,int weixinId){
 		return this.weixinPeopleDao.getWeixinPeopleEntity(null,appId,weixinId, weixinPeopleOpenId);
 	}
-	
-	
-	
+
 	/**
 	 * 根据用户编号获取用户信息
 	 * @param peopleId 用户编号
