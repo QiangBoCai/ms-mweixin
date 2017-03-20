@@ -49,7 +49,7 @@ import net.mingsoft.basic.util.BasicUtil;
  * @version 
  * 版本号：100-000-000<br/>
  * 创建日期：2014-07-14<br/>
- * 历史修订：<br/>
+ * 历史修订：2017-3-20 bootstrap-table列表更改<br/>
  */
 @Controller
 @RequestMapping("/${managerPath}/website")
@@ -68,17 +68,24 @@ public class WebsiteAction extends BaseAction{
 	private IManagerBiz managerBiz;
 	
 	/**
-	 * 对系统管理进行的查询站点列表信息
-	 * @param request 请求对象
-	 * @param mode ModelMap实体对象
-	 * @param response 响应对象
-	 * @return 站点列表显示页面
+	 * 返回站点管理页面
+	 * @param request
+	 * @param mode
+	 * @param response
+	 * @return
 	 */
 	@RequestMapping("/index")
 	public String index(HttpServletRequest request,ModelMap mode,HttpServletResponse response){
 		return view("/mwebsite/index");
 	}
 	
+	/**
+	 * 查询站点列表信息
+	 * @param request 请求对象
+	 * @param mode ModelMap实体对象
+	 * @param response 响应对象
+	 * @return 站点列表数据
+	 */
 	@RequestMapping("/list")
 	public void list(HttpServletRequest request,HttpServletResponse response){
 		ManagerEntity managerSession = (ManagerEntity) getSession(request, SessionConstEnum.MANAGER_SESSION);
@@ -125,7 +132,6 @@ public class WebsiteAction extends BaseAction{
 	@RequestMapping("/batchDelete")
 	@ResponseBody
 	public void batchDelete(HttpServletRequest request,HttpServletResponse response){
-		
 		String websiteIds = request.getParameter("websiteIds");
 		if (StringUtil.isBlank(websiteIds) && StringUtil.isInteger(websiteIds.split(","))) {
 			this.outJson(response, null, false);
@@ -140,7 +146,6 @@ public class WebsiteAction extends BaseAction{
 			websiteBiz.delete(ids);
 			this.outJson(response, null, true);
 		}
-		
 	}
 	
 	/**
@@ -181,7 +186,6 @@ public class WebsiteAction extends BaseAction{
 		}else{
 			mode.addAttribute("SystemManager",false);
 		}
-		
 		mode.addAttribute("website",website);
 		return view("/mwebsite/website");
 	}
@@ -202,7 +206,6 @@ public class WebsiteAction extends BaseAction{
 			return ;
 		}
 		mode.addAttribute("managerSession",managerSession);
-		
 		//判断否是超级管理员,不是则不修改应用续费时间和清单
 		if(!this.isSystemManager(request)){
 			website.setWebsitePayDate(null);
@@ -262,12 +265,10 @@ public class WebsiteAction extends BaseAction{
 	 * @param response response对象
 	 */
 	public boolean checkForm(WebsiteEntity website, HttpServletResponse response){
-		
 		/*
 		 * 判断数据的合法性
 		 */
 		if(!(StringUtil.isBlank(website.getWebsiteKeyword())) && !StringUtil.checkLength(website.getWebsiteKeyword(), 0,1000)){
-			
 			this.outJson(response, ModelCode.APP, false,getResString("err.length",this.getResString("website.keyword",com.mingsoft.mwebsite.constant.Const.RESOURCES),"0","1000"));
 			return false;
 		}
@@ -315,7 +316,6 @@ public class WebsiteAction extends BaseAction{
 		}else{
 			return false;
 		}
-		
 	}
 	
 	/**
