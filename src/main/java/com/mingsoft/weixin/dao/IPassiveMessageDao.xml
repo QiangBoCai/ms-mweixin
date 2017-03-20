@@ -3,6 +3,10 @@
 <mapper namespace="com.mingsoft.weixin.dao.IPassiveMessageDao">
 	<sql id="column_list">
 		PM.PM_ID,PM.PM_EVENT_ID,PM.PM_NEWS_ID,PM.PM_APP_ID,PM.PM_WEIXIN_ID,
+		PM.PM_REPLY_NUM,PM.PM_KEY,PM.PM_TYPE,PM.PM_TAG,PM.PM_MESSAGE_ID
+	</sql>
+	<sql id="column__list">
+		PM.PM_ID,PM.PM_EVENT_ID,PM.PM_NEWS_ID,PM.PM_APP_ID,PM.PM_WEIXIN_ID,
 		PM.PM_REPLY_NUM,PM.PM_KEY,PM.PM_TYPE,PM.PM_TAG,PM.PM_MESSAGE_ID,wn.news_content,wn.news_type,b.BASIC_TITLE,wn.news_master_article_id,b.BASIC_THUMBNAILS,
 		ca.ARTICLE_URL
 	</sql>
@@ -170,7 +174,7 @@
 	</delete>	
 	<!--批量删除被动回复结束  -->
 	<select id="query" resultMap="resultMap" parameterType="com.mingsoft.weixin.entity.PassiveMessageEntity">
-		select <include refid="column_list"/>
+		select <include refid="column__list"/>
 		from wx_passive_message PM  
 		LEFT JOIN wx_news wn ON PM.PM_NEWS_ID = wn.news_id
 		LEFT JOIN basic b ON b.BASIC_ID = wn.news_master_article_id

@@ -16,6 +16,7 @@
 			data-method="post" 
 			data-detail-formatter="detailFormatter" 
 			data-pagination="true"
+			data-page-size="1"
 			data-side-pagination="server">
 		</table>	
 	</@ms.panel>
@@ -36,7 +37,7 @@
         	contentType : "application/x-www-form-urlencoded",
         	queryParamsType : "undefined",
         	queryParams:function(params) {
-				return  $.param(params)+"&pageNo="+params.pageNumber;
+				return  $.param(params);
 			},
 			columns: [{checkbox:'true'},
 			{

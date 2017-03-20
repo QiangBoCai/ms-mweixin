@@ -96,7 +96,7 @@ public class NewsAction extends BaseAction {
 		//获取当前页码
 		int pageNo= this.getPageNo(request);
 		//图文素材总数
-		int recordCount = newsBiz.queryCount(appId,weixinId);	
+		int recordCount = newsBiz.queryCount(appId,weixinId);
 		//分页通用
 		PageUtil page = new PageUtil(pageNo,recordCount,"list.do?");
 		//查询图文素材

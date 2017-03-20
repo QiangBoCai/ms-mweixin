@@ -140,4 +140,9 @@
 		where WEIXIN_ID = #{weixinId}
 	</update>
 	<!-- 更新微信实体结束 -->
+	<!--查询微信实体-->
+	<select id="query" resultMap="resultMap" parameterType="com.mingsoft.weixin.entity.WeixinEntity">
+		select * from wx_weixin
+	</select>
+	<!--查询结束  -->
 </mapper>

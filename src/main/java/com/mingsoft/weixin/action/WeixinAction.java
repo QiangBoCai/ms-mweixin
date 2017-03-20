@@ -56,13 +56,14 @@ public class WeixinAction extends BaseAction {
 	private IRoleModelBiz roleModelBiz;
 
 	/**
+	 * 微信公众号列表界面
 	 * @param request
 	 * @param mode
-	 * @return manager/weixin/weixin_list.ftl
+	 * @return manager/weixin/weixin_list.ftl的界面
 	 */
-	@RequestMapping("/list")
-	public String list(HttpServletRequest request, ModelMap mode,HttpServletResponse response) {
-		return view("/weixin/weixin_list");
+	@RequestMapping("/index")
+	public String index(HttpServletRequest request, ModelMap mode,HttpServletResponse response) {
+		return view("/weixin/index");
 	}
 	/**
 	 * 
@@ -71,28 +72,13 @@ public class WeixinAction extends BaseAction {
 	 * @param response
 	 * @return 微信实体数据outjson形式
 	 */
-	@RequestMapping("/index")
+	@RequestMapping("/list")
 	@ResponseBody
-	public void index(HttpServletRequest request, ModelMap mode,HttpServletResponse response) {
-		// 得到appId
-		int appId = this.getAppId(request);
-		// 获取当前页码
-		int pageNo = this.getPageNo(request);
-		// 查询当前应用下的微信总数
-		int count = this.weixinBiz.getCountByAppId(appId);
-		// 分页工具类
-		PageUtil page = new PageUtil(pageNo, count, "/manager/weixin/list.do");
-
-		// 查询分页列表,获取微信集合
-		List<WeixinEntity> weixinList = weixinBiz.queryAllByAppId(appId, page);
-
-		// 获取微信类型
-		List<Map<String, Object>> weixinTypeList = this.weixinEnumToList(WeixinTypeEnum.class);
-
-		// 将微信信息压入list
-		mode.addAttribute("weixinList", weixinList);
-		mode.addAttribute("weixinTypeList", weixinTypeList);
-		mode.addAttribute("page", page);
+	public void list(HttpServletRequest request, ModelMap mode,HttpServletResponse response) {
+		//开始分页	
+		BasicUtil.startPage();
+		//分页查询
+		List weixinList = weixinBiz.query();
 		EUListBean _list = new EUListBean(weixinList,(int) BasicUtil.endPage(weixinList).getTotal());
 		this.outJson(response, JSONArray.toJSONString(_list));
 	}
@@ -205,19 +191,8 @@ public class WeixinAction extends BaseAction {
 	@ResponseBody
 	public void delete(HttpServletResponse response, HttpServletRequest request) {
 		// 得到需要删除的微信ID数组
-		String[] weixinIds = request.getParameterValues("weixinIds");
-		// 判断数组是否为空
-		if (StringUtil.isBlank(weixinIds)) {
-			// 返回json数据
-			this.outJson(response, null, false);
-			return;
-		}
-		// 判断字符串数组是否转成integer型数组
-		if (!StringUtil.isIntegers(weixinIds)) {
-			// 返回json数据
-			this.outJson(response, null, false);
-			return;
-		}
+		String[] weixin = request.getParameterValues("weixinIds");
+		String[] weixinIds = weixin[0].split(",");
 		// 得到ID数组并将字符串数组转化为int型数组
 		int[] ids = StringUtil.stringsToInts(weixinIds);
 		// 根据ID批量删除微信

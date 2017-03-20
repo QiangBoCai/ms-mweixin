@@ -34,7 +34,6 @@
 		 </@ms.form>
 	</@ms.panel>
 </@ms.html5>
-
 <script>
 	<#if weixin.weixinId!=0>
 		$("#weixinForm").attr("action","${managerPath}/weixin/"+${weixin.weixinId?c?default(0)}+"/update.do");
@@ -76,7 +75,7 @@
 			     			$("#saveOrUpdateWeixin").text("更新");
 		     			<#else>
 			     			alert("保存成功");
-			     			location.href = "${managerPath}/weixin/list.do"; 	
+			     			location.href = "${managerPath}/weixin/index.do"; 	
 			     		</#if>		     					    		
 			    	}else{
 			    		alert("提交失败!");

@@ -1,7 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<#include "${managerViewPath}/include/meta.ftl"/>
+<@ms.html5>
 	<style>
 		.ms-weixin-message .bar{
 			height: 40px;
@@ -183,8 +180,6 @@
 			height:100%;
 		}
 	</style>
-</head>
-<body>
 	<@ms.content>
 		<@ms.contentBody>
 			<#if news?has_content>
@@ -277,128 +272,128 @@
 		<option value="${errcode}" >${errmsg}</option>
 	</script>
 	</#noparse>
-	<script>
-		//获取文章列表的弹出层
-		function getArticleList(){
-			$(".modal-body").html("");
-			$(".newsMessageListModal").modal();
-			$.ajax({
-			   type: "Post",
-			   data:$("#messageForm").serialize(),
-			   url:  base+"${baseManager}/weixin/news/listAjax.do",
-			   success: function(html){
-			   		$(".modal-body").append(html);
-					$(".newsList").delegate(".appmsg","click",function(){
-						$(".appmsg").find(".mask").hide();
-						$(".appmsg").attr("contenteditable","false");
-						$(".appmsg").find(".icon").hide();
-						$(".appmsg").removeClass("msgSel");
+</@ms.html5>	
+<script>
+	//获取文章列表的弹出层
+	function getArticleList(){
+		$(".modal-body").html("");
+		$(".newsMessageListModal").modal();
+		$.ajax({
+			type: "Post",
+			data:$("#messageForm").serialize(),
+			url:  base+"${baseManager}/weixin/news/listAjax.do",
+			success: function(html){
+				$(".modal-body").append(html);
+				$(".newsList").delegate(".appmsg","click",function(){
+					$(".appmsg").find(".mask").hide();
+					$(".appmsg").attr("contenteditable","false");
+					$(".appmsg").find(".icon").hide();
+					$(".appmsg").removeClass("msgSel");
+					$(this).find(".mask").show();
+					$(this).find(".icon").show();
+					$(this).addClass("msgSel");
+				});
+				$(".appmsg").hover(
+					function () {
 						$(this).find(".mask").show();
-						$(this).find(".icon").show();
-						$(this).addClass("msgSel");
-					});
-					$(".appmsg").hover(
-					  function () {
-					    $(this).find(".mask").show();
-					  },
-					  function () {
-					  	if (!$(this).hasClass("msgSel")) {
+					},
+					function () {
+						if (!$(this).hasClass("msgSel")) {
 					    	$(this).find(".mask").hide();
 					    }
-					  }
-					);											
-			   },
-			   error:function(e) {
-			   		alert(e);
-			   }
-			});	
-		}
-		$(function(){
-			<#if news?has_content>
-				if(${news.newsType} == 2){
-					$(".bar ul li").removeClass("sel");
-					$(".bar ul li:first").addClass("sel");
+					}
+				);											
+			},
+			error:function(e) {
+			   	alert(e);
+			}
+		});	
+	}
+	$(function(){
+		<#if news?has_content>
+			if(${news.newsType} == 2){
+				$(".bar ul li").removeClass("sel");
+				$(".bar ul li:first").addClass("sel");
+			}else{
+				$(".bar ul li").removeClass("sel");
+				$(".bar ul li:last").addClass("sel");
+			}
+		</#if>
+		$(".bar li").click(function() {
+			$(".bar li").removeClass("sel");
+			$(this).addClass("sel");
+			$(".content").html("");
+			if($(this).attr("data-msg-type")=="1"){
+				getArticleList();
+			}
+		});
+		//选择图文消息后点击“确定”按钮事件
+		$("#newsMessageOk").click(function() {
+			$(".content").html("");
+			var obj = $(".modal-body").find("div.msgSel").parent().html();
+			$($.parseHTML(obj, document, true)).width(200).appendTo($(".content")); 
+			$(".content").find(".mask").hide();
+			$(".newsMessageListModal").modal('hide');
+			$(".bar li").removeClass("sel");
+			$(".bar .news").addClass("sel");
+		});
+		//点击保存关键字回复内容
+		$("#saveOrUpdateMessage").click(function() {
+			var vobj = $("#replyForm").data('bootstrapValidator').validate();
+			if(vobj.isValid()){
+				var btnTips = $(this).text();
+				$(".erro").remove();
+				var passiveMessageKey = $("input[name='passiveMessageKey']").val();
+				//回复类型
+				var replyType = $(".bar ul").find(".sel").attr("data-msg-type");
+				//回复内容
+				var content;
+				if ($(".bar li.sel").hasClass("news")) {
+					content = $(".content>div").attr("data-id");				
+					if(content == undefined || content == ""){
+						$(".content").after("<small style='color:#a94442' class='erro'>请选择素材！</small>")
+						return;
+					}
 				}else{
-					$(".bar ul li").removeClass("sel");
-					$(".bar ul li:last").addClass("sel");
+					content = $.trim($(".content").text());
+					if(content == undefined || content == ""){
+						$(".content").after("<small style='color:#a94442' class='erro'>请输入回复内容</small>")
+						return;
+					}else if(content.length > 300){
+						$(".content").after("<small style='color:#a94442' class='erro'>内容过长</small>")
+						return;
+					}
 				}
-			</#if>
-			$(".bar li").click(function() {
-				$(".bar li").removeClass("sel");
-				$(this).addClass("sel");
-				$(".content").html("");
-				if($(this).attr("data-msg-type")=="1"){
-					getArticleList();
-				}
-			});
-			//选择图文消息后点击“确定”按钮事件
-			$("#newsMessageOk").click(function() {
-				$(".content").html("");
-				var obj = $(".modal-body").find("div.msgSel").parent().html();
-				$($.parseHTML(obj, document, true)).width(200).appendTo($(".content")); 
-				$(".content").find(".mask").hide();
-				$(".newsMessageListModal").modal('hide');
-				$(".bar li").removeClass("sel");
-				$(".bar .news").addClass("sel");
-			});
-			//点击保存关键字回复内容
-			$("#saveOrUpdateMessage").click(function() {
-				var vobj = $("#replyForm").data('bootstrapValidator').validate();
-				if(vobj.isValid()){
-					var btnTips = $(this).text();
-					$(".erro").remove();
-					var passiveMessageKey = $("input[name='passiveMessageKey']").val();
-					//回复类型
-					var replyType = $(".bar ul").find(".sel").attr("data-msg-type");
-					//回复内容
-					var content;
-					if ($(".bar li.sel").hasClass("news")) {
-						content = $(".content>div").attr("data-id");				
-						if(content == undefined || content == ""){
-							$(".content").after("<small style='color:#a94442' class='erro'>请选择素材！</small>")
-							return;
-						}
-					}else{
-						content = $.trim($(".content").text());
-						if(content == undefined || content == ""){
-							$(".content").after("<small style='color:#a94442' class='erro'>请输入回复内容</small>")
-							return;
-						}else if(content.length > 300){
-							$(".content").after("<small style='color:#a94442' class='erro'>内容过长</small>")
-							return;
+				var url = "${managerPath}/weixin/messagekey/save.do";
+				$(this).text("保存中")
+				<#if news?has_content>
+					url = "${managerPath}/weixin/messagekey/${passiveMessage.passiveMessageId}/update.do"
+					$(this).text("更新中");
+				</#if>
+				$(this).attr("disabled",true);
+				$(this).request({
+					method:"post",
+					data:"content="+content+"&replyType="+replyType+"&passiveMessageKey="+passiveMessageKey,
+					url:url,
+					func:function(data) {
+						var obj = data.result;
+						if(obj == true){
+							<#if news?has_content>
+								alert("更新成功");
+								location.href="${managerPath}/weixin/messagekey/index.do"; 	
+							<#else>
+								alert("保存成功");								
+								location.href="${managerPath}/weixin/messagekey/index.do";
+							</#if>									
+						}else{
+							$(".content").after("<small style='color:#a94442' class='erro'>关键字已存在，请输入其他关键字</small>")
+							$("#saveOrUpdateMessage").attr("disabled", false);
+							$("#saveOrUpdateMessage").text(btnTips);
 						}
 					}
-					var url = "${managerPath}/weixin/messagekey/save.do";
-					$(this).text("保存中")
-					<#if news?has_content>
-						url = "${managerPath}/weixin/messagekey/${passiveMessage.passiveMessageId}/update.do"
-						$(this).text("更新中");
-					</#if>
-					$(this).attr("disabled",true);
-					$(this).request({
-						method:"post",
-						data:"content="+content+"&replyType="+replyType+"&passiveMessageKey="+passiveMessageKey,
-						url:url,
-						func:function(data) {
-							var obj = data.result;
-							if(obj == true){
-								<#if news?has_content>
-									alert("更新成功");
-									location.href="${managerPath}/weixin/messagekey/"+data.resultData; 	
-								<#else>
-									alert("保存成功");								
-									location.href="${managerPath}/weixin/messagekey/list.do";
-								</#if>									
-							}else{
-								$(".content").after("<small style='color:#a94442' class='erro'>关键字已存在，请输入其他关键字</small>")
-								$("#saveOrUpdateMessage").attr("disabled", false);
-								$("#saveOrUpdateMessage").text(btnTips);
-							}
-						}
-					});
-				}
-			});
-		})
-	</script>
-</body>
-</html>
+				});
+			}
+		});
+	})
+</script>
+
