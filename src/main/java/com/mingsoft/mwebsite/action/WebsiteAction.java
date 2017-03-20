@@ -88,7 +88,6 @@ public class WebsiteAction extends BaseAction{
 	 */
 	@RequestMapping("/list")
 	public void list(HttpServletRequest request,HttpServletResponse response){
-		ManagerEntity managerSession = (ManagerEntity) getSession(request, SessionConstEnum.MANAGER_SESSION);
 		BasicUtil.startPage();
 		List<BaseEntity> websiteList = websiteBiz.query();
 		EUListBean _list = new EUListBean(websiteList, (int) BasicUtil.endPage(websiteList).getTotal());
@@ -121,7 +120,6 @@ public class WebsiteAction extends BaseAction{
 		}
 		return pageNo;
 	}
-	
 	
 	/**
 	 * 批量id删除站点信息

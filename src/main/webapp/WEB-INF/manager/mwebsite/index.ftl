@@ -1,6 +1,8 @@
 <@ms.html5>
 	<@ms.panel>
-		<@ms.nav title="站点管理">
+		<@ms.nav title="站点管理"></@ms.nav>
+		<!--使用toolbar添加按钮-->
+		<div id="toolbar">
 			<@ms.panelNav>
 				<@ms.buttonGroup>
 					<@ms.addButton url="${base}${baseManager}/website/add.do"/>
@@ -8,7 +10,7 @@
 				</@ms.buttonGroup>
 				<@ms.menuButton links=[{"click":"setManager","name":"设置管理员"}] name="操作"/>
 			</@ms.panelNav>
-		</@ms.nav>
+		</div>
 		<table id="websiteListTable"
 			data-show-refresh="true"
 	        data-show-columns="true"
@@ -21,9 +23,7 @@
 		</table>
 	</@ms.panel>	
 	<@ms.modal  modalName="deleteModal" title="删除站点" >
-		<@ms.modalBody>
-			删除站点
-		</@ms.modalBody>
+		<@ms.modalBody>删除站点</@ms.modalBody>
 		<@ms.modalButton>
 			<!--模态框按钮组-->
 			<@ms.button  value="确认删除？"  id="deletewebsite"  />
@@ -31,7 +31,7 @@
 	</@ms.modal>	
 	<!--添加或编辑站点管理员-->
 	<@ms.modal modalName="addAndEdit" title="管理员设置">
-		 <@ms.modalBody>
+		<@ms.modalBody>
 			<@ms.form isvalidation=true name="managerForm" action="${managerPath}/website/manager/update.do" redirect="${base}${baseManager}/website/list.do">
 				<@ms.hidden name="managerWebsiteId"/>
 				<@ms.hidden name="modelIds"/>
@@ -39,12 +39,12 @@
 	    		<@ms.text name="managerNickName" width="250" label="昵称" title="管理员昵称"  maxlength="15" placeholder="请输入管理员昵称" validation={"required":"true", "data-bv-notempty-message":"请输入管理员昵称!"} />
 	    		<@ms.password name="managerPassword" width="250" label="密码" title="管理员密码"   maxlength="16" validation={"data-bv-regexp":"true","data-bv-regexp-regexp":"^[a-zA-Z0-9_]+$","data-bv-regexp-message":"密码只能由英文字母，数字，下划线组成!"}  />
 	    		<@ms.formRow label="模块" width="300">
-	    				<@ms.tree id="modelListTree" type="checkbox" url="${base}${baseManager}/model/queryAll.do" idKey="modelId" pIdKey="modelModelId" text="modelTitle"/>
+	    			<@ms.tree id="modelListTree" type="checkbox" url="${base}${baseManager}/model/queryAll.do" idKey="modelId" pIdKey="modelModelId" text="modelTitle"/>
 	    		</@ms.formRow>
-	    	</@ms.form>
-	     </@ms.modalBody>
-	     <@ms.modalButton>
-	 			<@ms.saveButton postForm="managerForm" postBefor="setModelIds" postAfter="closeModal"/>  
+			</@ms.form>
+	    </@ms.modalBody>
+		<@ms.modalButton>
+	 		<@ms.saveButton postForm="managerForm" postBefor="setModelIds" postAfter="closeModal"/>  
 	 	</@ms.modalButton>
 	</@ms.modal>
 </@ms.html5>
@@ -55,8 +55,9 @@
     		url:"${managerPath}/website/list.do",
     		contentType : "application/x-www-form-urlencoded",
     		queryParamsType : "undefined",
+    		toolbar: "#toolbar",
     		queryParams:function(params) {
-				return  $.param(params)+"&pageNo="+ params.pageNumber+"&"+$("#websiteListTable").serialize();
+				return  $.param(params)+"&pageNo="+params.pageNumber;
 			},
 		    columns: [{ checkbox: true},{
 		        field: 'websiteId',
@@ -64,7 +65,7 @@
 		    }, {
 		        field: 'websiteName',
 		         formatter: function(value,row,index){
-		        	return "<a class='btn btn-xs red tooltips' data-rid='' data-toggle='tooltip'  data-original-title='编辑站点' href='${base}${baseManager}/website/"+row.websiteId+"/edit.do' data-id='"+row.websiteId+"'>"+value+"</a>"
+		        	return "<a class='btn btn-xs red tooltips' data-rid='' target='_self' data-toggle='tooltip'  data-original-title='编辑站点' href='${base}${baseManager}/website/"+row.websiteId+"/edit.do' data-id='"+row.websiteId+"'>"+value+"</a>"
 		        },
 		        title: '标题'
 		    }, {
@@ -75,7 +76,7 @@
 		        	var url;
 		        	for(var i = 0 ; i < urlList.length ; i++){
 		        		url = urlList[i];
-		        		return "<a href='"+url+"' target='_blank'  data-toggle='tooltip'  data-original-title='点击查看'>"+url+"<a><br/>"
+		        		return "<a href='"+url+"' target='_self'  data-toggle='tooltip'  data-original-title='点击查看'>"+url+"<a><br/>"
 		        	}
 		        },
 		        title: '域名'
@@ -207,31 +208,26 @@
 			}
 		});	
 	})
-
-function closeModal(msg) {
-	$(".addAndEdit").modal("hide");
-}
-
-//设置模块工
-function setModelIds() {
-	var nodes = modelListTree.getCheckedNodes(true);
-	var ids = [];
-	for (i=0;i<nodes.length;i++) {
-		ids.push(nodes[i].modelId);
+	function closeModal(msg) {
+		$(".addAndEdit").modal("hide");
 	}
-	$("input[name='modelIds']").val(ids);
-	return true;
-}
-
-//删除站点的ajax
-function remove(ids) {
-	ms.post("${base}${baseManager}/website/batchDelete.do","websiteIds="+ids,function(msg){
+	
+	//设置模块工
+	function setModelIds() {
+		var nodes = modelListTree.getCheckedNodes(true);
+		var ids = [];
+		for (i=0;i<nodes.length;i++) {
+			ids.push(nodes[i].modelId);
+		}
+		$("input[name='modelIds']").val(ids);
+		return true;
+	}
+	//删除站点的ajax
+	function remove(ids) {
+		ms.post("${base}${baseManager}/website/batchDelete.do","websiteIds="+ids,function(msg){
 			if(msg.result){
 				location.href="${base}${baseManager}/website/list.do";
 			}
-	});
-}
-	
+		});
+	}
 </script>
-
-
