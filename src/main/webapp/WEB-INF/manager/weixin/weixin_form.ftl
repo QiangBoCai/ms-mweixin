@@ -52,14 +52,20 @@
 				if(weixinProxyUrl!="" && weixinProxyUrl!=undefined){
 					weixinProxyUrl = weixinProxyUrl.match(/http:\/\/.+/);
 					if(weixinProxyUrl == null){
-						alert("请输入http格式的内网地址!");
+						$('.ms-notifications').offset({top:43}).notify({
+    		    				type:'warning',
+			    				message: { text:'请输入http格式的内网地址!'}
+			 				}).show();
 						return;
 					}
 				}
 				if(weixinOauthUrl!="" && weixinOauthUrl!=undefined){
 					weixinOauthUrl = weixinOauthUrl.match(/http:\/\/.+/);
 					if(weixinOauthUrl == null){
-						alert("请输入http格式的授权地址!");
+						$('.ms-notifications').offset({top:43}).notify({
+    		    				type:'warning',
+			    				message: { text:'请输入http格式的授权地址!'}
+			 				}).show();
 						return;
 					}
 				}
@@ -71,15 +77,23 @@
 				$(this).postForm("#weixinForm",{func:function(msg) {
 					if (msg.result == true) {
 			     		<#if weixin.weixinId!=0>
-			     			alert("更新成功");	
-			     			
+			     			 $('.ms-notifications').offset({top:43}).notify({
+    		    				type:'fail',
+			    				message: { text:'保存失败'}
+			 				}).show();
 			     			location.href = "${managerPath}/weixin/index.do";
 		     			<#else>
-			     			alert("保存成功");
+			     			 $('.ms-notifications').offset({top:43}).notify({
+    		    				type:'success',
+			    				message: { text:'保存成功'}
+			 				}).show();
 			     			location.href = "${managerPath}/weixin/index.do"; 	
 			     		</#if>		     					    		
 			    	}else{
-			    		alert("提交失败!");
+			    		 $('.ms-notifications').offset({top:43}).notify({
+    		    				type:'warning',
+			    				message: { text:'提交失败'}
+			 				}).show();
 			    		$("#saveOrUpdateWeixin").text(btnWord);	
 			    	}
 				}});

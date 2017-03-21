@@ -77,7 +77,6 @@
 	</style>
 </head>
 <body>
-123456789
 	<@ms.content>
 		<@ms.contentBody>
 			<@ms.contentPanel style="margin-top:45px;">

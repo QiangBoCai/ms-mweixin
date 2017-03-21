@@ -80,9 +80,15 @@
 	        	},
 	        	success: function(msg){
 	                   if(msg.result == true){
-	                    alert("同步成功!")                     
+	                   		$('.ms-notifications').offset({top:43}).notify({
+    		    				type:'success',
+			    				message: { text:'同步成功'}
+			 				}).show();                     
 	                   }else{
-	                       alert("同步失败!")
+	                       $('.ms-notifications').offset({top:43}).notify({
+    		    				type:'fail',
+			    				message: { text:'同步失败'}
+			 				}).show();
 	                   }
 	                   location.reload();
 	              }
@@ -96,10 +102,16 @@
 	   $("body").delegate("#sendMessageButton","click",function(){
 			var content = $.trim($("textarea[name='messageContent']").val());
 	   		if(content == "" || content == undefined){
-	        alert("发送内容不能为空!");
+	        	 $('.ms-notifications').offset({top:43}).notify({
+    		    	type:'warning',
+			    	message: { text:'发送内容不能为空!'}
+			 	 }).show();
 	        	return;
 	        }else if(content.length>300){
-	        	alert("内容过长!");
+	        	$('.ms-notifications').offset({top:43}).notify({
+    		    	type:'warning',
+			    	message: { text:'内容过长!'}
+			 	 }).show();
 	            return;
 	       	}
 	        $.ajax({
@@ -113,9 +125,15 @@
 	            },
 	            success: function(msg){
 	            	if(msg.result == true){
-	                    alert("发送成功!")                     
+	            		$('.ms-notifications').offset({top:43}).notify({
+    		    			type:'success',
+			    			message: { text:'发送成功!'}
+			 	 		}).show();
 	                }else{
-	                    alert("发送失败!")
+	                    $('.ms-notifications').offset({top:43}).notify({
+    		    			type:'fail',
+			    			message: { text:'发送失败!'}
+			 	 		}).show();
 	                }
 	                $(".messageModel").modal("hide");
 	                $("#sendMessageButton").text("发送");

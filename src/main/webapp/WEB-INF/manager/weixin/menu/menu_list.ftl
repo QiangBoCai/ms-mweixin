@@ -127,14 +127,23 @@
 		   	},
 		   	success: function(msg){
 		    	if(msg.result) {
-					alert("删除菜单成功");
+					 $('.ms-notifications').offset({top:43}).notify({
+    		    		type:'success',
+			    		message: { text:'删除菜单成功'}
+			 		}).show();
 		    	}else{
-					alert("菜单下面有子菜单，请先逐个删除子菜单！");
+					$('.ms-notifications').offset({top:43}).notify({
+    		    		type:'warning',
+			    		message: { text:'菜单下面有子菜单，请先逐个删除子菜单！'}
+			 		}).show();
 		    	}
 		    	location.reload();
 		   	},
 		   	error: function(){
-		   	  	alert("删除菜单失败");
+		   	  	 $('.ms-notifications').offset({top:43}).notify({
+    		    		type:'fail',
+			    		message: { text:'删除菜单失败'}
+			 		}).show();
 		   	  	$("#deleteMenu").attr("disabled",false);
 		   	}
 		});
@@ -238,7 +247,10 @@
 		   	data: "menuId=" + treeNodes[0].id+"&menuMenuId="+menuMenuId,
 		   	success: function(msg){
 		   		if(msg.result){
-		   			alert("菜单移动成功");
+		   			$('.ms-notifications').offset({top:43}).notify({
+		    		    type:'success',
+					    message: { text:'菜单移动成功'}
+					 }).show();
 		   		 }
 		   	}
 		});
@@ -366,9 +378,15 @@
 				func:function(data) {
 					var obj = jQuery.parseJSON(data)
 					if (obj.result) {
-			     		alert("菜单"+html+"成功");
+			     		$('.ms-notifications').offset({top:43}).notify({
+		    		    	type:'success',
+					    	message: { text:"菜单"+html+"成功"}
+					 	}).show();
 			    	}else{
-			    		alert(obj.resultMsg);
+			    		$('.ms-notifications').offset({top:43}).notify({
+		    		    	type:'fail',
+					    	message: { text:'obj.resultMsg'}
+					 	}).show();
 			    	}
 			    	$(".ms-content-body-title #publishOrStop").text(html);
 					$(".ms-content-body-title #publishOrStop").attr("disabled",false);
@@ -379,7 +397,10 @@
 		$(".newsMessageListModal #select").click(function(){
 			var resId = window.frames["article_frame"].getSelected();
 			if(resId == null){
-				alert("请至少选择一个");
+				$('.ms-notifications').offset({top:43}).notify({
+		    		type:'warning',
+					message: { text:'请至少选择一个'}
+				}).show();
 				return;
 			}
 			$(".newsMessageListModal").modal("hide");

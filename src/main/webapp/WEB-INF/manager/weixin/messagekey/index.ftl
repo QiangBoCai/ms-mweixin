@@ -19,7 +19,7 @@
 	        data-show-export="true"
 			data-method="post"
 			data-pagination="true"
-			data-page-size="1" 
+			data-page-size="5" 
 			data-detail-formatter="detailFormatter" 
 			data-side-pagination="server">
 		</table>

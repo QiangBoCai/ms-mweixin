@@ -274,7 +274,10 @@
 				);											
 			},
 			error:function(e) {
-				alert(e);
+				$('.ms-notifications').offset({top:43}).notify({
+    		    	type:'fail',
+			    	message: { text:e}
+			 	}).show();
 			}
 		});	
 	}
@@ -318,16 +321,25 @@
 		if ($(".bar li.sel").hasClass("news")) {
 			content = $(".content>div").attr("data-id");
 			if(content == undefined || content == ""){
-				alert("请选择素材！");
+				$('.ms-notifications').offset({top:43}).notify({
+    		    	type:'warning',
+			    	message: { text:'请选择素材！'}
+			 	}).show();
 				return;
 			}
 		}else{
 			content = $.trim($(".content").text());
 			if(content == undefined || content == ""){
-				alert("请输入内容！");
+				$('.ms-notifications').offset({top:43}).notify({
+    		    	type:'warning',
+			    	message: { text:'请输入内容！'}
+			 	}).show();
 				return;
 			}else if(content.length > 300){
-				alert("内容过长！");
+				$('.ms-notifications').offset({top:43}).notify({
+    		    	type:'warning',
+			    	message: { text:'内容过长！'}
+			 	}).show();
 				return;
 			}
 		}		
@@ -346,13 +358,22 @@
 				var obj = data.result;
 				if(obj == true){
 					<#if news?has_content>
-						alert("更新成功");
+						$('.ms-notifications').offset({top:43}).notify({
+    		    			type:'success',
+			    			message: { text:'更新成功'}
+			 			}).show();
 					<#else>
-						alert("保存成功");						
+						$('.ms-notifications').offset({top:43}).notify({
+    		    			type:'success',
+			    			message: { text:'保存成功'}
+			 			}).show();						
 					</#if>							
 					location.reload();
 				}else{
-					alert("请重试!");
+					$('.ms-notifications').offset({top:43}).notify({
+    		    		type:'warning',
+			    		message: { text:'请重试!'}
+			 		}).show();
 					$("#saveOrUpdateMessage").attr("disabled",true);
 					$("#saveOrUpdateMessage").text(btnWord);
 				}

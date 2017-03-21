@@ -58,7 +58,7 @@
 			color: #666
 		}
 		.appmsg_thumb_wrp {
-			height: 135px;
+			height: 174px;
 			overflow: hidden
 		}
 		/*素材主图文缩略图*/
@@ -411,10 +411,16 @@
 				    	var obj = msg.result;
 				   		if(obj == true){
 				   			if($("#saveOrUpdateButton").attr("data-type")=="update") {
-								alert("更新成功!");
+								$('.ms-notifications').offset({top:43}).notify({
+    		    					type:'success',
+			    					message: { text:'更新成功'}
+			 					}).show();
 								location.href="${managerPath}/weixin/news/"+msg.resultData; 	
 							}else{
-								alert("保存成功!");
+								$('.ms-notifications').offset({top:43}).notify({
+    		    					type:'success',
+			    					message: { text:'保存成功'}
+			 					}).show();
 								location.href = base+"${baseManager}/weixin/news/list.do"; 
 							}
 				   		}
