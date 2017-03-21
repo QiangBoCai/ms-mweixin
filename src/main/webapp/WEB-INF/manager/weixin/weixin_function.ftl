@@ -29,8 +29,7 @@
 	<@ms.content>
 		<@ms.contentMenu>
 			<div class="ms-content--body-title" style="background:none;">${weixinName?default('暂无')}</div>
-		 	<ul id="menuTree" class="ztree">
-			</ul> 
+		 	<ul id="menuTree" class="ztree"></ul> 
 			<!-- 树形模块菜单结束 -->
 		</@ms.contentMenu>
 		<@ms.contentBody style="width:85%">
@@ -44,7 +43,6 @@
 	$(function(){
 		$.fn.zTree.init($("#menuTree"),setting,nodes);
 	})
-	
 	/******设置节点信息开始******/
 	//设置信息
 	var setting = {

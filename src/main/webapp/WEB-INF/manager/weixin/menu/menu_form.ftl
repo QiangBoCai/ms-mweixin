@@ -1,86 +1,86 @@
 <@ms.html5>
 	<@ms.panel>
-	<style>
-		/*图文预览*/
-		#menuForm .control-label{
-			width:17%;
-		}
-		/*固定文本域*/
-		textarea {
-			resize: none;
-		}
-		/*图文预览框*/
-		.msg-item-wrapper{
-			width: 340px;
-			position:relative;
-			margin-bottom:26px;
-			border:1px solid #B8B8B8;
-			background-color:#F4F4F4;
-			box-shadow:0 2px 2px rgba(0,0,0,0.1);
-			-webkit-box-shadow:0 2px 2px rgba(0,0,0,0.1);
-			-moz-box-shadow:0 2px 2px rgba(0,0,0,0.1);
-			border-radius:5px;
-			-webkit-border-radius:5px;
-			-moz-border-radius:5px;
-		}
-		body .col-xs-10{
-			width:340px;
-			padding:0
-		}
-		/*图文样式*/
-		.sub-msg-item{
-			padding:12px 14px;
-			overflow:hidden;
-			zoom:1;
-			border-top:1px solid #c6c6c6;
-		}
-		.cover{
-			margin:0 14px 12px;
-			position:relative;
-			font-size:0;
-			height:160px;
-			overflow:hidden;
-		}
-		.sub-msg-item .msg-t{
-			margin-left:0;
-			margin-right:85px;
-			margin-top:0;
-			padding-left:4px;
-			padding-top:12px;
-			line-height:24px;
-			max-height:48px;
-			font-size:14px;
-			overflow:hidden;
-		}
-		.thumb{
-			float:right;
-			font-size:0;
-		}
-		.thumb .default-tip{
-			font-size:16px;
-			color:#c0c0c0;
-			width:70px;
-			line-height:70px;
-			border:1px solid #b2b8bd;
-		}
-		.thumb img{
-			width:70px;
-			height:70px;
-			border:1px solid #b2b8bd;
-		}
-		body .ms-content-body-panel{
-			min-width: inherit;
-		}
-		.msg-meta,.msg-t,.msg-text{
-			padding:0 14px;
-		}
-		img{
-			width:100%;height:100%
-		}
-	</style>
-			<@ms.nav title="">
-				<button type="button"class="btn btn-success btn-md" id="saveOrUpdate" data-save = "true"><#if menuId?has_content>更新<#else>保存</#if></button>
-			</@ms.nav>
+		<style>
+			/*图文预览*/
+			#menuForm .control-label{
+				width:17%;
+			}
+			/*固定文本域*/
+			textarea {
+				resize: none;
+			}
+			/*图文预览框*/
+			.msg-item-wrapper{
+				width: 340px;
+				position:relative;
+				margin-bottom:26px;
+				border:1px solid #B8B8B8;
+				background-color:#F4F4F4;
+				box-shadow:0 2px 2px rgba(0,0,0,0.1);
+				-webkit-box-shadow:0 2px 2px rgba(0,0,0,0.1);
+				-moz-box-shadow:0 2px 2px rgba(0,0,0,0.1);
+				border-radius:5px;
+				-webkit-border-radius:5px;
+				-moz-border-radius:5px;
+			}
+			body .col-xs-10{
+				width:340px;
+				padding:0
+			}
+			/*图文样式*/
+			.sub-msg-item{
+				padding:12px 14px;
+				overflow:hidden;
+				zoom:1;
+				border-top:1px solid #c6c6c6;
+			}
+			.cover{
+				margin:0 14px 12px;
+				position:relative;
+				font-size:0;
+				height:160px;
+				overflow:hidden;
+			}
+			.sub-msg-item .msg-t{
+				margin-left:0;
+				margin-right:85px;
+				margin-top:0;
+				padding-left:4px;
+				padding-top:12px;
+				line-height:24px;
+				max-height:48px;
+				font-size:14px;
+				overflow:hidden;
+			}
+			.thumb{
+				float:right;
+				font-size:0;
+			}
+			.thumb .default-tip{
+				font-size:16px;
+				color:#c0c0c0;
+				width:70px;
+				line-height:70px;
+				border:1px solid #b2b8bd;
+			}
+			.thumb img{
+				width:70px;
+				height:70px;
+				border:1px solid #b2b8bd;
+			}
+			body .ms-content-body-panel{
+				min-width: inherit;
+			}
+			.msg-meta,.msg-t,.msg-text{
+				padding:0 14px;
+			}
+			img{
+				width:100%;height:100%
+			}
+		</style>
+		<@ms.nav title="">
+			<button type="button"class="btn btn-success btn-md" id="saveOrUpdate" data-save = "true"><#if menuId?has_content>更新<#else>保存</#if></button>
+		</@ms.nav>
 		<@ms.form isvalidation=true name="menuForm"  action="" style="width:83%;">
 			<@ms.hidden name="menuMenuId" value="" />
 			<@ms.text  name="menuTitle"   label="菜单名称:" value="${menu.menuTitle?default('')}" title="菜单名称:" placeholder="请输入菜单名称" validation={"required":"true", "maxlength":"7","data-bv-stringlength-message":"长度介于1-7个字符!","data-bv-notempty-message":"必填项目"}/>
@@ -121,7 +121,7 @@
 		</@ms.form>		
 	</@ms.panel>
 </@ms.html5>
-	<#noparse>
+<#noparse>
 	<!---被选中的图文模板---->
 	<script id="selectedArticle" type="text/x-jquery-tmpl">
 		<div class="msg-item-wrapper" data-id="${newsId}">
@@ -149,7 +149,7 @@
 			</div>
 	 	</div>
 	</script>
-	</#noparse>
+</#noparse>
 <script>
 	$(function(){
 		<#if menuId?has_content>

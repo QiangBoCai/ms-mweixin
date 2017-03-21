@@ -79,19 +79,19 @@
 	               	$("#synchronousPeople").attr("disabled","true");
 	        	},
 	        	success: function(msg){
-	                   if(msg.result == true){
-	                   		$('.ms-notifications').offset({top:43}).notify({
-    		    				type:'success',
-			    				message: { text:'同步成功'}
-			 				}).show();                     
-	                   }else{
-	                       $('.ms-notifications').offset({top:43}).notify({
-    		    				type:'fail',
-			    				message: { text:'同步失败'}
-			 				}).show();
-	                   }
-	                   location.reload();
-	              }
+					if(msg.result == true){
+				   		$('.ms-notifications').offset({top:43}).notify({
+							type:'success',
+							message: { text:'同步成功'}
+						}).show();                     
+					}else{
+				       $('.ms-notifications').offset({top:43}).notify({
+							type:'fail',
+							message: { text:'同步失败'}
+						}).show();
+					}
+					location.reload();
+				}
 	       })
 	   })
 	   //发送按钮弹出发送消息框
@@ -138,9 +138,9 @@
 	                $(".messageModel").modal("hide");
 	                $("#sendMessageButton").text("发送");
 	               	$("#sendMessageButton").attr("disabled",false);
-	           }
-	      });
-	  });
+	        	}
+			});
+		});
 	})   
 </script>
 

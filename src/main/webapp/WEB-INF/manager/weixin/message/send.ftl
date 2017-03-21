@@ -1,40 +1,40 @@
 <@ms.html5>
-<style>
-	.weixinEditer .editArea {
-  		border: 1px solid #AAA;
-  		border-top: 0;
-		padding: 20px;
-  		background-color: #FFF;
-	}
-	.weixinEditer  .editArea div{
- 	 	border: 1px solid #DDD;
- 	 	width: 100%;
-     	height: 80px;  
-	}
-	.weixinEditer .editArea textarea {
-     	border: 1px solid #DDD;
-  		width: 100%;
-  		height: 80px;
-	}
-	.weixinEditer .functionBar {
-  		height: 40px;
-  		border: 1px solid #AAA;
-  		padding: 10px 20px;
-  		background-color: #FFF;
-  		position: relative;
-  		box-shadow: 0 3px 3px #ddd;
-  		-moz-box-shadow: 0 3px 3px #ddd;
-  		-webkit-box-shadow: 0 3px 3px #ddd;
-	}
-	.weixinEditer .functionBar .opt {
-  		float: left;
-	}
-</style>
+	<style>
+		.weixinEditer .editArea {
+	  		border: 1px solid #AAA;
+	  		border-top: 0;
+			padding: 20px;
+	  		background-color: #FFF;
+		}
+		.weixinEditer  .editArea div{
+	 	 	border: 1px solid #DDD;
+	 	 	width: 100%;
+	     	height: 80px;  
+		}
+		.weixinEditer .editArea textarea {
+	     	border: 1px solid #DDD;
+	  		width: 100%;
+	  		height: 80px;
+		}
+		.weixinEditer .functionBar {
+	  		height: 40px;
+	  		border: 1px solid #AAA;
+	  		padding: 10px 20px;
+	  		background-color: #FFF;
+	  		position: relative;
+	  		box-shadow: 0 3px 3px #ddd;
+	  		-moz-box-shadow: 0 3px 3px #ddd;
+	  		-webkit-box-shadow: 0 3px 3px #ddd;
+		}
+		.weixinEditer .functionBar .opt {
+	  		float: left;
+		}
+	</style>
 	<div class="container-fluid" style="padding-right:0px;padding-left:7px;">
     	<!--头部开始-->
     	<@ms.contentNav title="关注回复">
     		<button type="button" class="btn btn-success" id="sendButton" data-id="${openId?default('0')}">发送</button>
-            	<button class="btn btn-default" role="button" onclick="javascript:history.go(-1)">返回</button>
+            <button class="btn btn-default" role="button" onclick="javascript:history.go(-1)">返回</button>
     	</@ms.contentNav>
         <!--<div class="row" style="height:25px;">
           	<div class="col-md-10" style="height:45px;padding-right:0px;padding-left:0px;">
@@ -89,8 +89,6 @@
 			}
 		}});
 	});
-	function save(target) {
-	    	
-	}		
+	function save(target) {}		
 </script>
 

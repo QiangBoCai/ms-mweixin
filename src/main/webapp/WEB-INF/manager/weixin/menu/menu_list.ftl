@@ -1,69 +1,69 @@
 <@ms.html5>
-<style>
-	#menuTree span{
-		display: inline-block;
-	}
-	#menuTree i{
-		cursor: pointer;
-	}
-	iframe {
-		width: 100%;
-		z-index: 20;
-		border: 0;
-		margin: 0 auto;
-		display: block;
-		-moz-border-radius: 10px;
-		-webkit-border-radius: 10px;
-		border-radius: 10px;
-	}
-	.glyphicon {
-		position: relative;
-		top: 1px;
-		display: inline-block;
-		font-family: 'Glyphicons Halflings';
-		font-style: normal;
-		font-weight: normal;
-		line-height: 1;
-	}
-	.row,.col-md-3{
-		height:100%;
-	}
-	.col-md-3{
-		border-right: 1px solid #ccc;
-		float:left;
-		padding-top: 5px;
-		width:25%;
-	}
-	body .row{
-		margin-top:-10px
-	}
-	.newsMessageListModal  .modal-body{padding:0}
-	body .col-md-9{
-		width:75%;
-		float:left;
-		padding-left:0;
-		padding-right:0;
-	}
-	body .ms-content-body-panel{
-		padding-left:0;
-		padding-right:0;
-	}
-	body .modal-dialog .modal-content{
-		width:100%;
-	}
-	.ms-content--body-title{
-	border-bottom: 1px solid #d3d7db;
-   	background: #fff;
-   	color: #666;
-   	line-height: 50px;
-   	padding: 0 10px;
-    width: 100%;
-    z-index: 1500;
-    text-align: right;
-	font-weight:900;
-	}
-</style>
-<body style="height:100%">
+	<style>
+		#menuTree span{
+			display: inline-block;
+		}
+		#menuTree i{
+			cursor: pointer;
+		}
+		iframe {
+			width: 100%;
+			z-index: 20;
+			border: 0;
+			margin: 0 auto;
+			display: block;
+			-moz-border-radius: 10px;
+			-webkit-border-radius: 10px;
+			border-radius: 10px;
+		}
+		.glyphicon {
+			position: relative;
+			top: 1px;
+			display: inline-block;
+			font-family: 'Glyphicons Halflings';
+			font-style: normal;
+			font-weight: normal;
+			line-height: 1;
+		}
+		.row,.col-md-3{
+			height:100%;
+		}
+		.col-md-3{
+			border-right: 1px solid #ccc;
+			float:left;
+			padding-top: 5px;
+			width:25%;
+		}
+		body .row{
+			margin-top:-10px
+		}
+		.newsMessageListModal  .modal-body{padding:0}
+		body .col-md-9{
+			width:75%;
+			float:left;
+			padding-left:0;
+			padding-right:0;
+		}
+		body .ms-content-body-panel{
+			padding-left:0;
+			padding-right:0;
+		}
+		body .modal-dialog .modal-content{
+			width:100%;
+		}
+		.ms-content--body-title{
+		border-bottom: 1px solid #d3d7db;
+	   	background: #fff;
+	   	color: #666;
+	   	line-height: 50px;
+	   	padding: 0 10px;
+	    width: 100%;
+	    z-index: 1500;
+	    text-align: right;
+		font-weight:900;
+		}
+	</style>
+	<body style="height:100%">
 	<@ms.content>
 		<@ms.contentBody>
 			<div class="row margin20" id="menuList">

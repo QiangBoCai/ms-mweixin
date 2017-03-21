@@ -38,7 +38,6 @@
 	<#if weixin.weixinId!=0>
 		$("#weixinForm").attr("action","${managerPath}/weixin/"+${weixin.weixinId?c?default(0)}+"/update.do");
 	</#if>
-		
 	$(function() {
 		//点击保存或更新按钮进行保存
 		$("#saveOrUpdateWeixin").click(function(){
@@ -91,7 +90,7 @@
 			     		</#if>		     					    		
 			    	}else{
 			    		 $('.ms-notifications').offset({top:43}).notify({
-    		    				type:'warning',
+    		    				type:'fail',
 			    				message: { text:'提交失败'}
 			 				}).show();
 			    		$("#saveOrUpdateWeixin").text(btnWord);	

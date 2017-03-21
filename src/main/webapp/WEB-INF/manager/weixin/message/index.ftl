@@ -142,7 +142,6 @@
 		$(".bar li").removeClass("sel");
 		$(".bar .news").addClass("sel");
 	});
-		
 	//点击发送按钮进行消息的群发
 	$("#sendMessageBtn").click(function() {
 		//默认是输入框里的文本内容
@@ -198,7 +197,6 @@
 		   	}	
 		});	
 	});	
-		
 	//调用微信官方群发接口群发，只支持图文发送
 	$("#sendMessageMassBtn").click(function() {
 		//若为图文，取msgType值为0.content取素材ID
