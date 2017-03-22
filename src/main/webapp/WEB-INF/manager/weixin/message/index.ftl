@@ -117,7 +117,10 @@
 				);											
 			},
 			error:function(e) {
-				alert("找不到相关素材");
+				$('.ms-notifications').offset({top:43}).notify({
+    		    	type:'fail',
+			    	message: { text:'找不到相关素材'}
+			 	}).show();
 			}
 		});	
 	}
@@ -151,17 +154,26 @@
 		if ($(".bar li.sel").hasClass("news")) {
 			content = $(".content>div").attr("data-id");
 			if(content == undefined || content == ""){
-				alert("请选择素材！");
+				$('.ms-notifications').offset({top:43}).notify({
+    		    	type:'warning',
+			    	message: { text:'请选择素材！'}
+			 	}).show();
 				return;
 			}
 			url = base+"${baseManager}/weixin/message/guiseSendAllNews.do";
 		}else{
 			content = $.trim($(".content").text());
 			if(content == undefined || content == ""){
-				alert("请输入内容！");
+				$('.ms-notifications').offset({top:43}).notify({
+    		    	type:'warning',
+			    	message: { text:'请输入内容！'}
+			 	}).show();
 				return;
 			}else if(content.length > 300){
-				alert("内容过长！");
+				$('.ms-notifications').offset({top:43}).notify({
+    		    	type:'warning',
+			    	message: { text:'内容过长！'}
+			 	}).show();
 				return;
 			}
 			url = base+"${baseManager}/weixin/message/guiseSendAllText.do";
@@ -181,12 +193,21 @@
 			   		var objFail = jQuery.parseJSON(msg.resultMsg);
 			   		var objSucess = jQuery.parseJSON(msg.resultData);
 			   		if(objFail.length == 0){
-			   			alert("发送成功！");
-			   		}else{   				
-			   			alert("发送失败："+objFail.length+"个,发送成功："+objSucess.length+"个");
+			   			$('.ms-notifications').offset({top:43}).notify({
+    		    			type:'success',
+			    			message: { text:'发送成功！'}
+			 			}).show();
+			   		}else{ 
+			   			$('.ms-notifications').offset({top:43}).notify({
+    		    			type:'fail',
+			    			message: { text:"发送失败："+objFail.length+"个,发送成功："+objSucess.length+"个"}
+			 			}).show();  				
 			   		}	
 		   		}else{
-		   			alert("发送失败！");
+		   			$('.ms-notifications').offset({top:43}).notify({
+    		    		type:'fail',
+			    		message: { text:'发送失败！'}
+			 		}).show();
 		   		}	
 		   		$("#sendMessageBtn").text("发送");
 		   		$("#sendMessageBtn").attr("disabled",false);
@@ -203,7 +224,10 @@
 		if ($(".bar li.sel").hasClass("news")) {
 			var content = $(".content>div").attr("data-id");
 			if(content == undefined || content == ""){
-				alert("素材不能为空！")
+				$('.ms-notifications').offset({top:43}).notify({
+    		    	type:'warning',
+			    	message: { text:'素材不能为空！'}
+			 	}).show();
 				return;
 			}
 			$.ajax({
@@ -217,9 +241,15 @@
 				},
 			   	success: function(msg){
 			   		if(msg.result == true){
-			   			alert("发送成功!");
+			   			$('.ms-notifications').offset({top:43}).notify({
+    		    			type:'success',
+			    			message: { text:'发送成功!'}
+			 			}).show();
 			   		}else{   				
-			   			alert("发送失败!");
+			   			$('.ms-notifications').offset({top:43}).notify({
+    		    			type:'fail',
+			    			message: { text:'发送失败!'}
+			 			}).show();
 			   		}
 			   		$("#sendMessageMassBtn").text("官方群发");
 			   		$("#sendMessageMassBtn").attr("disabled",false);
@@ -230,7 +260,10 @@
 			   	}	
 			});		
 		}else{
-			alert("只能进行图文发送!")
+			$('.ms-notifications').offset({top:43}).notify({
+    		    type:'fail',
+			    message: { text:'只能进行图文发送!'}
+			 }).show();
 		}											
 	});	
 </script>

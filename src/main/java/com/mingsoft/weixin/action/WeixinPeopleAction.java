@@ -78,9 +78,6 @@ public class WeixinPeopleAction extends BaseAction{
 		this.outJson(response, JSONArray.toJSONString(_list));
 		
 	}
-
-		
-	
 	/**
 	 * 导入微信所有用户
 	 * @param request

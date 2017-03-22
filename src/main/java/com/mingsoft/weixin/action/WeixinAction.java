@@ -238,16 +238,13 @@ public class WeixinAction extends BaseAction {
 		String str = "";
 		ModelEntity model = modelBiz.getEntityByModelCode("05000000");
 		if (model == null) {
-			
 			model = new ModelEntity();
 			model.setModelTitle("微信");
 			model.setModelCode("05000000");
 			model.setModelIcon("&#xe834;");
 			model.setModelManagerId(0);
 			model.setModelDatetime(new Timestamp(System.currentTimeMillis()));
-			
 			modelBiz.saveEntity(model);
-			
 			ModelEntity modelChild = new ModelEntity();
 			modelChild.setModelModelId(model.getModelId());
 			modelChild.setModelTitle("公众号管理");
@@ -255,32 +252,21 @@ public class WeixinAction extends BaseAction {
 			modelChild.setModelUrl("/weixin/list.do");
 			modelChild.setModelManagerId(0);
 			modelChild.setModelDatetime(new Timestamp(System.currentTimeMillis()));
-			
 			modelBiz.saveEntity(modelChild);
-			
-			
 			List list = new ArrayList();
 			RoleModelEntity roleModel = new RoleModelEntity();
 			roleModel.setModelId(model.getModelId());
 			roleModel.setRoleId(this.getManagerBySession(request).getManagerRoleID());
 			list.add(roleModel);
-			
 			RoleModelEntity roleModel2 = new RoleModelEntity();
 			roleModel2.setModelId(modelChild.getModelId());
 			roleModel2.setRoleId(this.getManagerBySession(request).getManagerRoleID());
 			list.add(roleModel2);
-			
-			
 			roleModelBiz.saveEntity(list);
 			this.outString(response, "微信插件安装成功!请刷新后台主界面");
 		} else {
-			
 			this.outString(response, "插件不能重复安装");
-			
 		}
-		
-		
-		
 	}
 
 }

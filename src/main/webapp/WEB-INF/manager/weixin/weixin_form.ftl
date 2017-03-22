@@ -77,14 +77,13 @@
 					if (msg.result == true) {
 			     		<#if weixin.weixinId!=0>
 			     			 $('.ms-notifications').offset({top:43}).notify({
-    		    				type:'fail',
-			    				message: { text:'保存失败'}
-			 				}).show();
-			     			location.href = "${managerPath}/weixin/index.do";
-		     			<#else>
-			     			 $('.ms-notifications').offset({top:43}).notify({
     		    				type:'success',
 			    				message: { text:'保存成功'}
+			 				}).show();
+		     			<#else>
+			     			 $('.ms-notifications').offset({top:43}).notify({
+    		    				type:'fail',
+			    				message: { text:'保存失败'}
 			 				}).show();
 			     			location.href = "${managerPath}/weixin/index.do"; 	
 			     		</#if>		     					    		

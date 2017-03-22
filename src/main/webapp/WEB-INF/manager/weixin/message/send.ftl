@@ -36,18 +36,6 @@
     		<button type="button" class="btn btn-success" id="sendButton" data-id="${openId?default('0')}">发送</button>
             <button class="btn btn-default" role="button" onclick="javascript:history.go(-1)">返回</button>
     	</@ms.contentNav>
-        <!--<div class="row" style="height:25px;">
-          	<div class="col-md-10" style="height:45px;padding-right:0px;padding-left:0px;">
-            	<h3 class="page-title bottomLine" style="line-height:0;font-weight:900;font-size:15px;">
-              		订单回复
-              		<small>回复的内容</small>
-            	</h3>
-          	</div>
-          	<div class="col-md-2 text-right" style="margin-top:5px;">
-          		<button type="button" class="btn btn-success" id="sendButton" data-id="${openId?default('0')}">发送</button>
-            	<button class="btn btn-default" role="button" onclick="javascript:history.go(-1)">返回</button>
-          	</div>
-        </div>-->
     	<!--头部结束-->
     	<hr>
     	<!--主体开始-->
@@ -83,9 +71,15 @@
 		$("#messageContent").val($("#messageContent").next("div").text());
 	    $(this).postForm("#messageForm",{action:actionUrl,func:function(data) {
 			if(data.result){
-				alert("发送成功");
+				$('.ms-notifications').offset({top:43}).notify({
+    		    	type:'success',
+			   	 	message: { text:'发送成功'}
+			 	}).show();
 			}else{
-				alert(data.resultMsg);
+				$('.ms-notifications').offset({top:43}).notify({
+    		    	type:'fail',
+			   	 	message: { text:'data.resultMsg'}
+			 	}).show();
 			}
 		}});
 	});

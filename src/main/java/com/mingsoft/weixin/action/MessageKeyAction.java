@@ -56,7 +56,6 @@ public class MessageKeyAction extends BaseAction{
 	@Autowired
 	private INewsBiz newsBiz;
 	
-	
 	/**
 	 * 保存关键字回复内容
 	 * @param response
@@ -234,7 +233,6 @@ public class MessageKeyAction extends BaseAction{
 	 */
 	@RequestMapping("/list")
 	public void list(PassiveMessageEntity message,HttpServletResponse response,HttpServletRequest request,ModelMap mode){
-		
 		WeixinEntity weixin = this.getWeixinSession(request);
 		message.setPassiveMessageAppId(BasicUtil.getAppId());
 		message.setPassiveMessageWeixinId(weixin.getWeixinId());
@@ -242,7 +240,6 @@ public class MessageKeyAction extends BaseAction{
 		BasicUtil.startPage();
 		//分页查询
 		List messageKey = passiveMessageBiz.query(message);
-
 		EUListBean _list = new EUListBean(messageKey,(int) BasicUtil.endPage(messageKey).getTotal());
 		this.outJson(response, JSONArray.toJSONString(_list));
 	}
@@ -253,7 +250,6 @@ public class MessageKeyAction extends BaseAction{
 	 * @return manager/weixin/messagekey/index.ftl的界面
 	 */
 	@RequestMapping("/index")
-	
 	public String index(HttpServletRequest request,HttpServletResponse response) {
 		return view("/weixin/messagekey/index");
 	}

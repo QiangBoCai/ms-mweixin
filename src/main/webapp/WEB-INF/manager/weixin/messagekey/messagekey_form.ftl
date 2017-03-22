@@ -379,10 +379,16 @@
 						var obj = data.result;
 						if(obj == true){
 							<#if news?has_content>
-								alert("更新成功");
+								$('.ms-notifications').offset({top:43}).notify({
+    		    					type:'success',
+			    					message: { text:'更新成功'}
+			 					}).show();
 								location.href="${managerPath}/weixin/messagekey/index.do"; 	
 							<#else>
-								alert("保存成功");								
+								$('.ms-notifications').offset({top:43}).notify({
+    		    					type:'success',
+			    					message: { text:'保存成功'}
+			 					}).show();								
 								location.href="${managerPath}/weixin/messagekey/index.do";
 							</#if>									
 						}else{
