@@ -360,7 +360,10 @@
 				if ($(".bar li.sel").hasClass("news")) {
 					content = $(".content>div").attr("data-id");				
 					if(content == undefined || content == ""){
-						alert("请选择素材！")
+						$('.ms-notifications').offset({top:43}).notify({
+							type:'warning',
+							message: { text: '请选择素材！' }
+						}).show();
 						return;
 					}
 				}else{
@@ -385,16 +388,25 @@
 						var obj = jQuery.parseJSON(data);
 						if(obj.result == true){
 							<#if news?has_content>
-								alert("更新成功");
+								$('.ms-notifications').offset({top:43}).notify({
+									type:'success',
+									message: { text: "更新成功" }
+								}).show();
 								location.href="${managerPath}/weixin/messagekey/"+obj.resultData; 	
 							<#else>
-								alert("保存成功");								
+								$('.ms-notifications').offset({top:43}).notify({
+									type:'success',
+									message: { text: "保存成功！" }
+								}).show();								
 								location.href="${managerPath}/weixin/messagekey/list.do";
 							</#if>
 							$("#saveOrUpdateMessage").css("background","#ccc");	
 							$("#saveOrUpdateMessage").attr("disabled", true);		
 						}else{
-							alert("请重试!");
+							$('.ms-notifications').offset({top:43}).notify({
+								type:'fail',
+								message: { text: "请重试！" }
+							}).show();
 						}
 					}
 				});

@@ -212,8 +212,11 @@
 		   		$("#sendMessageBtn").text("发送");
 		   		$("#sendMessageBtn").attr("disabled",false);
 		   	},
-		   	error:function(XMLHttpRequest, textStatus, errorThrown){
-		   		alert("a"+textStatus);
+		   	error:function(XMLHttpRequest, textStatus, errorThrown){		   		
+		   		 $('.ms-notifications').offset({top:43}).notify({
+	    		    type:'fail',
+				    message: {text:'a'+textStatus}
+				 }).show();
 		   		location.reload();
 		   	}	
 		});	

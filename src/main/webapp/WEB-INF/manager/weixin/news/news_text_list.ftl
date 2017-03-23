@@ -148,12 +148,18 @@
 			//点击更新按钮
 			$("#addTextDialog").delegate("#updateOrSaveText","click",function(){
 				if($("#textForm textarea").val().length <=0){
-					alert("请输入文本素材内容！");
+					$('.ms-notifications').offset({top:43}).notify({
+						type:'warning',
+						message: { text:'请输入素材内容！' }
+					}).show();
 					retrun ;
 				}
 				if($("#textForm textarea").val().length>600){
 					var beyond = $("#textForm textarea").val().length - 600;
-					alert("您输入的内容超出:"+beyond+"个字符！");
+					$('.ms-notifications').offset({top:43}).notify({
+						type:'warrning',
+						message: { text:'您输入的内容超出:'+beyond+'个字符' }
+					}).show();
 					return ;
 				}
 				var formdata = $("#textForm").serialize();
@@ -166,15 +172,24 @@
 				   	success: function(msg){
 				   		if(msg.result){
 				   			if($("#updateOrSaveText").html()=="保存"){
-				   				alert("保存成功");
+				   				$('.ms-notifications').offset({top:43}).notify({
+									type:'success',
+									message: { text:'保存成功！' }
+								}).show();
 				   				location.href="${base}${baseManager}/weixin/news/textList.do";
 				   			}else{
-				   				alert("更新成功");
+				   				$('.ms-notifications').offset({top:43}).notify({
+									type:'success',
+									message: { text:'更新成功！' }
+								}).show();
 				   				location.href="${base}${baseManager}/weixin/message/list.do?pageNo="+(msg.resultMsg);
 				   			}
 				   			$("#updateOrSaveText").attr("disabled", true);
 				   		}else{
-				   			alert(msg.resultMsg);
+				   			$('.ms-notifications').offset({top:43}).notify({
+								type:'fail',
+								message: { text:msg.resultMsg }
+							}).show();
 				   		}
 				   	}
 				});
@@ -224,7 +239,10 @@
 		 						location.href="${base}${baseManager}/weixin/message/list.do?pageNo="+msg.resultMsg;
 		 					}
     					}else{
-    						alert("没有找到该文章！")
+    						$('.ms-notifications').offset({top:43}).notify({
+				    		    type:'warning',
+							    message: { text:'没有找到该文章!'}
+							 }).show();
     					}
     				}
     			});

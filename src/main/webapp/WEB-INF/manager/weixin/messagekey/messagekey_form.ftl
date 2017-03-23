@@ -305,7 +305,10 @@
 				);											
 			},
 			error:function(e) {
-			   	alert(e);
+				$('.ms-notifications').offset({top:43}).notify({
+					type:'fail',
+					message: { text: e }
+				}).show();
 			}
 		});	
 	}

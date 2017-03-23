@@ -90,7 +90,10 @@
 		if(radioData!=""){
 			$(".delete").modal();//打开
 			}else{
-				alert("请选择需要删除的模板！");
+				$('.ms-notifications').offset({top:43}).notify({
+					type:'warning',
+					message: { text: "请选择需要删除的模板！" }
+				}).show();
 			}
 	})
 		//点击每一条数据的id
@@ -165,10 +168,16 @@
 				$(this).postForm("#updateSms",{func:function(data) {
 					$(".update").modal("hide");//关闭
 					location.reload();
-					alert("更新成功");
+					$('.ms-notifications').offset({top:43}).notify({
+						type:'success',
+						message: { text:'更新成功！' }
+					}).show();
 				}})
 			} else {
-				alert("更新失败");
+				$('.ms-notifications').offset({top:43}).notify({
+					type:'fail',
+					message: { text:'更新失败！' }
+				}).show();
 			}    	
 	 });
 
@@ -185,13 +194,19 @@
 	    			success: function(msg){
 	    				if (msg.result) {
 	    					location.reload();
-	    					alert("删除成功！");
+	    					$('.ms-notifications').offset({top:43}).notify({
+								type:'success',
+								message: { text:'删除成功！' }
+							}).show();
 	    				}    				
 	    			}
 	    		});
 	    	}else{
 	    		$(".delete").modal("hide");
-	        	alert("请选择模块！");
+	    		$('.ms-notifications').offset({top:43}).notify({
+					type:'warning',
+					message: { text:'请选择模版！' }
+				}).show();
 	        }
 	 })
 </script>
