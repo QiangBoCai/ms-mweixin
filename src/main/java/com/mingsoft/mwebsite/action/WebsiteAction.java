@@ -102,7 +102,7 @@ public class WebsiteAction extends BaseAction{
 	 */
 	@RequestMapping("/{basicId}/delete")
 	@ResponseBody
-	public int delete(@PathVariable int basicId, HttpServletRequest request){
+	public void delete(@PathVariable int basicId, HttpServletRequest request){
 		WebsiteEntity website= (WebsiteEntity) websiteBiz.getEntity(basicId);
 		/*
 		 * 删除对应的站点管理员
@@ -112,13 +112,6 @@ public class WebsiteAction extends BaseAction{
 			managerBiz.deleteEntity(managerId);
 			websiteBiz.deleteBasic(basicId);
 		}
-		int pageNo = 2;
-		//保存页面cookie值
-		int cookie = Integer.valueOf(this.getCookie(request, CookieConstEnum.PAGENO_COOKIE));
-		if(cookie>=1){
-			pageNo=cookie;
-		}
-		return pageNo;
 	}
 	
 	/**
@@ -159,7 +152,7 @@ public class WebsiteAction extends BaseAction{
 		WebsiteEntity website = new WebsiteEntity();
 		//传入一个空的app
 		mode.addAttribute("website",website);
-		return view("/mwebsite/website");
+		return view("/mwebsite/website_form");
 	}
 	
 	/**
