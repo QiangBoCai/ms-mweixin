@@ -277,7 +277,10 @@
 		//当目标节点的子节点个数等于5时 ,不能进行移动
 		var nodes = treeObj.getNodesByParam("pId",targetNode.id, null);
 		if(nodes.length>=5 ){
-			alert("子节点最多只能为5，不能进行移动");
+			$('.ms-notifications').offset({top:43}).notify({
+    		    type:'warning',
+			    message: { text:'子节点最多只能为5，不能进行移动'}
+			}).show();
 			return false;
 		}
 		//移动时保证一级菜单的数量不超过3

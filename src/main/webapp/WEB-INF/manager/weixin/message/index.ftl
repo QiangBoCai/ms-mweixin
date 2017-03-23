@@ -255,7 +255,10 @@
 			   		$("#sendMessageMassBtn").attr("disabled",false);
 			   	},
 			   	error:function(XMLHttpRequest, textStatus, errorThrown){
-			   		alert("a"+textStatus);
+			   		$('.ms-notifications').offset({top:43}).notify({
+    		    		type:'warning',
+			    		message: { text:"a"+textStatus}
+			 	 	}).show();
 			   		location.reload();
 			   	}	
 			});		

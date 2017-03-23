@@ -23,7 +23,6 @@
 		<@ms.modalBody style="width:100%">
 			<@ms.form name="textForm" id="textForm" isvalidation=true  action="" method="post"  >
 				<@ms.textarea rows="7" style="height:300px;width:100%" label="发送内容" maxlength="600" size="600"  placeholder="请输入600个字符以内的文本素材！" name="messageContent"/>				
-            	<input type="hidden" name="weixinPeopleOpenId"/>
 			</@ms.form>
 		</@ms.modalBody>
 		<@ms.modalButton>
@@ -117,7 +116,7 @@
 	        $.ajax({
 	        	type: "post",
 	            dataType: "json",
-	            url:  "${base}${baseManager}/weixin/message/"+$("input[name='weixinPeopleOpenId']").val()+"/sendText.do",
+	            url:  "${base}${baseManager}/weixin/message/"+$(".sendMessage").attr("data-id")+"/sendText.do",
 	            data: "content=" + content,
 	            beforeSend:function(){
 	            	$("#sendMessageButton").text("发送中..");

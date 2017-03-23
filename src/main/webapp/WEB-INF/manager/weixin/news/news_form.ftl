@@ -432,7 +432,10 @@
 		//获取关键字
 		var keyword = $.trim($("input[name='keyword']").val());
 		if(keyword=="" || keyword==undefined){
-			alert("关键词不能为空!");			
+			$('.ms-notifications').offset({top:43}).notify({
+    		    	type:'warning',
+			    	message: { text:'关键词不能为空!'}
+			 	 }).show();
 			return;
 		}		
 		if (curPage<1) {

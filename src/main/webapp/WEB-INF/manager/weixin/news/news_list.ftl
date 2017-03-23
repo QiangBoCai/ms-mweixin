@@ -376,7 +376,10 @@
 			   		if(msg.result == true){
 			   			location.href = base+"${baseManager}/weixin/news/list.do"; 
 			   		}else{
-			   			alert("该素材已被绑定，请先删除其绑定内容!");
+			   			$('.ms-notifications').offset({top:43}).notify({
+    		    			type:'warning',
+			    			message: { text:'该素材已被绑定，请先删除其绑定内容!'}
+			 	 		}).show();
 			   			$(".deleteModel").modal("hide");
 			  			$("#deleteNews").attr("disabled",false);
 			  			$("#deleteNews").text("删除");

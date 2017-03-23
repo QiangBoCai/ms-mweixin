@@ -224,7 +224,10 @@
 				    		$("#menuForm").attr("action","${base}${baseManager}/weixin/menu/update.do");
 				    		$("#hideMenuId").html('<input type="hidden" name="menuId" value="'+data.menuId+'"/>')
 			    		}else{
-			    			alert(msg.resultMsg);
+			    			$('.ms-notifications').offset({top:43}).notify({
+    		    				type:'warning',
+			    				message: { text:msg.resultMsg}
+			 	 			}).show();
 			    			$("#saveOrUpdate").html(btnHtml);
 			    		}
 			    		$("#saveOrUpdate").attr("disabled",false);
