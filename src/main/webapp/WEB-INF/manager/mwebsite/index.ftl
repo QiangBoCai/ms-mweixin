@@ -1,6 +1,12 @@
 <@ms.html5>
 	<@ms.panel>
 		<@ms.nav title="站点管理"></@ms.nav>
+		<@ms.searchForm  id="search" name="searchForm" action="${managerPath}/website/list.do">
+			<@ms.text label="标题"  name="websiteName" value="" title="请输入标题"  placeholder="请输入标题" value=""/>
+			<@ms.searchFormButton>
+				<@ms.queryButton onclick="query()"/>								
+			</@ms.searchFormButton>
+		</@ms.searchForm>
 		<!--使用toolbar添加按钮-->
 		<div id="toolbar">
 			<@ms.panelNav>
@@ -49,6 +55,7 @@
 	</@ms.modal>
 </@ms.html5>
 <script>	
+	
 	$(function() {
 		//对应bootstrap-table框架的控制
         $("#websiteListTable").bootstrapTable({
@@ -112,6 +119,17 @@
 		    }]
         }); 		
 	})
+	function query(){
+		var websiteName = $("input[name='websiteName']").val();
+		$.post("${managerPath}/website/list.do",
+			{
+				websiteName:websiteName
+			},
+			function(data,status){
+				$("#websiteListTable").bootstrapTable('load',data);
+			}
+		)
+	}
 	function setManager() {
 		var rows =  $("#websiteListTable").bootstrapTable("getSelections");
 		if (rows.length > 1) {

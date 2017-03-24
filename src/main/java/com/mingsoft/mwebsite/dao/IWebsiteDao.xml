@@ -90,7 +90,6 @@
 			<if test="websiteDescription != null">APP_DESCRIPTION =#{websiteDescription},</if>
 			<if test="websiteLogo != null">APP_LOGO =#{websiteLogo},</if>
 			<if test="websiteDatetime != null">APP_DATETIME =#{websiteDatetime},</if>
-
 			<if test="websiteKeyword != null">APP_keyword =#{websiteKeyword},</if>
 			<if test="websiteCopyright != null">APP_copyright =#{websiteCopyright},</if>
 			<if test="websiteStyle != null">APP_style =#{websiteStyle},</if>
@@ -107,8 +106,12 @@
 	<!-- 更新website结束 -->
 
 	<!-- 查询所有website开始 -->
-	<select id="query" resultMap="resultMap">
-		select * from app order by
+	<select id="query" resultMap="resultMap" parameterType="com.mingsoft.mwebsite.entity.WebsiteEntity">
+		select * from app 
+		<where>
+			<if test="websiteName != null">and APP_NAME=#{websiteName}</if>
+		</where>
+		order by
 		app_id desc
 	</select>
 	<!-- 查询所有website结束 -->

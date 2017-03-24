@@ -38,7 +38,6 @@ import com.mingsoft.mwebsite.entity.WebsiteEntity;
 import com.mingsoft.parser.IParserRegexConstant;
 import com.mingsoft.util.PageUtil;
 import com.mingsoft.util.StringUtil;
-
 import net.mingsoft.basic.bean.EUListBean;
 import net.mingsoft.basic.bean.ListBean;
 import net.mingsoft.basic.util.BasicUtil;
@@ -87,9 +86,9 @@ public class WebsiteAction extends BaseAction{
 	 * @return 站点列表数据
 	 */
 	@RequestMapping("/list")
-	public void list(HttpServletRequest request,HttpServletResponse response){
+	public void list(@ModelAttribute WebsiteEntity websiteEntity, HttpServletRequest request,HttpServletResponse response){
 		BasicUtil.startPage();
-		List<BaseEntity> websiteList = websiteBiz.query();
+		List<BaseEntity> websiteList = websiteBiz.query(websiteEntity);
 		EUListBean _list = new EUListBean(websiteList, (int) BasicUtil.endPage(websiteList).getTotal());
 		this.outJson(response, net.mingsoft.base.util.JSONArray.toJSONString(_list, new DoubleValueFilter(),new DateValueFilter("yyyy-MM-dd")));
 	}
@@ -110,7 +109,7 @@ public class WebsiteAction extends BaseAction{
 		if(website!=null){
 			int managerId = website.getWebsiteManagerId();
 			managerBiz.deleteEntity(managerId);
-			websiteBiz.deleteBasic(basicId);
+			websiteBiz.deleteEntity(basicId);
 		}
 	}
 	
