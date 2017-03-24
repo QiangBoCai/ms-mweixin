@@ -96,7 +96,11 @@
 		from wx_people wp 
 		left join  people p on wp.PW_PEOPLE_ID=p.people_id
 		left join people_user pu on pu.pu_people_id=wp.PW_PEOPLE_ID
-		where wp.PW_APP_ID = #{weixinPeopleAppId} and wp.PW_WEIXIN_ID = #{weixinPeopleWeixinId}
+		<where>
+			<if test="weixinPeopleAppId != null">and wp.PW_APP_ID = #{weixinPeopleAppId}</if>			
+			<if test="weixinPeopleWeixinId != null">and wp.PW_WEIXIN_ID = #{weixinPeopleWeixinId}</if>
+			<if test="peopleUserNickName != null">and PU.PU_NICKNAME = #{peopleUserNickName}</if>
+		</where>
 	</select>
 	
 	

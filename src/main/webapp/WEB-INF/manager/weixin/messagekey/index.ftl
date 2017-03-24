@@ -121,15 +121,11 @@
 	$("#deleteMessagekey").click(function(){
 		$(this).text("努力删除中...")
 		$(this).attr("disabled","true");
-		var keyMessageIds = [];
 		rows = $("#messagekeyListTable").bootstrapTable("getSelections");	
-		for(var i = 0;i<rows.length;i++){
-			keyMessageIds[i] = rows[i].passiveMessageId;
-		}
 		$.ajax({		
 		    type:"GET",
 			url:"${managerPath}/weixin/messagekey/delete.do",
-		    data:"keyMessageIds="+keyMessageIds,
+		    data:"rows="+JSON.stringify(rows),
 		    success:function(msg) { 
 				if (msg.result == false) {
 					$('.ms-notifications').offset({top:43}).notify({

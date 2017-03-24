@@ -2,6 +2,12 @@
 	<@ms.panel>
     	<!--title对应板块名称-->
         <@ms.nav title="微信用户"></@ms.nav>
+        <@ms.searchForm   name="searchForm" action="">
+			<@ms.text label="用户昵称"  name="peopleUserNickName" value="" title="请输入用户昵称"  placeholder="请输入用户昵称"/>
+			<@ms.searchFormButton>
+				<@ms.queryButton id="submitSearch"/>								
+			</@ms.searchFormButton>
+		</@ms.searchForm>
         <!--使用bootstrap-table的toolbar添加按钮-->
         <div id="toolbar">
         	<@ms.button class="btn btn-success"  id="synchronousPeople"  value="一键同步"/>
@@ -12,7 +18,6 @@
 	        data-show-columns="true"
 	        data-show-export="true"
 			data-method="post" 
-			data-search="true"
 			data-detail-formatter="detailFormatter" 
 			data-pagination="true"
 			data-page-size="50"
@@ -27,7 +32,7 @@
 		</@ms.modalBody>
 		<@ms.modalButton>
 			<!--模态框按钮组-->
-			<@ms.button  value="发送"  id="sendMessageButton"  />
+			<@ms.button  value="发送"  id="sendMessageButton"/>
 		</@ms.modalButton>
 	</@ms.modal>
 </@ms.html5>
@@ -39,7 +44,7 @@
         	queryParamsType : "undefined",
         	toolbar:"#toolbar",
         	queryParams:function(params) {
-				return  $.param(params)+"&pageNo="+params.pageNumber+"&pageSize="+params.pageSize;
+				return  $.param(params)+"&pageNo="+params.pageNumber;
 			},
 			columns: [{
 				align:'center',
@@ -65,7 +70,19 @@
 			    title: '操作',
 			    formatter:function(value,row,index){return "<button style='line-height: 9px;'  type='button' class='btn btn-success col-md sendMessage' data-id=" + row.weixinPeopleOpenId + ">发送消息</button>"}
 			}]
-        });   
+        });
+        //点击查询按钮触发
+        $("#submitSearch").click(function(){
+        	var peopleUserNickName = $("input[name='peopleUserNickName']").val();
+        	$.post("${managerPath}/weixin/weixinPeople/list.do",
+        	{
+        		peopleUserNickName:peopleUserNickName
+        	},
+        	function(data,status){
+        		$("#peopleListTable").bootstrapTable('load',data);
+        	}
+        	);
+        })
 	    //同步微信公众号的用户到数据库中
 	    $("#synchronousPeople").click(function(){
 	    	$.ajax({

@@ -105,17 +105,13 @@
 	});
 	//批量删除
 	$("#deleteWeixin").click(function(){
-		var weixinIds = [];
 		var rows = $("#weixinListTable").bootstrapTable("getSelections");
-		for(var i = 0;i<rows.length;i++){
-			weixinIds[i] = rows[i].weixinId;
-		}
 		$(this).text("努力删除中...")
 		$(this).attr("disabled","true");
 		$.ajax({		
 		    type:"GET",
 			url:"${managerPath}/weixin/delete.do",
-		    data:"weixinIds="+weixinIds,
+		    data:"rows="+JSON.stringify(rows),
 		    success:function(msg) { 
 				if(msg.result == true) {
 					$('.ms-notifications').offset({top:43}).notify({

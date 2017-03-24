@@ -212,12 +212,15 @@ public class MessageKeyAction extends BaseAction{
 	 */
 	@RequestMapping("/delete")
 	@ResponseBody
-	public void delete(HttpServletResponse response,HttpServletRequest request){		
-		String[] keyIds = request.getParameterValues("keyMessageIds");
-		//分割字符串
-		String[] keyMessageIds = keyIds[0].split(",");
-		//得到ID数组并将字符串数组转化为int型数组
-		int[] ids = StringUtil.stringsToInts(keyMessageIds);
+	public void delete(HttpServletResponse response,HttpServletRequest request){
+		//获取请求的字符串数据
+		String rows = request.getParameter("rows");
+		//转换数据类型
+		List<PassiveMessageEntity> keyIds = JSONArray.parseArray(rows, PassiveMessageEntity.class);
+		int[] ids = new int[keyIds.size()];
+		for(int i=0;i<keyIds.size();i++){
+			ids[i] = keyIds.get(i).getPassiveMessageId();
+		}
 		//根据ID批量删除
 		passiveMessageBiz.deleteByIds(ids);
 		//返回json数据

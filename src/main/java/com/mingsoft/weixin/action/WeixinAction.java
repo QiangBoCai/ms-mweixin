@@ -26,6 +26,7 @@ import com.mingsoft.util.StringUtil;
 import com.mingsoft.weixin.biz.IWeixinBiz;
 import com.mingsoft.weixin.constant.SessionConst;
 import com.mingsoft.weixin.constant.e.WeixinTypeEnum;
+import com.mingsoft.weixin.entity.PassiveMessageEntity;
 import com.mingsoft.weixin.entity.WeixinEntity;
 
 import net.mingsoft.basic.bean.EUListBean;
@@ -190,11 +191,14 @@ public class WeixinAction extends BaseAction {
 	@RequestMapping("/delete")
 	@ResponseBody
 	public void delete(HttpServletResponse response, HttpServletRequest request) {
-		// 得到需要删除的微信ID数组
-		String[] weixin = request.getParameterValues("weixinIds");
-		String[] weixinIds = weixin[0].split(",");
-		// 得到ID数组并将字符串数组转化为int型数组
-		int[] ids = StringUtil.stringsToInts(weixinIds);
+		// 得到需要删除的数据字符串
+		String rows  = request.getParameter("rows");
+		List<WeixinEntity> keyIds = JSONArray.parseArray(rows, WeixinEntity.class);
+		int[] ids = new int[keyIds.size()];
+		//循环的到要删除的ID
+		for(int i=0;i<keyIds.size();i++){
+			ids[i] = keyIds.get(i).getWeixinId();
+		}
 		// 根据ID批量删除微信
 		weixinBiz.deleteByIds(ids);
 		// 返回json数据
