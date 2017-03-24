@@ -50,6 +50,7 @@
 				align:'center',
 			   	field: 'weixinPeopleHeadimgUrl',
 			    title: '用户头像',
+			    width:'100',
 			    formatter:function(value,row,index){return "<img src=" + row.weixinPeopleHeadimgUrl + " style='border-radius:12px;width:25px;height:25px;'>"}
 			}, {
 			    align:'center',

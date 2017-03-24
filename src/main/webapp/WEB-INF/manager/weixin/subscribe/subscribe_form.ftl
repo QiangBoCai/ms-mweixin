@@ -296,6 +296,7 @@
 		$(".bar li").removeClass("sel");
 		$(this).addClass("sel");
 		$(".content").html("");
+		$(".content").focus();
 		if($(this).attr("data-msg-type")=="1"){
 			getArticleList();
 		}

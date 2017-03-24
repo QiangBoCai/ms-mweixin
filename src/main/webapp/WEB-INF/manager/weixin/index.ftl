@@ -46,20 +46,26 @@
 			{
 				align:'center',
 			   	field: 'weixinId',
-			    title: '编号'
+			    title: '编号',
+			    width:'50'
+			    
 			}, {
-			    align:'center',
+			    align:'left',
 			    field: 'weixinNo',
-			    title: '微信号'
+			    title: '微信号',
+			    width:'220'
+			    
 			},{
 			    align:'center',
 			    field: 'weixinName',
 			    title: '公众号名称',
+			    width:'200',
 			    formatter:function(value,row,index){return"	<a class='btn btn-xs red tooltips editWeixin' data-id=" + row.weixinId + ">" + row.weixinName + "</a>"}
 			}, {
 			    align:'center',
 			    field: 'weixinType',
 			    title: '公众号类型',
+			    width:'110',
 			    formatter:function(value,row,index){
 			    	if(row.weixinType == 0){
 			    		return "服务号";
@@ -69,9 +75,11 @@
 			    	}
 			   }
 			},{
-			    align:'center',
+			    align:'left',
 			    field: 'weixinToken',
-			    title: '微信token'
+			    title: '微信token',
+			    width:'120',
+			    halign:'center'
 			},{
 				align:'center',
 				field: 'weixinOauthUrl',

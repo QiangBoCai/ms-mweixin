@@ -99,7 +99,7 @@
 		<where>
 			<if test="weixinPeopleAppId != null">and wp.PW_APP_ID = #{weixinPeopleAppId}</if>			
 			<if test="weixinPeopleWeixinId != null">and wp.PW_WEIXIN_ID = #{weixinPeopleWeixinId}</if>
-			<if test="peopleUserNickName != null">and PU.PU_NICKNAME = #{peopleUserNickName}</if>
+			<if test="peopleUserNickName != null">and PU.PU_NICKNAME like concat('%',#{peopleUserNickName},'%')</if>
 		</where>
 	</select>
 	
