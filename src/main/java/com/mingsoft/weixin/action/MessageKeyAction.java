@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -212,14 +213,12 @@ public class MessageKeyAction extends BaseAction{
 	 */
 	@RequestMapping("/delete")
 	@ResponseBody
-	public void delete(HttpServletResponse response,HttpServletRequest request){
-		//获取请求的字符串数据
-		String rows = request.getParameter("rows");
-		//转换数据类型
-		List<PassiveMessageEntity> keyIds = JSONArray.parseArray(rows, PassiveMessageEntity.class);
-		int[] ids = new int[keyIds.size()];
-		for(int i=0;i<keyIds.size();i++){
-			ids[i] = keyIds.get(i).getPassiveMessageId();
+	public void delete(@RequestBody List<PassiveMessageEntity> messages,HttpServletResponse response,HttpServletRequest request){
+		//声明数组接收要删除的id
+		int[] ids = new int[messages.size()];
+		//循环获取id数据
+		for(int i=0;i<messages.size();i++){
+			ids[i] = messages.get(i).getPassiveMessageId();
 		}
 		//根据ID批量删除
 		passiveMessageBiz.deleteByIds(ids);

@@ -97,16 +97,10 @@
 		var rows = $("#weixinListTable").bootstrapTable("getSelections");
 		//没有选中checkbox
 		if(rows.length <= 0){
-			 $('.ms-notifications').offset({top:43}).notify({
-    		    type:'warning',
-			    message: { text:'请选择删除的微信'}
-			 }).show();
+			<@ms.notify msg="请选择删除的微信" type="warning"/>
 		//点击全选，但是列表为空
 		}else if(rows.length == 0){
-			$('.ms-notifications').offset({top:43}).notify({
-    		    type:'warning',
-			    message: { text:'没有可删除的微信'}
-			 }).show();
+			<@ms.notify msg="没有可删除的微信" type="warning"/>
 		}else{
 			$(".delWeixinModal").modal();
 		}
@@ -117,20 +111,16 @@
 		$(this).text("努力删除中...")
 		$(this).attr("disabled","true");
 		$.ajax({		
-		    type:"GET",
+		    type:"post",
 			url:"${managerPath}/weixin/delete.do",
-		    data:"rows="+JSON.stringify(rows),
+		    data:JSON.stringify(rows),
+		    dataType:"json",
+  			contentType:"application/json",
 		    success:function(msg) { 
 				if(msg.result == true) {
-					$('.ms-notifications').offset({top:43}).notify({
-		    		    type:'success',
-					    message: { text:'删除成功'}
-					 }).show();
+					<@ms.notify msg="删除成功" type="success"/>
 				}else{
-					$('.ms-notifications').offset({top:43}).notify({
-		    		    type:'fail',
-					    message: { text:'删除失败'}
-					 }).show();
+					<@ms.notify msg="删除失败" type="fail"/>
 				}
 				location.reload();
 			}

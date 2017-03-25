@@ -74,15 +74,15 @@
         });
         //点击查询按钮触发
         $("#submitSearch").click(function(){
-        	var peopleUserNickName = $("input[name='peopleUserNickName']").val();
-        	$.post("${managerPath}/weixin/weixinPeople/list.do",
-        	{
-        		peopleUserNickName:peopleUserNickName
-        	},
-        	function(data,status){
-        		$("#peopleListTable").bootstrapTable('load',data);
-        	}
-        	);
+        	$.ajax({
+        		type:"post",
+        		dataType:"json",
+        		url:"${managerPath}/weixin/weixinPeople/list.do",
+        		data:$("input[name='peopleUserNickName']").serialize(),
+        		success:function(data){
+        			$("#peopleListTable").bootstrapTable('load',data);
+        		}
+        	});
         })
 	    //同步微信公众号的用户到数据库中
 	    $("#synchronousPeople").click(function(){
@@ -97,15 +97,9 @@
 	        	},
 	        	success: function(msg){
 					if(msg.result == true){
-				   		$('.ms-notifications').offset({top:43}).notify({
-							type:'success',
-							message: { text:'同步成功'}
-						}).show();                     
+						<@ms.notify msg="同步成功" type="success"/>
 					}else{
-				       $('.ms-notifications').offset({top:43}).notify({
-							type:'fail',
-							message: { text:'同步失败'}
-						}).show();
+						<@ms.notify msg="同步失败" type="fail"/>
 					}
 					location.reload();
 				}
@@ -119,16 +113,10 @@
 	   $("body").delegate("#sendMessageButton","click",function(){
 			var content = $.trim($("textarea[name='messageContent']").val());
 	   		if(content == "" || content == undefined){
-	        	 $('.ms-notifications').offset({top:43}).notify({
-    		    	type:'warning',
-			    	message: { text:'发送内容不能为空!'}
-			 	 }).show();
+	   			<@ms.notify msg="发送内容不能为空!" type="warning"/>
 	        	return;
 	        }else if(content.length>300){
-	        	$('.ms-notifications').offset({top:43}).notify({
-    		    	type:'warning',
-			    	message: { text:'内容过长!'}
-			 	 }).show();
+	        	<@ms.notify msg="内容过长!" type="warning"/>
 	            return;
 	       	}
 	        $.ajax({
@@ -142,15 +130,9 @@
 	            },
 	            success: function(msg){
 	            	if(msg.result == true){
-	            		$('.ms-notifications').offset({top:43}).notify({
-    		    			type:'success',
-			    			message: { text:'发送成功!'}
-			 	 		}).show();
+	            		<@ms.notify msg="发送成功!" type="success"/>
 	                }else{
-	                    $('.ms-notifications').offset({top:43}).notify({
-    		    			type:'fail',
-			    			message: { text:'发送失败!'}
-			 	 		}).show();
+	                	<@ms.notify msg="发送失败!" type="fail"/>
 	                }
 	                $(".messageModel").modal("hide");
 	                $("#sendMessageButton").text("发送");

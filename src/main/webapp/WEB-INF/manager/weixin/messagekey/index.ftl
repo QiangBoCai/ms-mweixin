@@ -103,16 +103,10 @@
 		var rows = $("#messagekeyListTable").bootstrapTable("getSelections");
 		//没有选中checkbox
 		if(rows.length <= 0){
-			 $('.ms-notifications').offset({top:43}).notify({
-    		    type:'warning',
-			    message: { text:'请选择删除的关键字回复'}
-			 }).show();
+			<@ms.notify msg="请选择删除的关键字回复" type="warning"/>
 		//点击全选，但是列表为空
 		}else if(rows.length == 0){
-			$('.ms-notifications').offset({top:43}).notify({
-    		    type:'warning',
-			    message: { text:'请选择删除的关键字回复'}
-			 }).show();
+			<@ms.notify msg="请选择删除的关键字回复" type="warning"/>
 		}else{
 			$(".delMessagekeyModal").modal();
 		}
@@ -123,20 +117,16 @@
 		$(this).attr("disabled","true");
 		rows = $("#messagekeyListTable").bootstrapTable("getSelections");	
 		$.ajax({		
-		    type:"GET",
+		    type:"post",
 			url:"${managerPath}/weixin/messagekey/delete.do",
-		    data:"rows="+JSON.stringify(rows),
+		    data:JSON.stringify(rows),
+		    dataType:"json",
+  			contentType:"application/json",
 		    success:function(msg) { 
 				if (msg.result == false) {
-					$('.ms-notifications').offset({top:43}).notify({
-    		    		type:'fail',
-			    		message: { text:'删除失败'}
-			 		}).show();
+					<@ms.notify msg="删除失败" type="fail"/>
 				}else{
-					$('.ms-notifications').offset({top:43}).notify({
-    		    		type:'success',
-			    		message: { text:'删除成功'}
-			 		}).show();
+					<@ms.notify msg="删除成功" type="success"/>
 					location.href = base+"${baseManager}/weixin/messagekey/index.do";
 				}
 			}

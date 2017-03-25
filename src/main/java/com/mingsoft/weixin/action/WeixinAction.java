@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -190,14 +191,12 @@ public class WeixinAction extends BaseAction {
 	 */
 	@RequestMapping("/delete")
 	@ResponseBody
-	public void delete(HttpServletResponse response, HttpServletRequest request) {
-		// 得到需要删除的数据字符串
-		String rows  = request.getParameter("rows");
-		List<WeixinEntity> keyIds = JSONArray.parseArray(rows, WeixinEntity.class);
-		int[] ids = new int[keyIds.size()];
+	public void delete(@RequestBody List<WeixinEntity> weixins,HttpServletResponse response, HttpServletRequest request) {
+		//声明数组接收要删除的id
+		int[] ids = new int[weixins.size()];
 		//循环的到要删除的ID
-		for(int i=0;i<keyIds.size();i++){
-			ids[i] = keyIds.get(i).getWeixinId();
+		for(int i=0;i<weixins.size();i++){
+			ids[i] = weixins.get(i).getWeixinId();
 		}
 		// 根据ID批量删除微信
 		weixinBiz.deleteByIds(ids);
