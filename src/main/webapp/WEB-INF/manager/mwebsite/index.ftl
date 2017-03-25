@@ -1,10 +1,10 @@
 <@ms.html5>
 	<@ms.panel>
 		<@ms.nav title="站点管理"></@ms.nav>
-		<@ms.searchForm  id="search" name="searchForm" action="${managerPath}/website/list.do">
+		<@ms.searchForm  name="searchForm" action="">
 			<@ms.text label="标题"  name="websiteName" value="" title="请输入标题"  placeholder="请输入标题" value=""/>
 			<@ms.searchFormButton>
-				<@ms.queryButton onclick="query()"/>								
+				<@ms.queryButton id="submitSearch" onclick="query()"/>			
 			</@ms.searchFormButton>
 		</@ms.searchForm>
 		<!--使用toolbar添加按钮-->
@@ -68,7 +68,8 @@
 			},
 		    columns: [{ checkbox: true},{
 		        field: 'websiteId',
-		        title: '编号'
+		        title: '编号',
+		        align: 'center'
 		    }, {
 		        field: 'websiteName',
 		         formatter: function(value,row,index){
@@ -96,7 +97,8 @@
 		        		return "<font color='red'>已停止</font>"
 		        	}
 		        },
-		        title: '状态'
+		        title: '状态',
+		        align: 'center'
 		    }, {
 		        field: 'websiteMobileState',
 		        formatter: function(value,row,index){
@@ -106,7 +108,8 @@
 		        		return "<font color='red'>未启用</font>"
 		        	}
 		        },
-		        title: '手机端'
+		        title: '手机端',
+		        align: 'center'
 		    }, {
 		        field: 'websitePayDate',
 		        formatter: function(value,row,index){
@@ -115,20 +118,21 @@
 		        	var time = timeList[0];
 		        	return time
 		        },
-		        title: '续费日期'
+		        title: '续费日期',
+		        align: 'center'
 		    }]
         }); 		
 	})
 	function query(){
-		var websiteName = $("input[name='websiteName']").val();
-		$.post("${managerPath}/website/list.do",
-			{
-				websiteName:websiteName
-			},
-			function(data,status){
-				$("#websiteListTable").bootstrapTable('load',data);
-			}
-		)
+		var website = $("form[name='searchForm']").serialize();
+		$.ajax({
+			url:"${managerPath}/website/list.do",
+			type:"post",
+			data:website,
+			 success:function(data){
+			 	$("#websiteListTable").bootstrapTable('load',data);
+             }
+		})
 	}
 	function setManager() {
 		var rows =  $("#websiteListTable").bootstrapTable("getSelections");
@@ -185,16 +189,10 @@
 		//没有选中checkbox
 		var rows =  $("#websiteListTable").bootstrapTable("getSelections");
 		if(rows.length <= 0){
-    		  $('.ms-notifications').offset({top:43}).notify({
-    		    type:'warning',
-			    message: { text:'请选择删除的站点'}
-			 }).show();
+			 <@ms.notify msg="请选择删除的站点" type="warning"/>
 		//点击全选，但是列表为空
 		}else if(rows.length == 0){
-			 $('.ms-notifications').offset({top:43}).notify({
-    		    type:'warning',
-			    message: { text:'请选择删除的站点'}
-			 }).show();
+			<@ms.notify msg="请选择删除的站点" type="warning"/>
 		}else{
 			$(".deleteModal").modal();
 		}
@@ -212,16 +210,10 @@
 		    data:"websiteIds="+websiteIds,
 		    success:function(msg) { 
 				if (msg.result == false) {
-					$('.ms-notifications').offset({top:43}).notify({
-		    		    type:'fail',
-					    message: { text:'删除失败'}
-					 }).show();
+					 <@ms.notify msg="删除失败" type="fail"/>
 				}else{
 					location.href = base+"${baseManager}/website/index.do";
-					$('.ms-notifications').offset({top:43}).notify({
-						type:'success',
-						message: { text:'删除成功！' }
-					}).show();
+					<@ms.notify msg="删除成功!" type="success"/>
 				}
 			}
 		});	

@@ -109,7 +109,7 @@
 	<select id="query" resultMap="resultMap" parameterType="com.mingsoft.mwebsite.entity.WebsiteEntity">
 		select * from app 
 		<where>
-			<if test="websiteName != null">and APP_NAME=#{websiteName}</if>
+			<if test="websiteName != null">and APP_NAME like CONCAT('%',#{websiteName},'%')</if>
 		</where>
 		order by
 		app_id desc
