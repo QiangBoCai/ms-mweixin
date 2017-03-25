@@ -192,10 +192,7 @@
 				if(source_url.length!=0 && source_url!=null && source_url!=undefined){
 					source_url = source_url.match(/http:\/\/.+/);
 					if(source_url == null){
-						$('.ms-notifications').offset({top:43}).notify({
-    		    			type:'warning',
-			    			message: { text:'外连接为http格式!'}
-			 			}).show();
+						<@ms.notify msg="外连接为http格式!" type="warning"/>
 						return;
 					}
 				}
@@ -203,10 +200,7 @@
 				$(this).postForm("#menuForm",{
 					func:function(msg) {
 						if (msg.result) {
-			     			$('.ms-notifications').offset({top:43}).notify({
-    		    				type:'success',
-			    				message: { text:btnHtml+"成功"}
-			 				}).show();
+							<@ms.notify msg="保存或更新成功" type="success"/>
 			     			var data = jQuery.parseJSON(msg.resultMsg);
 			     			var node = {
                 				"name" :data.menuTitle,
@@ -224,10 +218,7 @@
 				    		$("#menuForm").attr("action","${base}${baseManager}/weixin/menu/update.do");
 				    		$("#hideMenuId").html('<input type="hidden" name="menuId" value="'+data.menuId+'"/>')
 			    		}else{
-			    			$('.ms-notifications').offset({top:43}).notify({
-    		    				type:'warning',
-			    				message: { text:msg.resultMsg}
-			 	 			}).show();
+			    			<@ms.notify msg="提交失败" type="warning"/>
 			    			$("#saveOrUpdate").html(btnHtml);
 			    		}
 			    		$("#saveOrUpdate").attr("disabled",false);
