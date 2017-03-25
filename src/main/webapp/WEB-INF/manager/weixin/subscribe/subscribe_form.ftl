@@ -274,10 +274,7 @@
 				);											
 			},
 			error:function(e) {
-				$('.ms-notifications').offset({top:43}).notify({
-    		    	type:'fail',
-			    	message: { text:e}
-			 	}).show();
+			 	<@ms.notify msg= e type="fail"/>
 			}
 		});	
 	}
@@ -322,25 +319,16 @@
 		if ($(".bar li.sel").hasClass("news")) {
 			content = $(".content>div").attr("data-id");
 			if(content == undefined || content == ""){
-				$('.ms-notifications').offset({top:43}).notify({
-    		    	type:'warning',
-			    	message: { text:'请选择素材！'}
-			 	}).show();
+			 	<@ms.notify msg="请选择素材！" type="warning"/>
 				return;
 			}
 		}else{
 			content = $.trim($(".content").text());
 			if(content == undefined || content == ""){
-				$('.ms-notifications').offset({top:43}).notify({
-    		    	type:'warning',
-			    	message: { text:'请输入内容！'}
-			 	}).show();
+			 	<@ms.notify msg="请输入内容！" type="warning"/>
 				return;
 			}else if(content.length > 300){
-				$('.ms-notifications').offset({top:43}).notify({
-    		    	type:'warning',
-			    	message: { text:'内容过长！'}
-			 	}).show();
+			 	<@ms.notify msg="内容过长！" type="warning"/>
 				return;
 			}
 		}		
@@ -359,22 +347,13 @@
 				var obj = data.result;
 				if(obj == true){
 					<#if news?has_content>
-						$('.ms-notifications').offset({top:43}).notify({
-    		    			type:'success',
-			    			message: { text:'更新成功'}
-			 			}).show();
+			 			<@ms.notify msg="更新成功" type="success"/>
 					<#else>
-						$('.ms-notifications').offset({top:43}).notify({
-    		    			type:'success',
-			    			message: { text:'保存成功'}
-			 			}).show();						
+			 			<@ms.notify msg="保存成功" type="success"/>						
 					</#if>							
 					location.reload();
 				}else{
-					$('.ms-notifications').offset({top:43}).notify({
-    		    		type:'warning',
-			    		message: { text:'请重试!'}
-			 		}).show();
+			 		<@ms.notify msg="请重试!" type="warning"/>
 					$("#saveOrUpdateMessage").attr("disabled",true);
 					$("#saveOrUpdateMessage").text(btnWord);
 				}

@@ -420,10 +420,7 @@
 				var obj = $(".mask").attr("data-index");		//重新获取遮罩层的位置
 				$(".mask").animate({top:(obj-1)*126},150);		//遮罩层向上移动(上移的位置再乘以每格要偏移的像素数（*126）)
 			}else{
-				$('.ms-notifications').offset({top:43}).notify({
-	    		    type:'warning',
-				    message: { text:'多文章标题不得少于一条!'}
-				 }).show();
+				 <@ms.notify msg="多文章标题不得少于一条!" type="warning"/>
 			}
 		});	
 		

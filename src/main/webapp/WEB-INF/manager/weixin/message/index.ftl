@@ -117,10 +117,7 @@
 				);											
 			},
 			error:function(e) {
-				$('.ms-notifications').offset({top:43}).notify({
-    		    	type:'fail',
-			    	message: { text:'找不到相关素材'}
-			 	}).show();
+			 	<@ms.notify msg="找不到相关素材" type="fail"/>
 			}
 		});	
 	}
@@ -155,26 +152,17 @@
 		if ($(".bar li.sel").hasClass("news")) {
 			content = $(".content>div").attr("data-id");
 			if(content == undefined || content == ""){
-				$('.ms-notifications').offset({top:43}).notify({
-    		    	type:'warning',
-			    	message: { text:'请选择素材！'}
-			 	}).show();
+			 	<@ms.notify msg="请选择素材！" type="warning"/>
 				return;
 			}
 			url = base+"${baseManager}/weixin/message/guiseSendAllNews.do";
 		}else{
 			content = $.trim($(".content").text());
 			if(content == undefined || content == ""){
-				$('.ms-notifications').offset({top:43}).notify({
-    		    	type:'warning',
-			    	message: { text:'请输入内容！'}
-			 	}).show();
+			 	<@ms.notify msg="请输入内容！" type="warning"/>
 				return;
 			}else if(content.length > 300){
-				$('.ms-notifications').offset({top:43}).notify({
-    		    	type:'warning',
-			    	message: { text:'内容过长！'}
-			 	}).show();
+			 	<@ms.notify msg="内容过长！" type="warning"/>
 				return;
 			}
 			url = base+"${baseManager}/weixin/message/guiseSendAllText.do";
@@ -194,30 +182,18 @@
 			   		var objFail = jQuery.parseJSON(msg.resultMsg);
 			   		var objSucess = jQuery.parseJSON(msg.resultData);
 			   		if(objFail.length == 0){
-			   			$('.ms-notifications').offset({top:43}).notify({
-    		    			type:'success',
-			    			message: { text:'发送成功！'}
-			 			}).show();
+			 			<@ms.notify msg="发送成功！" type="success"/>
 			   		}else{ 
-			   			$('.ms-notifications').offset({top:43}).notify({
-    		    			type:'fail',
-			    			message: { text:"发送失败："+objFail.length+"个,发送成功："+objSucess.length+"个"}
-			 			}).show();  				
+			 			<@ms.notify msg="发送失败："+objFail.length+"个,发送成功："+objSucess.length+"个" type="fail"/> 				
 			   		}	
 		   		}else{
-		   			$('.ms-notifications').offset({top:43}).notify({
-    		    		type:'fail',
-			    		message: { text:'发送失败！'}
-			 		}).show();
+			 		<@ms.notify msg="发送失败！" type="fail"/>
 		   		}	
 		   		$("#sendMessageBtn").text("发送");
 		   		$("#sendMessageBtn").attr("disabled",false);
 		   	},
 		   	error:function(XMLHttpRequest, textStatus, errorThrown){		   		
-		   		 $('.ms-notifications').offset({top:43}).notify({
-	    		    type:'fail',
-				    message: {text:'a'+textStatus}
-				 }).show();
+				 <@ms.notify msg='a'+textStatus type="fail"/>
 		   		location.reload();
 		   	}	
 		});	
@@ -228,10 +204,7 @@
 		if ($(".bar li.sel").hasClass("news")) {
 			var content = $(".content>div").attr("data-id");
 			if(content == undefined || content == ""){
-				$('.ms-notifications').offset({top:43}).notify({
-    		    	type:'warning',
-			    	message: { text:'素材不能为空！'}
-			 	}).show();
+			 	<@ms.notify msg="素材不能为空！" type="warning"/>
 				return;
 			}
 			$.ajax({
@@ -245,32 +218,20 @@
 				},
 			   	success: function(msg){
 			   		if(msg.result == true){
-			   			$('.ms-notifications').offset({top:43}).notify({
-    		    			type:'success',
-			    			message: { text:'发送成功!'}
-			 			}).show();
+			 			<@ms.notify msg="发送成功!" type="success"/>
 			   		}else{   				
-			   			$('.ms-notifications').offset({top:43}).notify({
-    		    			type:'fail',
-			    			message: { text:'发送失败!'}
-			 			}).show();
+			 			<@ms.notify msg="发送失败!" type="fail"/>
 			   		}
 			   		$("#sendMessageMassBtn").text("官方群发");
 			   		$("#sendMessageMassBtn").attr("disabled",false);
 			   	},
 			   	error:function(XMLHttpRequest, textStatus, errorThrown){
-			   		$('.ms-notifications').offset({top:43}).notify({
-    		    		type:'warning',
-			    		message: { text:"a"+textStatus}
-			 	 	}).show();
+			 	 	<@ms.notify msg = "a"+textStatus type="warning"/>
 			   		location.reload();
 			   	}	
 			});		
 		}else{
-			$('.ms-notifications').offset({top:43}).notify({
-    		    type:'fail',
-			    message: { text:'只能进行图文发送!'}
-			 }).show();
+			 <@ms.notify msg="只能进行图文发送!" type="fail"/>
 		}											
 	});	
 </script>

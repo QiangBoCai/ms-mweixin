@@ -127,23 +127,14 @@
 		   	},
 		   	success: function(msg){
 		    	if(msg.result) {
-					 $('.ms-notifications').offset({top:43}).notify({
-    		    		type:'success',
-			    		message: { text:'删除菜单成功'}
-			 		}).show();
+			 		<@ms.notify msg="删除菜单成功!" type="success"/>
 		    	}else{
-					$('.ms-notifications').offset({top:43}).notify({
-    		    		type:'warning',
-			    		message: { text:'菜单下面有子菜单，请先逐个删除子菜单！'}
-			 		}).show();
+			 		<@ms.notify msg="菜单下面有子菜单，请先逐个删除子菜单！" type="warning"/>
 		    	}
 		    	location.reload();
 		   	},
 		   	error: function(){
-		   	  	 $('.ms-notifications').offset({top:43}).notify({
-    		    		type:'fail',
-			    		message: { text:'删除菜单失败'}
-			 		}).show();
+			 	<@ms.notify msg="删除菜单失败!" type="fail"/>
 		   	  	$("#deleteMenu").attr("disabled",false);
 		   	}
 		});
@@ -211,15 +202,15 @@
 		var nodes = treeObj.getNodesByParam("pId",targetNode.id, null);
 		//当子节点个数超过5时，移除新增按钮(二级菜单个数)
 		if (targetNode.pId == 0  &&(nodes.length>=5)){
-				 $("#diyBtnAdd_"+targetNode.id).remove();
+			$("#diyBtnAdd_"+targetNode.id).remove();
 		}			
 		//当一级菜单的子节点超过3时
 		if(targetNode.id == 0  &&(nodes.length>=3)){
-			 $("#diyBtnAdd_"+targetNode.id).remove();
+			$("#diyBtnAdd_"+targetNode.id).remove();
 		}
 		//节点由父节点变成子节点时，移除新增按钮  (剔除了同级目录下打乱顺序的移动产生的bug)
 		if (targetNode.pId != null && targetNode.pId == 0 && targetNode.open == true){
-				 $("#diyBtnAdd_"+treeNodes[0].id).remove();
+			$("#diyBtnAdd_"+treeNodes[0].id).remove();
 		}
 		//获取一级菜单
 		nodes =  treeObj.getNodesByParam("pId",0, null);
@@ -247,10 +238,7 @@
 		   	data: "menuId=" + treeNodes[0].id+"&menuMenuId="+menuMenuId,
 		   	success: function(msg){
 		   		if(msg.result){
-		   			$('.ms-notifications').offset({top:43}).notify({
-		    		    type:'success',
-					    message: { text:'菜单移动成功'}
-					 }).show();
+					 <@ms.notify msg="菜单移动成功!" type="success"/>
 		   		 }
 		   	}
 		});
@@ -277,10 +265,7 @@
 		//当目标节点的子节点个数等于5时 ,不能进行移动
 		var nodes = treeObj.getNodesByParam("pId",targetNode.id, null);
 		if(nodes.length>=5 ){
-			$('.ms-notifications').offset({top:43}).notify({
-    		    type:'warning',
-			    message: { text:'子节点最多只能为5，不能进行移动'}
-			}).show();
+			<@ms.notify msg="子节点最多只能为5，不能进行移动" type="warning"/>
 			return false;
 		}
 		//移动时保证一级菜单的数量不超过3
@@ -381,15 +366,9 @@
 				func:function(data) {
 					var obj = jQuery.parseJSON(data)
 					if (obj.result) {
-			     		$('.ms-notifications').offset({top:43}).notify({
-		    		    	type:'success',
-					    	message: { text:"菜单"+html+"成功"}
-					 	}).show();
+					 	<@ms.notify msg="菜单"+html+"成功" type="success"/>
 			    	}else{
-			    		$('.ms-notifications').offset({top:43}).notify({
-		    		    	type:'fail',
-					    	message: { text:'obj.resultMsg'}
-					 	}).show();
+					 	<@ms.notify msg="obj.resultMsg" type="fail"/>
 			    	}
 			    	$(".ms-content-body-title #publishOrStop").text(html);
 					$(".ms-content-body-title #publishOrStop").attr("disabled",false);
@@ -400,10 +379,7 @@
 		$(".newsMessageListModal #select").click(function(){
 			var resId = window.frames["article_frame"].getSelected();
 			if(resId == null){
-				$('.ms-notifications').offset({top:43}).notify({
-		    		type:'warning',
-					message: { text:'请至少选择一个'}
-				}).show();
+				<@ms.notify msg="请至少选择一个" type="warning"/>
 				return;
 			}
 			$(".newsMessageListModal").modal("hide");

@@ -71,15 +71,13 @@
 		$("#messageContent").val($("#messageContent").next("div").text());
 	    $(this).postForm("#messageForm",{action:actionUrl,func:function(data) {
 			if(data.result){
-				$('.ms-notifications').offset({top:43}).notify({
-    		    	type:'success',
-			   	 	message: { text:'发送成功'}
-			 	}).show();
+			 	<@ms.notify msg="发送成功!" type="success"/>
 			}else{
 				$('.ms-notifications').offset({top:43}).notify({
     		    	type:'fail',
 			   	 	message: { text:'data.resultMsg'}
 			 	}).show();
+			 	<@ms.notify msg = data.resultMsg type="fail"/>
 			}
 		}});
 	});

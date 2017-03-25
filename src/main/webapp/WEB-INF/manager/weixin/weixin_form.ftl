@@ -51,20 +51,14 @@
 				if(weixinProxyUrl!="" && weixinProxyUrl!=undefined){
 					weixinProxyUrl = weixinProxyUrl.match(/http:\/\/.+/);
 					if(weixinProxyUrl == null){
-						$('.ms-notifications').offset({top:43}).notify({
-    		    				type:'warning',
-			    				message: { text:'请输入http格式的内网地址!'}
-			 				}).show();
+			 			<@ms.notify msg="请输入http格式的内网地址!" type="warning"/>
 						return;
 					}
 				}
 				if(weixinOauthUrl!="" && weixinOauthUrl!=undefined){
 					weixinOauthUrl = weixinOauthUrl.match(/http:\/\/.+/);
 					if(weixinOauthUrl == null){
-						$('.ms-notifications').offset({top:43}).notify({
-    		    				type:'warning',
-			    				message: { text:'请输入http格式的授权地址!'}
-			 				}).show();
+			 			<@ms.notify msg="请输入http格式的授权地址!" type="warning"/>
 						return;
 					}
 				}
@@ -76,22 +70,13 @@
 				$(this).postForm("#weixinForm",{func:function(msg) {
 					if (msg.result == true) {
 			     		<#if weixin.weixinId!=0>
-			     			 $('.ms-notifications').offset({top:43}).notify({
-    		    				type:'success',
-			    				message: { text:'保存成功'}
-			 				}).show();
+			 				<@ms.notify msg="保存成功" type="success"/>
 		     			<#else>
-			     			 $('.ms-notifications').offset({top:43}).notify({
-    		    				type:'fail',
-			    				message: { text:'保存失败'}
-			 				}).show();
+			 				<@ms.notify msg="保存失败" type="fail"/>
 			     			location.href = "${managerPath}/weixin/index.do"; 	
 			     		</#if>		     					    		
 			    	}else{
-			    		 $('.ms-notifications').offset({top:43}).notify({
-    		    				type:'fail',
-			    				message: { text:'提交失败'}
-			 				}).show();
+			 			<@ms.notify msg="提交失败" type="fail"/>
 			    		$("#saveOrUpdateWeixin").text(btnWord);	
 			    	}
 				}});

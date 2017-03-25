@@ -432,10 +432,7 @@
 		//获取关键字
 		var keyword = $.trim($("input[name='keyword']").val());
 		if(keyword=="" || keyword==undefined){
-			$('.ms-notifications').offset({top:43}).notify({
-    		    	type:'warning',
-			    	message: { text:'关键词不能为空!'}
-			 	 }).show();
+			<@ms.notify msg="关键词不能为空!" type="warning"/>
 			return;
 		}		
 		if (curPage<1) {
@@ -545,10 +542,7 @@
 		 */
 		$("table").delegate(".articleInfo","click",function(){
 			if (targetNews=="") {
-				$('.ms-notifications').offset({top:43}).notify({
-    		    	type:'warning',
-			    	message: { text:'请选择左边需要编辑消息'}
-			 	}).show();
+			 	<@ms.notify msg="请选择左边需要编辑消息" type="warning"/>
 				return;
 			}
 			newsCategoryId  = $(this).find("td").last().find("p").eq(0).text();//文章所属栏目ID
@@ -580,10 +574,7 @@
 			$(".childNews[data-id]").each(function() {  //遍历子图文消息获取文章id 
 				var dataId = $(this).attr("data-id");
 				if (dataId=="" || dataId==null || typeof(dataId) == "undefined") { //如果子文章的id为空，说明用户没有选择，作出提示
-						$('.ms-notifications').offset({top:43}).notify({
-    		    			type:'warning',
-			    			message: { text:'信息不完整！请重新填写。'}
-			 			}).show();
+			 		<@ms.notify msg="信息不完整！请重新填写。" type="warning"/>
 					$("div.editTarget").removeClass("editTarget");
 					$(this).addClass("editTarget");//提示用户那片文章没有选择
 		  			return;
@@ -591,23 +582,14 @@
 				newsChildArticleIds+=dataId+",";
 			});
 		  	if (newsChildArticleIds==""　&& newsType==1) {
-		  		$('.ms-notifications').offset({top:43}).notify({
-    		    	type:'warning',
-			    	message: { text:'信息不完整！请重新填写。'}
-			 	}).show();
+			 	<@ms.notify msg="信息不完整,请重新填写!" type="warning"/>
 		  		return;
 		  	} else if (newsType==0 && parseInt($(".marsterId").attr("data-id"))<=0 ||  typeof($(".marsterId").attr("data-id")) == "undefined") {
-		  			$('.ms-notifications').offset({top:43}).notify({
-    		    		type:'warning',
-			    		message: { text:'请选择一篇文章作为单图文素材！'}
-			 		}).show();
+			 	<@ms.notify msg="请选择一篇文章作为单图文素材！" type="warning"/>
 		  		return;
 		  	}
 		  	if (newsCategoryId=="" || newsCategoryId==0) {
-		  			$('.ms-notifications').offset({top:43}).notify({
-    		    		type:'warning',
-			    		message: { text:'请选择素材所属分类'}
-			 		}).show();
+			 	<@ms.notify msg="请选择素材所属分类" type="warning"/>
 		  		return;
 		  	}
 			//发送添加请求
@@ -625,22 +607,13 @@
 			   success: function(msg){
 			   		if(msg.result == true){
 			   			<#if news?has_content>							
-			   				$('.ms-notifications').offset({top:43}).notify({
-    		    				type:'success',
-			    				message: { text:'更新成功'}
-			 				}).show();
+			 				<@ms.notify msg="更新成功" type="success"/>
 			   			<#else>
-			   				$('.ms-notifications').offset({top:43}).notify({
-    		    				type:'success',
-			    				message: { text:'添加成功'}
-			 				}).show();
+			 				<@ms.notify msg="添加成功" type="success"/>
 						</#if>
 			   			location.href = base+"${baseManager}/weixin/news/list.do"; 
 			   		}else{
-			   			$('.ms-notifications').offset({top:43}).notify({
-    		    				type:'warning',
-			    				message: { text:'请重试！'}
-			 				}).show();
+			 			<@ms.notify msg="请重试！" type="warning"/>
 			   			$("#saveOrUpdateNews").text(btnWord);
 			   			$("#saveOrUpdateNews").attr("disabled",false);	
 			   		}
@@ -706,10 +679,7 @@
 				var obj = $(".mask").attr("data-index");		//重新获取遮罩层的位置
 				$(".mask").animate({top:(obj-1)*126},150);		//遮罩层向上移动(上移的位置再乘以每格要偏移的像素数（*126）)
 			}else{
-				$('.ms-notifications').offset({top:43}).notify({
-    		    	type:'warning',
-			    	message: { text:'多文章标题不得少于一条！'}
-			 	}).show();
+			 	<@ms.notify msg="多文章标题不得少于一条！" type="warning"/>
 			}
 		});	
 		
@@ -748,10 +718,7 @@
 	*/
 	function addChildNews() {
 		if ($(".childNews").length>7) {
-			$('.ms-notifications').offset({top:43}).notify({
-    		    	type:'warning',
-			    	message: { text:'最多8条图文消息！'}
-			 	}).show();
+			<@ms.notify msg="最多8条图文消息！" type="warning"/>
 			return;
 		}
 		$(".childNewes").append($(".childNewsPlug").html());

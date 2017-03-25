@@ -219,10 +219,7 @@
 				if(source_url.length!=0 && source_url!=null && source_url!=undefined){
 					source_url = source_url.match(/http:\/\/.+/);
 					if(source_url == null){
-						$('.ms-notifications').offset({top:43}).notify({
-    		    			type:'warning',
-			    			message: { text:'外连接为http格式!'}
-			 	 		}).show();
+			 	 		<@ms.notify msg="外连接为http格式!" type="warning"/>
 						return;
 					}
 				}
@@ -230,10 +227,7 @@
 				$(this).postForm("#menuForm",{
 					func:function(msg) {
 						if (msg.result) {
-							$('.ms-notifications').offset({top:43}).notify({
-    		    				type:'warning',
-			    				message: { text:btnHtml+"成功"}
-			 	 			}).show();
+			 	 			<@ms.notify msg=btnHtml+"成功" type="warning"/>
 			     			var data = jQuery.parseJSON(msg.resultMsg);
 			     			var node = {
                 				"name" :data.menuTitle,
@@ -247,10 +241,7 @@
 	       				 		parent.updateNode(node);
 	       				 	}
 			    		}else{
-			    			$('.ms-notifications').offset({top:43}).notify({
-    		    				type:'warning',
-			    				message: { text:msg.resultMsg}
-			 	 			}).show();
+			 	 			<@ms.notify msg=msg.resultMsg type="warning"/>
 			    		}
 			    		$("#saveOrUpdate").html("更新");
 			    		$("#saveOrUpdate").attr("data-save",false);

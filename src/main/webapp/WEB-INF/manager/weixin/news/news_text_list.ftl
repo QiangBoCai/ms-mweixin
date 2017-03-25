@@ -148,18 +148,12 @@
 			//点击更新按钮
 			$("#addTextDialog").delegate("#updateOrSaveText","click",function(){
 				if($("#textForm textarea").val().length <=0){
-					$('.ms-notifications').offset({top:43}).notify({
-						type:'warning',
-						message: { text:'请输入素材内容！' }
-					}).show();
+					<@ms.notify msg="请输入素材内容！" type="warning"/>
 					retrun ;
 				}
 				if($("#textForm textarea").val().length>600){
 					var beyond = $("#textForm textarea").val().length - 600;
-					$('.ms-notifications').offset({top:43}).notify({
-						type:'warrning',
-						message: { text:'您输入的内容超出:'+beyond+'个字符' }
-					}).show();
+					<@ms.notify msg="您输入的内容超出:"+beyond+"个字符" type="warrning"/>
 					return ;
 				}
 				var formdata = $("#textForm").serialize();
@@ -172,24 +166,15 @@
 				   	success: function(msg){
 				   		if(msg.result){
 				   			if($("#updateOrSaveText").html()=="保存"){
-				   				$('.ms-notifications').offset({top:43}).notify({
-									type:'success',
-									message: { text:'保存成功！' }
-								}).show();
+								<@ms.notify msg="保存成功！" type="success"/>
 				   				location.href="${base}${baseManager}/weixin/news/textList.do";
 				   			}else{
-				   				$('.ms-notifications').offset({top:43}).notify({
-									type:'success',
-									message: { text:'更新成功！' }
-								}).show();
+								<@ms.notify msg="更新成功！" type="success"/>
 				   				location.href="${base}${baseManager}/weixin/message/list.do?pageNo="+(msg.resultMsg);
 				   			}
 				   			$("#updateOrSaveText").attr("disabled", true);
 				   		}else{
-				   			$('.ms-notifications').offset({top:43}).notify({
-								type:'fail',
-								message: { text:msg.resultMsg }
-							}).show();
+							<@ms.notify msg=msg.resultMsg type="fail"/>
 				   		}
 				   	}
 				});
@@ -239,10 +224,7 @@
 		 						location.href="${base}${baseManager}/weixin/message/list.do?pageNo="+msg.resultMsg;
 		 					}
     					}else{
-    						$('.ms-notifications').offset({top:43}).notify({
-				    		    type:'warning',
-							    message: { text:'没有找到该文章!'}
-							 }).show();
+							 <@ms.notify msg="没有找到该文章!" type="warning"/>
     					}
     				}
     			});

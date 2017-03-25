@@ -305,10 +305,7 @@
 				);											
 			},
 			error:function(e) {
-				$('.ms-notifications').offset({top:43}).notify({
-					type:'fail',
-					message: { text: e }
-				}).show();
+				<@ms.notify msg= e type="fail"/>
 			}
 		});	
 	}
@@ -382,16 +379,10 @@
 						var obj = data.result;
 						if(obj == true){
 							<#if news?has_content>
-								$('.ms-notifications').offset({top:43}).notify({
-    		    					type:'success',
-			    					message: { text:'更新成功'}
-			 					}).show();
+			 					<@ms.notify msg="更新成功" type="success"/>
 								location.href="${managerPath}/weixin/messagekey/index.do"; 	
 							<#else>
-								$('.ms-notifications').offset({top:43}).notify({
-    		    					type:'success',
-			    					message: { text:'保存成功'}
-			 					}).show();								
+			 					<@ms.notify msg="保存成功" type="success"/>						
 								location.href="${managerPath}/weixin/messagekey/index.do";
 							</#if>									
 						}else{

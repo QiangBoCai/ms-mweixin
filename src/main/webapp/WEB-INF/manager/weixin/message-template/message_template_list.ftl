@@ -90,10 +90,7 @@
 		if(radioData!=""){
 			$(".delete").modal();//打开
 		}else{
-			$('.ms-notifications').offset({top:43}).notify({
-			    type:'warning',
-			    message: { text:'请选择需要删除的模板！'}
-			 }).show();				
+			 <@ms.notify msg="请选择需要删除的模板！" type="warning"/>				
 		}
 	})
 		//点击每一条数据的id
@@ -168,16 +165,10 @@
 				$(this).postForm("#updateSms",{func:function(data) {
 					$(".update").modal("hide");//关闭
 					location.reload();
-					$('.ms-notifications').offset({top:43}).notify({
-		    		    type:'success',
-					    message: { text:'更新成功'}
-					 }).show();
+					<@ms.notify msg="更新成功!" type="success"/>
 				}})
 			}else {
-				$('.ms-notifications').offset({top:43}).notify({
-	    		    type:'fail',
-				    message: { text:'更新失败'}
-				 }).show();
+				<@ms.notify msg="更新失败" type="fail"/>
 			}    	
 	 });
 
@@ -194,19 +185,13 @@
 	    			success: function(msg){
 	    				if (msg.result) {
 	    					location.reload();
-	    					$('.ms-notifications').offset({top:43}).notify({
-								type:'success',
-								message: { text:'删除成功！' }
-							}).show();
+							<@ms.notify msg="删除成功！" type="success"/>
 	    				}    				
 	    			}
 	    		});
 	    	}else{
 	    		$(".delete").modal("hide");
-	    		$('.ms-notifications').offset({top:43}).notify({
-					type:'warning',
-					message: { text:'请选择模块！' }
-				}).show();
+				<@ms.notify msg="请选择模块！" type="warning"/>
 	        }
 	 })
 </script>
