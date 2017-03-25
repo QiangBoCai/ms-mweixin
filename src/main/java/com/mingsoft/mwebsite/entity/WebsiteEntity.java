@@ -5,6 +5,7 @@ import java.util.Date;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.mingsoft.base.entity.BaseEntity;
+import com.mingsoft.util.StringUtil;
 
 /**
  * 网站基本信息实体类
@@ -198,7 +199,7 @@ public class WebsiteEntity extends BaseEntity {
 	 * 获取网站域名
 	 */
 	public String getWebsiteHostUrl() {
-		if (websiteUrl.indexOf("\n") > 0) { //存在多个域名绑定
+		if (!StringUtil.isBlank(websiteUrl) && websiteUrl.indexOf("\n") > 0) { //存在多个域名绑定
 			return websiteUrl.split("\n")[0].trim();
 		}
 		return websiteUrl;
