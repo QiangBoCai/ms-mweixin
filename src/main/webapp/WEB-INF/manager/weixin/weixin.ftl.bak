@@ -81,7 +81,7 @@
 				if(weixinOauthUrl!="" && weixinOauthUrl!=undefined){
 					weixinOauthUrl = weixinOauthUrl.match(/http:\/\/.+/);
 					if(weixinOauthUrl == null){
-						alert("请输入http格式的授权地址!");
+						<@ms.notify msg="请输入http格式的内网地址!" type="warning"/>
 						return;
 					}
 				}
@@ -89,11 +89,11 @@
 				$(this).postForm("#weixinForm",{func:function(msg) {
 					if (msg.result == true) {
 			     		<#if weixin?has_content>
-			     			alert("更新成功");	
+			     			<@ms.notify msg="更新成功" type="success"/>
 			     			$("#saveOrUpdateWeixin").text("更新");
 		     			<#else>
 		     				$("#saveOrUpdateWeixin").attr("disabled", true);
-			     			alert("保存成功");
+			     			<@ms.notify msg="保存成功" type="success"/>
 			     			location.href = "${basePath}/manager/weixin/list.do"; 	
 			     		</#if>		     					    		
 			    	}else{

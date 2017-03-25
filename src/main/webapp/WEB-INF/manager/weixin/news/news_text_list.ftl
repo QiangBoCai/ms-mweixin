@@ -152,8 +152,7 @@
 					retrun ;
 				}
 				if($("#textForm textarea").val().length>600){
-					var beyond = $("#textForm textarea").val().length - 600;
-					<@ms.notify msg="您输入的内容超出:"+beyond+"个字符" type="warrning"/>
+					<@ms.notify msg="您输入的内容超出600个字符" type="warrning"/>
 					return ;
 				}
 				var formdata = $("#textForm").serialize();
@@ -174,7 +173,7 @@
 				   			}
 				   			$("#updateOrSaveText").attr("disabled", true);
 				   		}else{
-							<@ms.notify msg=msg.resultMsg type="fail"/>
+							<@ms.notify msg="保存或更新失败！" type="fail"/>
 				   		}
 				   	}
 				});

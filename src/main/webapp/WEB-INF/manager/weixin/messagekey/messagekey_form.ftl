@@ -305,7 +305,7 @@
 				);											
 			},
 			error:function(e) {
-				<@ms.notify msg= e type="fail"/>
+				<@ms.notify msg= "提交失败" type="fail"/>
 			}
 		});	
 	}

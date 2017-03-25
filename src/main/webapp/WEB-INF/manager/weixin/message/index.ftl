@@ -184,7 +184,7 @@
 			   		if(objFail.length == 0){
 			 			<@ms.notify msg="发送成功！" type="success"/>
 			   		}else{ 
-			 			<@ms.notify msg="发送失败："+objFail.length+"个,发送成功："+objSucess.length+"个" type="fail"/> 				
+			 			<@ms.notify msg="发送失败！" type="fail"/> 				
 			   		}	
 		   		}else{
 			 		<@ms.notify msg="发送失败！" type="fail"/>
@@ -193,7 +193,7 @@
 		   		$("#sendMessageBtn").attr("disabled",false);
 		   	},
 		   	error:function(XMLHttpRequest, textStatus, errorThrown){		   		
-				 <@ms.notify msg='a'+textStatus type="fail"/>
+				 <@ms.notify msg="发送失败！" type="fail"/>
 		   		location.reload();
 		   	}	
 		});	
@@ -226,12 +226,12 @@
 			   		$("#sendMessageMassBtn").attr("disabled",false);
 			   	},
 			   	error:function(XMLHttpRequest, textStatus, errorThrown){
-			 	 	<@ms.notify msg = "a"+textStatus type="warning"/>
+			 	 	<@ms.notify msg ="发送失败!" type="fail"/>
 			   		location.reload();
 			   	}	
 			});		
 		}else{
-			 <@ms.notify msg="只能进行图文发送!" type="fail"/>
+			 <@ms.notify msg="只能进行图文发送!" type="warning"/>
 		}											
 	});	
 </script>

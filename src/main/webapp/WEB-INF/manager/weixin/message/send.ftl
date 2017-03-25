@@ -73,11 +73,7 @@
 			if(data.result){
 			 	<@ms.notify msg="发送成功!" type="success"/>
 			}else{
-				$('.ms-notifications').offset({top:43}).notify({
-    		    	type:'fail',
-			   	 	message: { text:'data.resultMsg'}
-			 	}).show();
-			 	<@ms.notify msg = data.resultMsg type="fail"/>
+			 	<@ms.notify msg = "发送失败！" type="fail"/>
 			}
 		}});
 	});

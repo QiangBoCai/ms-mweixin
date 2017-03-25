@@ -366,9 +366,9 @@
 				func:function(data) {
 					var obj = jQuery.parseJSON(data)
 					if (obj.result) {
-					 	<@ms.notify msg="菜单"+html+"成功" type="success"/>
+					 	<@ms.notify msg="菜单发布成功" type="success"/>
 			    	}else{
-					 	<@ms.notify msg="obj.resultMsg" type="fail"/>
+					 	<@ms.notify msg="菜单发布失败" type="fail"/>
 			    	}
 			    	$(".ms-content-body-title #publishOrStop").text(html);
 					$(".ms-content-body-title #publishOrStop").attr("disabled",false);
