@@ -27,6 +27,13 @@
 				width:340px;
 				padding:0
 			}
+			.col-sm-2{
+				float:left;
+			}
+			.col-sm-9{
+				float:left;
+				width:83%;
+			}
 			/*图文样式*/
 			.sub-msg-item{
 				padding:12px 14px;
@@ -83,7 +90,7 @@
 		</@ms.nav>
 		<@ms.form isvalidation=true name="menuForm"  action="" style="width:83%;">
 			<@ms.hidden name="menuMenuId" value="" />
-			<@ms.text  name="menuTitle"   label="菜单名称:" value="${menu.menuTitle?default('')}" title="菜单名称:" placeholder="请输入菜单名称" validation={"required":"true", "maxlength":"7","data-bv-stringlength-message":"长度介于1-7个字符!","data-bv-notempty-message":"必填项目"}/>
+			<@ms.text  name="menuTitle"   label="菜单名称:"  value="${menu.menuTitle?default('')}" title="菜单名称:" placeholder="请输入菜单名称" validation={"required":"true", "maxlength":"7","data-bv-stringlength-message":"长度介于1-7个字符!","data-bv-notempty-message":"必填项目"}/>
 			<@ms.select  name="menuStyle"   label="菜单类型:" list={"1":"文本","2":"图文","4":"外连接"}  value="${menu.menuStyle?default(1)}" listKey="menuStyle" listValue="menuStyleValue" validation={"required":"true", "data-bv-notempty-message":"必填项目"} />	
 			<!---文本内容开始---->
 			<div class=" menuText r-module" data-style="1" style="display:block">
