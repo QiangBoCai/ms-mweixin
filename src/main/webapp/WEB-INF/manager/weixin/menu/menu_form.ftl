@@ -27,6 +27,9 @@
 				width:340px;
 				padding:0
 			}
+			body{
+				min-width:0px;
+			}
 			.col-sm-2{
 				float:left;
 			}
@@ -88,7 +91,7 @@
 		<@ms.nav title="">
 			<button type="button"class="btn btn-success btn-md" id="saveOrUpdate" data-save = "true"><#if menuId?has_content>更新<#else>保存</#if></button>
 		</@ms.nav>
-		<@ms.form isvalidation=true name="menuForm"  action="" style="width:83%;">
+		<@ms.form isvalidation=true name="menuForm"  action="">
 			<@ms.hidden name="menuMenuId" value="" />
 			<@ms.text  name="menuTitle"   label="菜单名称:"  value="${menu.menuTitle?default('')}" title="菜单名称:" placeholder="请输入菜单名称" validation={"required":"true", "maxlength":"7","data-bv-stringlength-message":"长度介于1-7个字符!","data-bv-notempty-message":"必填项目"}/>
 			<@ms.select  name="menuStyle"   label="菜单类型:" list={"1":"文本","2":"图文","4":"外连接"}  value="${menu.menuStyle?default(1)}" listKey="menuStyle" listValue="menuStyleValue" validation={"required":"true", "data-bv-notempty-message":"必填项目"} />	

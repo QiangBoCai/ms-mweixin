@@ -56,10 +56,10 @@
 			    width:'220'
 			    
 			},{
-			    align:'center',
+			    align:'left',
 			    field: 'weixinName',
 			    title: '公众号名称',
-			    width:'200',
+			     width:'220',
 			    formatter:function(value,row,index){return"	<a class='btn btn-xs red tooltips editWeixin' data-id=" + row.weixinId + ">" + row.weixinName + "</a>"}
 			}, {
 			    align:'center',
@@ -78,10 +78,9 @@
 			    align:'left',
 			    field: 'weixinToken',
 			    title: '微信token',
-			    width:'120',
-			    halign:'center'
+			    width:'120'
 			},{
-				align:'center',
+				align:'left',
 				field: 'weixinOauthUrl',
 			    title: '网页2.0授权地址'
 			}]

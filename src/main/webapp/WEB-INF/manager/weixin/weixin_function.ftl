@@ -32,11 +32,9 @@
 		 	<ul id="menuTree" class="ztree"></ul> 
 			<!-- 树形模块菜单结束 -->
 		</@ms.contentMenu>
-		<@ms.contentBody style="width:85%">
-			<@ms.contentPanel>
-				<iframe src="${managerPath}/weixin/weixinPeople/index.do" style="width:100%;maring:0;padding:0;border:none;height:100%; " id="listFrame" target="listFrame" ></iframe>
-			</@ms.contentPanel>
-		</@ms.contentBody>
+		<@ms.panel style="width: 85%;right: 0; position: absolute;">
+				<iframe src="${managerPath}/weixin/weixinPeople/index.do"  style="width:100%;maring:0;padding:0;border:none;height:100%;" scrolling="no" id="listFrame" target="listFrame" ></iframe>
+		</@ms.panel>
 	</@ms.content>
 </@ms.html5>
 <script>

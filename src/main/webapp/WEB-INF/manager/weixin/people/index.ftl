@@ -50,10 +50,10 @@
 				align:'center',
 			   	field: 'weixinPeopleHeadimgUrl',
 			    title: '用户头像',
-			    width:'100',
+			    width:'80',
 			    formatter:function(value,row,index){return "<img src=" + row.weixinPeopleHeadimgUrl + " style='border-radius:12px;width:25px;height:25px;'>"}
 			}, {
-			    align:'center',
+			    align:'left',
 			    field: 'peopleUserNickName',
 			    title: '用户昵称'
 			},{
@@ -64,7 +64,8 @@
 			}, {
 			    align:'center',
 			    field: 'peoplePhone',
-			    title: '用户电话'
+			    title: '用户电话',
+			    width:'200'
 			},{
 			    align:'center',
 			    field: 'weixinPeopleCity',

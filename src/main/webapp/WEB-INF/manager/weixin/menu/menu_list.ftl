@@ -63,10 +63,9 @@
 		font-weight:900;
 		}
 	</style>
-	<body style="height:100%">
 	<@ms.content>
 		<@ms.contentBody>
-			<div class="row margin20" id="menuList">
+			<div class="row margin20" id="menuList" style="overflow:hidden;">
 				<!--菜单显示区域开始-->
 				<div class="col-md-3" style="padding-left:0px;padding-right:0px;">
 					<div class="ms-content--body-title" style="background:none;">
@@ -91,7 +90,7 @@
 			<!--选取素材模态框开始-->
 			<@ms.modal modalName="newsMessageListModal" title="选择图文素材">
 				<@ms.modalBody>
-					<iframe class="box-iframe"  id="article_frame" name="article_frame"  data-key="iframe"   src="${base}${baseManager}/weixin/news/listSelect.do" frameborder="0" scrolling="yes"  height="400px;" width="900px;"></iframe>
+					<iframe class="box-iframe"  id="article_frame" name="article_frame"  data-key="iframe"   src="${base}${baseManager}/weixin/news/listSelect.do" frameborder="0" scrolling="no"  height="400px;" width="900px;"></iframe>
 				</@ms.modalBody>
 				<@ms.modalButton>
 					<!--模态框按钮组-->
@@ -395,7 +394,7 @@
     	iframeHeight =  $("#menuList").height();
    		if(defaults.url!=''){
    			$("#menuDetail .alert").hide();
-			$("#menuDetail").html('<iframe class="box-iframe" height="'+iframeHeight+'" data-key="iframe"  id="detail" name="detail" src="'+defaults.url+'" frameborder="0" scrolling="yes" data-parent-id="'+defaults.pId+'"></iframe>');
+			$("#menuDetail").html('<iframe class="box-iframe" height="'+iframeHeight+'" data-key="iframe"  id="detail" name="detail" src="'+defaults.url+'" frameborder="0" scrolling="no" data-parent-id="'+defaults.pId+'"></iframe>');
 		}
    	}   		   
 	//显示图文选择模态框

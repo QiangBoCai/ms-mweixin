@@ -46,12 +46,13 @@
 			},
 			columns: [{checkbox:'true'},
 			{
-				align:'center',
+				align:'left',
 			   	field: 'passiveMessageKey',
-			    title: '关键词'
+			    title: '关键词',
+			    width:'200'
 			    
 			}, {
-			    align:'center',
+			    align:'left',
 			    field: 'passiveMessageId',
 			    title: '回复内容',
 			    formatter:function(value,row,index){
@@ -75,6 +76,7 @@
 			    align:'center',
 			    field: 'newsType',
 			    title: '素材类型',
+			    width:'150',
 			    formatter:function(value,row,index){
 			    	if(row.newsEntity.newsType == 0){
 			    		return "单图文素材";
