@@ -114,6 +114,21 @@ public class WebsiteAction extends BaseAction{
 	}
 	
 	/**
+	 * Mstore标识是否显示
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("/ckeckedStore")
+	public void ckeckedStore(HttpServletRequest request,HttpServletResponse response){
+		//判断是否是管理员
+		if(this.isSystemManager(request)){
+			this.outJson(response, true);
+		}else{
+			this.outJson(response, false);
+		}
+	}
+	
+	/**
 	 * 批量id删除站点信息
 	 * @param basicId 要删除的站点Id
 	 * @param request 请求对象

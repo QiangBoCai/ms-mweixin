@@ -66,6 +66,22 @@
 			}
 			$(this).data("url", "${managerPath}/"+$(this).data("url")+tag+"modelId="+$(this).data("id")+"&modelTitle="+encodeURI($(this).data("title")));
 		});
+		$.ajax({
+			url:"${managerPath}/website/ckeckedStore.do",
+			type:"post",
+			success:function(data){
+				if(data.result == false){
+					$(".ms-top-mstore").hide();
+				}else{
+					$(".ms-top-mstore").show();
+				}	
+			},
+			statusCode:{
+				 404:function(){
+				 	$(".ms-top-mstore").show();
+				 }
+			}
+		})
     });
 </script>
 
