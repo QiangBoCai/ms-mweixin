@@ -4,7 +4,7 @@
 		<@ms.searchForm  name="searchForm" action="">
 			<@ms.text label="标题"  name="websiteName" value="" title="请输入标题"  placeholder="请输入标题" value=""/>
 			<@ms.searchFormButton>
-				<@ms.queryButton id="submitSearch" onclick="query()"/>			
+				<@ms.queryButton id="submitSearch" />			
 			</@ms.searchFormButton>
 		</@ms.searchForm>
 		<!--使用toolbar添加按钮-->
@@ -55,8 +55,14 @@
 	</@ms.modal>
 </@ms.html5>
 <script>	
-	
-	$(function() {
+$(function() {
+	query();
+	$("#submitSearch").click(function(){
+	//先破坏表数据，在重新加载
+		$("#websiteListTable").bootstrapTable('destroy');
+		query();
+	})
+	function query(){
 		//对应bootstrap-table框架的控制
         $("#websiteListTable").bootstrapTable({
     		url:"${managerPath}/website/list.do",
@@ -64,7 +70,7 @@
     		queryParamsType : "undefined",
     		toolbar: "#toolbar",
     		queryParams:function(params) {
-				return  $.param(params)+"&pageNo="+params.pageNumber;
+				return  $.param(params)+"&pageNo="+params.pageNumber+$("form[name='searchForm']").serialize();
 			},
 		    columns: [{ checkbox: true},{
 		        field: 'websiteId',
@@ -121,19 +127,9 @@
 		        title: '续费日期',
 		        align: 'center'
 		    }]
-        }); 		
-	})
-	function query(){
-		var website = $("form[name='searchForm']").serialize();
-		$.ajax({
-			url:"${managerPath}/website/list.do",
-			type:"post",
-			data:website,
-			 success:function(data){
-			 	$("#websiteListTable").bootstrapTable('load',data);
-             }
-		})
+        }); 
 	}
+	
 	function setManager() {
 		var rows =  $("#websiteListTable").bootstrapTable("getSelections");
 		if (rows.length > 1) {
@@ -240,4 +236,5 @@
 			}
 		});
 	}
+});
 </script>
