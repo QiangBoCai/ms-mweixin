@@ -75,11 +75,7 @@
         });
     	//点击查询按钮触发
         $("#submitSearch").click(function(){
-        	var opt = {
-	        	silent: true,
-	        	query:$("form[name='searchForm']").serializeArray()
-	    	};
-   	 		$("#peopleListTable").bootstrapTable('refresh', opt);
+   	 		$("#peopleListTable").bootstrapTable('refresh', {query:$("form[name='searchForm']").serializeArray()});
 		})
 	    //同步微信公众号的用户到数据库中
 	    $("#synchronousPeople").click(function(){

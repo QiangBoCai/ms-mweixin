@@ -376,10 +376,7 @@
 			   		if(msg.result == true){
 			   			location.href = base+"${baseManager}/weixin/news/list.do"; 
 			   		}else{
-			   			$('.ms-notifications').offset({top:43}).notify({
-    		    			type:'warning',
-			    			message: { text:'该素材已被绑定，请先删除其绑定内容!'}
-			 	 		}).show();
+			   			<@ms.notify msg="该素材已被绑定，请先删除其绑定内容!" type="warning"/>
 			   			$(".deleteModel").modal("hide");
 			  			$("#deleteNews").attr("disabled",false);
 			  			$("#deleteNews").text("删除");
@@ -413,17 +410,11 @@
 				    success: function(msg){
 				    	var obj = msg.result;
 				   		if(obj == true){
+				   			<@ms.notify msg="更新成功" type="success"/>
 				   			if($("#saveOrUpdateButton").attr("data-type")=="update") {
-								$('.ms-notifications').offset({top:43}).notify({
-    		    					type:'success',
-			    					message: { text:'更新成功'}
-			 					}).show();
 								location.href="${managerPath}/weixin/news/"+msg.resultData; 	
 							}else{
-								$('.ms-notifications').offset({top:43}).notify({
-    		    					type:'success',
-			    					message: { text:'保存成功'}
-			 					}).show();
+								<@ms.notify msg="保存成功" type="success"/>
 								location.href = base+"${baseManager}/weixin/news/list.do"; 
 							}
 				   		}

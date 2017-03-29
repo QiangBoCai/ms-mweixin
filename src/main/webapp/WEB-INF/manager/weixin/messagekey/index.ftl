@@ -42,7 +42,7 @@
         	queryParamsType : "undefined",
         	toolbar: "#toolbar",
         	queryParams:function(params) {
-				return  $.param(params)+"&pageNo="+params.pageNumber+"&pageSize="+params.pageSize;
+				return  $.param(params);
 			},
 			columns: [{checkbox:'true'},
 			{

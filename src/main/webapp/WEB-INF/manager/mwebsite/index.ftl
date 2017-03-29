@@ -123,11 +123,7 @@
         }); 		
 	})
 	function query(){
-		 var opt = {
-	        silent: true,
-	        query:$("form[name='searchForm']").serializeArray()
-	    };
-   	 	$("#websiteListTable").bootstrapTable('refresh', opt);
+   	 	$("#websiteListTable").bootstrapTable('refresh', {query:$("form[name='searchForm']").serializeArray()});
 	}
 	function setManager() {
 		var rows =  $("#websiteListTable").bootstrapTable("getSelections");
