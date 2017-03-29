@@ -43,9 +43,6 @@
         	contentType : "application/x-www-form-urlencoded",
         	queryParamsType : "undefined",
         	toolbar:"#toolbar",
-        	queryParams:function(params) {
-				return  $.param(params)+"&"+$("form[name='searchForm']").serialize();
-			},
 			columns: [{
 				align:'center',
 			   	field: 'weixinPeopleHeadimgUrl',
@@ -75,7 +72,7 @@
         });
     	//点击查询按钮触发
         $("#submitSearch").click(function(){
-   	 		$("#peopleListTable").bootstrapTable('refresh', {query:$("form[name='searchForm']").serializeArray()});
+   	 		$("#peopleListTable").bootstrapTable('refresh', {query:$("form[name='searchForm']").serializeJSON()});
 		})
 	    //同步微信公众号的用户到数据库中
 	    $("#synchronousPeople").click(function(){

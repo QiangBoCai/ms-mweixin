@@ -62,9 +62,6 @@
     		contentType : "application/x-www-form-urlencoded",
     		queryParamsType : "undefined",
     		toolbar: "#toolbar",
-    		queryParams:function(params) {
-				return  $.param(params)+"&"+$("form[name='searchForm']").serialize();
-			},
 		    columns: [{ checkbox: true},{
 		        field: 'websiteId',
 		        title: '编号',
@@ -123,7 +120,7 @@
         }); 		
 	})
 	function query(){
-   	 	$("#websiteListTable").bootstrapTable('refresh', {query:$("form[name='searchForm']").serializeArray()});
+   	 	$("#websiteListTable").bootstrapTable('refresh', {query:$("form[name='searchForm']").serializeJSON()});
 	}
 	function setManager() {
 		var rows =  $("#websiteListTable").bootstrapTable("getSelections");
