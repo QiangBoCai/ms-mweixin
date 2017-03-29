@@ -38,49 +38,49 @@
 </@ms.html5>
 <script>
 	$(function(){
-		search();
-		function search(){
-			$("#peopleListTable").bootstrapTable({
-        		url:"${managerPath}/weixin/weixinPeople/list.do",
-        		contentType : "application/x-www-form-urlencoded",
-        		queryParamsType : "undefined",
-        		toolbar:"#toolbar",
-        		queryParams:function(params) {
-					return  $.param(params)+"&pageNo="+params.pageNumber+$("form[name='searchForm']").serialize();
-				},
-				columns: [{
-					align:'center',
-			   		field: 'weixinPeopleHeadimgUrl',
-			    	title: '用户头像',
-			    	width:'80',
-			    	formatter:function(value,row,index){return "<img src=" + row.weixinPeopleHeadimgUrl + " style='border-radius:12px;width:25px;height:25px;'>"}
-				}, {
-			    	align:'left',
-			    	field: 'peopleUserNickName',
-			    	title: '用户昵称'
-				},{
-			   		align:'center',
-			    	field: 'weixinPeopleProvince',
-			    	title: '用户所在地',
-			    	formatter:function(value,row,index){return row.weixinPeopleProvince + "/" + row.weixinPeopleCity}
-				}, {
-			    	align:'center',
-			    	field: 'peoplePhone',
-			    	title: '用户电话',
-			    	width:'200'
-				},{
-			    	align:'center',
-			    	field: 'weixinPeopleCity',
-			    	title: '操作',
-			    	formatter:function(value,row,index){return "<button style='line-height: 9px;'  type='button' class='btn btn-success col-md sendMessage' data-id=" + row.weixinPeopleOpenId + ">发送消息</button>"}
-				}]
-        	});
-       	}
-        //点击查询按钮触发
+		$("#peopleListTable").bootstrapTable({
+        	url:"${managerPath}/weixin/weixinPeople/list.do",
+        	contentType : "application/x-www-form-urlencoded",
+        	queryParamsType : "undefined",
+        	toolbar:"#toolbar",
+        	queryParams:function(params) {
+				return  $.param(params)+"&"+$("form[name='searchForm']").serialize();
+			},
+			columns: [{
+				align:'center',
+			   	field: 'weixinPeopleHeadimgUrl',
+			    title: '用户头像',
+			    width:'80',
+			    formatter:function(value,row,index){return "<img src=" + row.weixinPeopleHeadimgUrl + " style='border-radius:12px;width:25px;height:25px;'>"}
+			}, {
+			    align:'left',
+			    field: 'peopleUserNickName',
+			    title: '用户昵称'
+			},{
+			   	align:'center',
+			    field: 'weixinPeopleProvince',
+			    title: '用户所在地',
+			    formatter:function(value,row,index){return row.weixinPeopleProvince + "/" + row.weixinPeopleCity}
+			}, {
+			    align:'center',
+			    field: 'peoplePhone',
+			    title: '用户电话',
+			    width:'200'
+			},{
+			    align:'center',
+			    field: 'weixinPeopleCity',
+			    title: '操作',
+			    formatter:function(value,row,index){return "<button style='line-height: 9px;'  type='button' class='btn btn-success col-md sendMessage' data-id=" + row.weixinPeopleOpenId + ">发送消息</button>"}
+			}]
+        });
+    	//点击查询按钮触发
         $("#submitSearch").click(function(){
-        	$("#peopleListTable").bootstrapTable('destroy');
-        	search();
-        })
+        	var opt = {
+	        	silent: true,
+	        	query:$("form[name='searchForm']").serializeArray()
+	    	};
+   	 		$("#peopleListTable").bootstrapTable('refresh', opt);
+		})
 	    //同步微信公众号的用户到数据库中
 	    $("#synchronousPeople").click(function(){
 	    	$.ajax({
@@ -139,5 +139,3 @@
 		});
 	})   
 </script>
-
-
