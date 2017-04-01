@@ -72,12 +72,13 @@
         });
     	//点击查询按钮触发
         $("#submitSearch").click(function(){
+        	var search = $("form[name='searchForm']").serializeJSON();
         	 var params = $('#peopleListTable').bootstrapTable('getOptions');
         	 params.queryParams = function(params) {  
-	            params.search = $("form[name='searchForm']").serializeJSON() 
+        	 	$.extend(params,search);
 	            return params;  
        		 }  
-   	 		$("#").bootstrapTable('refresh', {query:$("form[name='searchForm']").serializeJSON()});
+   	 		$("#peopleListTable").bootstrapTable('refresh', {query:$("form[name='searchForm']").serializeJSON()});
 		})
 	    //同步微信公众号的用户到数据库中
 	    $("#synchronousPeople").click(function(){
