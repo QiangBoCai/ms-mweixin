@@ -252,7 +252,7 @@ public class WeixinAction extends BaseAction {
 			modelChild.setModelModelId(model.getModelId());
 			modelChild.setModelTitle("公众号管理");
 			modelChild.setModelCode("05010000");
-			modelChild.setModelUrl("/weixin/list.do");
+			modelChild.setModelUrl("/weixin/index.do");
 			modelChild.setModelManagerId(0);
 			modelChild.setModelDatetime(new Timestamp(System.currentTimeMillis()));
 			modelBiz.saveEntity(modelChild);
