@@ -143,6 +143,9 @@
 	<!--查询微信实体-->
 	<select id="query" resultMap="resultMap" parameterType="com.mingsoft.weixin.entity.WeixinEntity">
 		select * from wx_weixin
+		<where>
+			and app_id = #{appId}
+		</where>
 	</select>
 	<!--查询结束  -->
 </mapper>

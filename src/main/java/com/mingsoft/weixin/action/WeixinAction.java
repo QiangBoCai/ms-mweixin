@@ -79,8 +79,9 @@ public class WeixinAction extends BaseAction {
 	public void list(HttpServletRequest request, ModelMap mode,HttpServletResponse response) {
 		//开始分页	
 		BasicUtil.startPage();
-		//分页查询
-		List weixinList = weixinBiz.query();
+		WeixinEntity weiXinEntity = new WeixinEntity();
+		weiXinEntity.setAppId(BasicUtil.getAppId());
+		List weixinList = weixinBiz.query(weiXinEntity);
 		EUListBean _list = new EUListBean(weixinList,(int) BasicUtil.endPage(weixinList).getTotal());
 		this.outJson(response, JSONArray.toJSONString(_list));
 	}
