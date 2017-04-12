@@ -51,7 +51,7 @@
 		<ms.base.version>1.0.2-SNAPSHOT</ms.base.version>
 		<ms.basic.version>1.0.3-SNAPSHOT</ms.basic.version>
 		<ms.mdiy.version>1.0.2-SNAPSHOT</ms.mdiy.version>
-		<ms.mcms.version>1.0.0-SNAPSHOT</ms.mcms.version>
+		<ms.mcms.version>4.6.0-SNAPSHOT</ms.mcms.version>
 		<ms.mpeople.version>1.0.0-SNAPSHOT</ms.mpeople.version>
 		<ms.mbank.version>1.0.0-SNAPSHOT</ms.mbank.version>
 		<ms.mail.version>1.0.0-SNAPSHOT</ms.mail.version>
@@ -258,6 +258,7 @@
 				<artifactId>maven-war-plugin</artifactId>
 				<version>2.6</version>
 				<configuration>
+					<webXml>src\main\webapp\WEB-INF\web.xml</webXml>
 					<webResources>
 						<resource>
 							<directory>src/main/webapp/WEB-INF</directory>
