@@ -170,12 +170,6 @@
 			<version>${ms.mcomment.version}</version>
 			<type>war</type>
 		</dependency>
-		<!-- <dependency> <groupId>net.mingsoft</groupId> <artifactId>ms-iweixiao</artifactId> 
-			<version>${ms.mcomment.version}</version> <type>war</type> </dependency> 
-			<dependency> <groupId>net.mingsoft</groupId> <artifactId>ms-mweixin</artifactId> 
-			<version>${ms.mcomment.version}</version> <type>war</type> </dependency> 
-			<dependency> <groupId>net.mingsoft</groupId> <artifactId>ms-upgrader</artifactId> 
-			<version>1.0.1-SNAPSHOT</version> </dependency -->
 	</dependencies>
 
 	<build>
@@ -258,7 +252,6 @@
 				<artifactId>maven-war-plugin</artifactId>
 				<version>2.6</version>
 				<configuration>
-					<webXml>src\main\webapp\WEB-INF\web.xml</webXml>
 					<webResources>
 						<resource>
 							<directory>src/main/webapp/WEB-INF</directory>
@@ -273,10 +266,9 @@
 						</resource>
 					</webResources>
 					<attachClasses>true</attachClasses>
-					 <failOnMissingWebXml>true</failOnMissingWebXml>
+					 <failOnMissingWebXml>false</failOnMissingWebXml>
 					<warSourceExcludes> */web.xml,static</warSourceExcludes>
-					
-					<packagingExcludes>ms.install,html/,static/,temp,upgrader,WEB-INF/web.xml,WEB-INF/lib/,templets/,WEB-INF/classes/*.xml,WEB-INF/classes/*.properties,*.sh</packagingExcludes>
+					<packagingExcludes>WEB-INF/web.xml,ms.install,html/,static/,temp,upgrader,WEB-INF/lib/,templets/,WEB-INF/classes/*.xml,WEB-INF/classes/*.properties,*.sh</packagingExcludes>
 					 <overlays>
 						<overlay>
 							<groupId>net.mingsoft</groupId>
