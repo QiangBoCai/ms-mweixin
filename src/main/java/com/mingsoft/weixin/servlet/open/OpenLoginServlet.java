@@ -18,11 +18,11 @@ import com.mingsoft.weixin.util.WeixinOpenLoginUtil;
 
 /**
  * 
- * 微信开放平台登录请求入口
- * @author 成卫雄(qq:330216230)
+ * 项目名称
+ * @author 铭飞开发团队
  * @version 
  * 版本号：100-000-000<br/>
- * 创建日期：2015年8月28日 下午4:55:40<br/>
+ * 创建日期：2017年3月20日<br/>
  * 历史修订：<br/>
  */
 @WebServlet("/weixin/open/login")
