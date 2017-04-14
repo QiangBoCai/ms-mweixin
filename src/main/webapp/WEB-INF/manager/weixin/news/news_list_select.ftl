@@ -340,7 +340,7 @@
 				   							<p class="msg-meta"><span class="msg-date">${list.newsDateTime?string('MM月dd日')}</span></p>
 											<div class="cover">
 												<p class="default-tip" style="display:none">封面图片</p>
-												<img src="${list.newsMasterArticle.basicThumbnails?default('')}" class="i-img" style="">
+												<img src="${base}/${list.newsMasterArticle.basicThumbnails?default('')}" class="i-img" style="">
 											</div>
 											<p class="msg-text">${list.newsMasterArticle.basicDescription?default('')}</p>
 											<div class="msg-hover-mask"></div> 
@@ -367,7 +367,7 @@
 				   							<p class="msg-meta"><span class="msg-date">${news.newsDateTime?string('MM月dd日')}</span></p>
 											<div class="cover">
 												<p class="default-tip" style="display:none">封面图片</p>
-												<img src="${news.newsMasterArticle.basicThumbnails?default('')}" class="i-img" style="">
+												<img src="${base}/${news.newsMasterArticle.basicThumbnails?default('')}" class="i-img" style="">
 											</div>
 											<p class="msg-text"></p>   
 											<div class="msg-hover-mask"></div> 
@@ -376,7 +376,7 @@
 										<#if news.childs?has_content>
 				       						<#list news.childs as listChild>
 											<div class="rel sub-msg-item appmsgItem">              
-												<span class="thumb"><img src="${listChild.basicThumbnails?default('')}" class="i-img" style=""></span>                 
+												<span class="thumb"><img src="${base}/${listChild.basicThumbnails?default('')}" class="i-img" style=""></span>                 
 												<h4 class="msg-t"><a href="#" target="_blank" class="i-title">${listChild.basicTitle?default('')}</a></h4>                
 											</div>
 										</#list>

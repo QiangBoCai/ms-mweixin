@@ -73,7 +73,7 @@
 		{ "id":1, "name":"群发消息", "url":"", "click":"$('#listFrame').attr('src','${managerPath}/weixin/message/index.do')"},
 		{ "id":1, "name":"关注回复", "url":"", "click":"$('#listFrame').attr('src','${managerPath}/weixin/subscribe/subscribe.do')"},
 		{ "id":1, "name":"关键字回复", "url":"", "click":"$('#listFrame').attr('src','${managerPath}/weixin/messagekey/index.do')"},
-		{ "id":1, "name":"返回", "url":"", "click":"$('#listFrame').attr('src','${managerPath}/weixin/index.do'),$('.ms-content-menu').hide(),$('.ms-content-body').css('width','100%')"}
+		{ "id":1, "name":"返回", "url":"", "click":"$('#listFrame').attr('src','${managerPath}/weixin/index.do'),$('.ms-content-menu').hide(),$('.ms-content-body').css('width','100%'),$('.ms-content-body-panel').css('width','100%')"}
 	]
 	/******设置节点信息结束******/
 </script>

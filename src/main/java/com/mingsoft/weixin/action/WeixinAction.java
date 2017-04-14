@@ -77,10 +77,10 @@ public class WeixinAction extends BaseAction {
 	@RequestMapping("/list")
 	@ResponseBody
 	public void list(HttpServletRequest request, ModelMap mode,HttpServletResponse response) {
-		//开始分页	
-		BasicUtil.startPage();
 		WeixinEntity weiXinEntity = new WeixinEntity();
 		weiXinEntity.setAppId(BasicUtil.getAppId());
+		//开始分页	
+		BasicUtil.startPage();
 		List weixinList = weixinBiz.query(weiXinEntity);
 		EUListBean _list = new EUListBean(weixinList,(int) BasicUtil.endPage(weixinList).getTotal());
 		this.outJson(response, JSONArray.toJSONString(_list));

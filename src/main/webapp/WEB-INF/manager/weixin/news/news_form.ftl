@@ -264,7 +264,7 @@
 			                        <p class="onl_tit title"><#if news?has_content>${news.newsMasterArticle.basicTitle?default("标题")}<#else>标题</#if></p>
 			                        <div class="onl_name newsImg img"> 
 			                            <#if news?has_content>
-			                            	<img src="${news.newsMasterArticle.basicThumbnails}"/>
+			                            	<img src="${base}/${news.newsMasterArticle.basicThumbnails}"/>
 			                            <#else>
 				                            <img src="#" class="onl_img"/>
 				                            <i>封面图片</i>		                            
@@ -281,7 +281,7 @@
 			                 		<div class="parentNews marsterId" data-click="false" <#if news?has_content>data-id="${news.newsMasterArticle.basicId}"</#if>>
 			                 			<div class="newsImg img">
 				                            <#if news?has_content>
-				                            	<img src="${news.newsMasterArticle.basicThumbnails}"/>
+				                            	<img src="${base}/${news.newsMasterArticle.basicThumbnails}"/>
 				                            <#else>
 					                            <img src="#" class="onl_img"/>
 					                            <i>封面图片</i>		                            
@@ -304,7 +304,7 @@
 								             	<div  class="childNews child${article_index+1}" data-id="${article.basicId}">
 								                	<div class="duo_div">
 								                	    <div class="duo_cen title">${article.basicTitle}</div>
-								                	    <i class="childNewes_img img"><img src="${article.basicThumbnails}" height="100%"/></i> 
+								                	    <i class="childNewes_img img"><img src="${base}/${article.basicThumbnails}" height="100%"/></i> 
 								                	 </div>
 								            	 </div>	                           	
 			                           		</#list>
@@ -554,10 +554,10 @@
 			$("."+targetNews +" .description").html(articleDescription);
 			if (newsType==0) {
 				$(".marsterId").attr("data-id",articleId);
-				$("."+targetNews +" .img").html("<img src='"+articleImg+"'  style='margin-top:0'/>");
+				$("."+targetNews +" .img").html("<img src='${base}"+articleImg+"'  style='margin-top:0'/>");
 			} else {
 				$("."+targetNews).attr("data-id",articleId);
-				$("."+targetNews +" .img").html("<img src='"+articleImg+"' />");
+				$("."+targetNews +" .img").html("<img src='${base}"+articleImg+"' />");
 			}
 		});		
 		
