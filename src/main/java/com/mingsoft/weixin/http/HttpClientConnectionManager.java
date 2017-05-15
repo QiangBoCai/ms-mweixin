@@ -37,6 +37,9 @@ import org.apache.http.conn.ClientConnectionManager;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.scheme.SchemeRegistry;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.log4j.Logger;
+
+import com.mingsoft.weixin.util.XmlUtils;
 
 /**
  * Copyright: Copyright (c) 2014 - 2015
@@ -52,6 +55,10 @@ import org.apache.http.impl.client.DefaultHttpClient;
  */
 public class HttpClientConnectionManager {
 
+	/**
+	 * log4j
+	 */
+	protected final static Logger LOG = Logger.getLogger(HttpClientConnectionManager.class);
 	/**
 	 * 网页字符集编码UTF-8
 	 */
@@ -88,10 +95,10 @@ public class HttpClientConnectionManager {
 	 * @return null出现异常
 	 */
 	public static String request(String postUrl, String param, String method) {
+		LOG.debug("url:" + postUrl);
 		URL url;
 		try {
 			url = new URL(postUrl);
-
 			HttpURLConnection conn;
 			conn = (HttpURLConnection) url.openConnection();
 			conn.setConnectTimeout(30000); // 设置连接主机超时（单位：毫秒)
@@ -118,6 +125,7 @@ public class HttpClientConnectionManager {
 			while ((line = in.readLine()) != null) {
 				strBuf.append(line).append("\n");
 			}
+			LOG.debug("返回："+ strBuf);
 			in.close();
 			out.close();
 			return strBuf.toString();

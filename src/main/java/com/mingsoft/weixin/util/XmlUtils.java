@@ -394,8 +394,8 @@ public class XmlUtils {
 	 * @return map数据
 	 */
 	public static Map<String,Object> getXmlPayUnifiedOrder(String xml) {
-		LOG.debug("getXmlPayUnifiedOrder xml"+ xml);
-		if (xml==null) {
+		LOG.debug("getXmlPayUnifiedOrder xml:"+ xml);
+		if (StringUtil.isBlank(xml)) {
 			return null;
 		}
 		Map<String,Object> param = new HashMap<String,Object>();

@@ -30,10 +30,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import net.mingsoft.basic.util.BasicUtil;
 import net.mingsoft.order.biz.IOrderBiz;
 import net.mingsoft.order.constant.e.OrderPaymentEnum;
 import net.mingsoft.order.constant.e.OrderStatusEnum;
 import net.mingsoft.order.entity.OrderEntity;
+
+import com.mingsoft.cms.parser.CmsParser;
 import com.mingsoft.util.JsonUtil;
 import com.mingsoft.util.StringUtil;
 import com.mingsoft.weixin.action.BaseAction;
@@ -85,6 +88,10 @@ public class WeixinPayAction extends BaseAction {
 	private IOrderBiz orderBiz;
 	
 	
+	@Autowired
+	private CmsParser cmsParser;
+	
+	
 	/**
 	 * 手机端提交支付。先进入pay方法组织参数</br>
 	 * 跳转授权登录,调用微信JS-API必须携带微信openId</br>
@@ -108,7 +115,7 @@ public class WeixinPayAction extends BaseAction {
 		Map<String,Object> map = this.assemblyRequestMap(request);
 		map.put(ORDER_ID,orderId);//订单Id
 		map.put(WEIXIN_ID,weixinId);//微信Id
-//		map.put(R_KEY,rKey);
+//		map.put(R_KEY,rKey);x
 		//将需要传递的参数转换成json格式，进行加密后传递
 		String state = this.encryptByAES(request,JsonUtil.getObjectToJsonObject(map));
 		return "redirect:" + OauthUtils.getCodeUrl(weixin.getWeixinAppID(),weixin.getWeixinOauthUrl()+"/weixin/pay/gateway.do",true,state);
@@ -127,34 +134,35 @@ public class WeixinPayAction extends BaseAction {
 	 */
 	@RequestMapping("/gateway")
 	public void gateway(HttpServletRequest request, HttpServletResponse response){
-		String state = request.getParameter("state");//获取重定向参数
-		String code = request.getParameter("code"); //用户同意授权就可以获得
-		if(StringUtil.isBlank(state) || StringUtil.isBlank(code)){
+		//String state = request.getParameter("state");//获取重定向参数
+		//String code = request.getParameter("code"); //用户同意授权就可以获得
+		//if(StringUtil.isBlank(state) || StringUtil.isBlank(code)){
 			//返回错误地址
-			this.outJson(response, null, false);
-			return ;
-		}
+		//	this.outJson(response, null, false);
+		//	return ;
+		//}
 		
 		//将参数进行解密，该参数约定为json数据键:weixinId,orderId
-		state = this.decryptByAES(request, state);
+		//state = this.decryptByAES(request, state);
 		//将json转换为map
-		Map<String,Object> stateMap = JsonUtil.getMap4Json(state);
-		int weixinId = Integer.parseInt(stateMap.get(WEIXIN_ID).toString());//微信Id
-		int orderId = Integer.parseInt(stateMap.get(ORDER_ID).toString());//订单Id
-		String rKey = "";//stateMap.get(R_KEY).toString();//重定向模版的key值
+		//Map<String,Object> stateMap = JsonUtil.getMap4Json(state);
+		int weixinId = BasicUtil.getInt(WEIXIN_ID);//Integer.parseInt(stateMap.get(WEIXIN_ID).toString());//微信Id
+		String orderNo = BasicUtil.getString("orderNo");//Integer.parseInt(stateMap.get(ORDER_ID).toString());//订单Id
+		String openId = BasicUtil.getString("openId");
+		String page = BasicUtil.getString("page");
 		
 		//获取微信信息
 		WeixinEntity weixin = this.weixinBiz.getEntityById(weixinId);
 		
 		//获取用户openid;调用微信JS支付接口必须要用户openId
-		OauthUtils au = new OauthUtils(weixin.getWeixinAppID(),weixin.getWeixinAppSecret());
-		Map<String,Object> userMap = au.getUser(code);
+		//OauthUtils au = new OauthUtils(weixin.getWeixinAppID(),weixin.getWeixinAppSecret());
+		//Map<String,Object> userMap = au.getUser(code);
 		//将获取到的微信用户详情转换为用户实体信息
-		WeixinPeopleEntity weixinPeopleEntity = WeixinPeopleEntityUtils.userInfoToWeixinPeople(userMap,weixin.getAppId(),weixin.getWeixinId());
+		//WeixinPeopleEntity weixinPeopleEntity = WeixinPeopleEntityUtils.userInfoToWeixinPeople(userMap,weixin.getAppId(),weixin.getWeixinId());
 		WeixinPayUtils weixinPayUtils = new WeixinPayUtils(weixin.getWeixinAppID(), weixin.getWeixinAppSecret());
 		
 		//获取订单需要支付的订单信息
-		OrderEntity order = (OrderEntity) this.orderBiz.getEntity(orderId);
+		OrderEntity order = (OrderEntity) this.orderBiz.getByOrderNo(orderNo);
 		
 		//该订单需要支付的价格(注订单价格不能有小数)
 		int priceStr = (int) (order.getOrderPrice()*100);
@@ -171,16 +179,17 @@ public class WeixinPayAction extends BaseAction {
 		wpb.setSpbillCreateIp(this.getHostIp()); //终端IP(必须)
 		wpb.setNotifyUrl(weixin.getWeixinOauthUrl()+"/weixin/pay/notify.do"); //接收微信支付成功通知(必须)
 		wpb.setTradeType(WeixinPayEnum.JSAPI.toString()); //支付方式类型
-		wpb.setOpenId(weixinPeopleEntity.getWeixinPeopleOpenId());
+		wpb.setOpenId(openId);
 		//加载请求参数的xml
 		String xml = XmlUtils.buildXmlPayUnifiedOrder(wpb,weixin.getWeixinPayKey());
 		//调用统一下单接口
+		LOG.debug("pay xml"+ xml);
 		Map<String,Object> mapUnifiedorder = weixinPayUtils.unifiedorder(xml);
 		LOG.debug("return mapUnifiedorder" + mapUnifiedorder);
 		
 		/*-----------拼装JS调用微信api的必须参数-----------*/		
 		// 读取模版内容
-		String content = "";//this.generaterPage(rKey,cmsParser,request);
+		String content = this.generaterPage(page,cmsParser,request);
 		//替换模版中的自定义参数
 		content = content.replace("{appId/}", weixin.getWeixinAppID());//微信appId
 		content = content.replace("{nonceStr/}",wpb.getNonce());//随机字符串

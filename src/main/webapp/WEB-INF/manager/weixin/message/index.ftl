@@ -67,6 +67,9 @@
 						    <div class="content" contenteditable="true"></div> 
 						</div> 
 				  	</div>
+				  	<div class="col-md-12">
+				  	<intput type="hidden" id="groupId"/>
+				  	</div>
 			  	</div>
 			  	<!--选择素材模态框-->
 				<@ms.modal modalName="newsMessageListModal" title="选择素材" size="L">
@@ -209,7 +212,7 @@
 			}
 			$.ajax({
 			   	type: "POST",
-			   	data:"content="+content,
+			   	data:"groupId="+$(groupId).val()+"&content="+content,
 			   	dataType:"json",
 			   	url: base+"${baseManager}/weixin/messageMass/sendToAll.do",
 				beforeSend:function() {

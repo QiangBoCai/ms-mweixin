@@ -21,7 +21,12 @@ The MIT License (MIT) * Copyright (c) 2017 铭飞科技
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.ParseException;
 import org.apache.http.client.ClientProtocolException;
@@ -179,5 +184,22 @@ public class MessageMassUtils extends BaseUtils{
 			} 
 		}
 		return null;
+	}
+	
+	public static void main(String[] args) {
+		String htmlCode = "<img src='https://1.jpg'/>adsfadfasdf<img src='2.jpg'>";
+		List<String> imageSrcList = new ArrayList<String>();
+	    Pattern p = Pattern.compile("<img\\b[^>]*\\bsrc\\b\\s*=\\s*('|\")?([^'\"\n\r\f>]+(\\.jpg|\\.bmp|\\.eps|\\.gif|\\.mif|\\.miff|\\.png|\\.tif|\\.tiff|\\.svg|\\.wmf|\\.jpe|\\.jpeg|\\.dib|\\.ico|\\.tga|\\.cut|\\.pic)\\b)[^>]*>", Pattern.CASE_INSENSITIVE);
+	    Matcher m = p.matcher(htmlCode);
+	    String quote = null;
+	    String src = null;
+	    while (m.find()) {
+	        quote = m.group(1);
+	        src = (quote == null || quote.trim().length() == 0) ? m.group(2).split("\\s+")[0] : m.group(2);
+	        imageSrcList.add(src);
+	    }
+	    for(String i:imageSrcList) {
+	    	System.out.println("tu:"+i);
+	    }
 	}
 }

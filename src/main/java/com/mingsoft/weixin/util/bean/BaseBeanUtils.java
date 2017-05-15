@@ -18,6 +18,9 @@ The MIT License (MIT) * Copyright (c) 2017 铭飞科技
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */package com.mingsoft.weixin.util.bean;
+
+import org.apache.log4j.Logger;
+
 /**
  * 微信请求参数类型转换
  * @author 成卫雄(qq:330216230)
@@ -27,5 +30,6 @@ The MIT License (MIT) * Copyright (c) 2017 铭飞科技
  * 历史修订：<br/>
  */
 public abstract class BaseBeanUtils {
+	
 
 }

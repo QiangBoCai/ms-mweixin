@@ -19,6 +19,8 @@ The MIT License (MIT) * Copyright (c) 2017 铭飞科技
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */package com.mingsoft.weixin.constant;
 
+import com.mingsoft.base.constant.e.BaseSessionEnum;
+
 /**
  * 微信系统中的session枚举类
  * @author 成卫雄(qq:330216230)
@@ -27,7 +29,7 @@ The MIT License (MIT) * Copyright (c) 2017 铭飞科技
  * 创建日期：2015年8月30日 下午4:44:20<br/>
  * 历史修订：<br/>
  */
-public enum SessionConst{
+public enum SessionConst  implements BaseSessionEnum {
 	
 	WEIXIN_SESSION("weixin_session");
 	

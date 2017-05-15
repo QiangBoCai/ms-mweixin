@@ -37,6 +37,8 @@ import com.mingsoft.weixin.util.UploadDownUtils;
 import com.mingsoft.weixin.util.XmlUtils;
 import com.mingsoft.weixin.util.bean.NewsEntityUtils;
 
+import net.mingsoft.basic.util.BasicUtil;
+
 /** 
  * 微信群发消息控制层
  * @author  付琛  QQ:1658879747 
@@ -72,7 +74,8 @@ public class MessageMassAction extends BaseAction{
 		//引入messageMass的工具类
 		MessageMassUtils messageMassUtils = new MessageMassUtils(weixin.getWeixinAppID(),weixin.getWeixinAppSecret());
 		//获取图文素材ID
-		String contentStr = request.getParameter("content");
+		String contentStr = BasicUtil.getString("content");
+		String gourpId = BasicUtil.getString("gourpId",null);
 		//判断字符串是否转化为了int型
 		if(!StringUtil.isInteger(contentStr)){
 			this.outJson(response, null, false);
@@ -98,7 +101,7 @@ public class MessageMassAction extends BaseAction{
 			return;
 		}
 		//调用微信官方接口群发图文消息(true表示群发，null表示不分组发送)并返回是否发送成功
-		Boolean temp = messageMassUtils.sendAllMessageMass(mediaId, true, null);
+			Boolean temp = messageMassUtils.sendAllMessageMass(mediaId, gourpId==null, gourpId);
 		this.outJson(response, null, temp);
 		LOG.debug("群发状态======="+temp);
 	}

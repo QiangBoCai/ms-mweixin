@@ -22,8 +22,12 @@ The MIT License (MIT) * Copyright (c) 2017 铭飞科技
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.apache.log4j.Logger;
 
 import com.mingsoft.cms.entity.ArticleEntity;
 import com.mingsoft.parser.IParserRegexConstant;
@@ -36,6 +40,8 @@ import com.mingsoft.weixin.entity.NewsEntity;
 import com.mingsoft.weixin.entity.WeixinEntity;
 import com.mingsoft.weixin.util.UploadDownUtils;
 
+import net.mingsoft.basic.util.BasicUtil;
+
 /** 
  * 素材实体类型转化工具类
  * @author  付琛  QQ:1658879747 
@@ -45,7 +51,10 @@ import com.mingsoft.weixin.util.UploadDownUtils;
  * 历史修订<br/>
  */
 public class NewsEntityUtils extends BaseBeanUtils{
-	
+	/*
+	 * log4j日志记录
+	 */
+	protected static final Logger LOG = Logger.getLogger(NewsEntityUtils.class);
 	/**
 	 * 将素材实体转化为发送被动消息响应实体
 	 * @param news 素材实体
@@ -95,13 +104,13 @@ public class NewsEntityUtils extends BaseBeanUtils{
 	public static List<UploadNewsBean> newsEnttiyToUploadNewsBeanList(WeixinEntity weixin,NewsEntity news,HttpServletRequest request){
 		UploadDownUtils uploadUtil = new UploadDownUtils(weixin.getWeixinAppID(), weixin.getWeixinAppSecret());	
 		//创建uploadNewsBean实体,并赋予上传素材封面必要的参数
-		UploadNewsBean uploadNewsBean = new UploadNewsBean(news.getNewsMasterArticle().getBasicTitle(), news.getNewsMasterArticle().getArticleContent());
+		UploadNewsBean uploadNewsBean = new UploadNewsBean(news.getNewsMasterArticle().getBasicTitle(), replaceAllImage(news.getNewsMasterArticle().getArticleContent(),uploadUtil,request));
 		//得到单图文or多图文的封面图片唯一ID
 		String thumb_media_id = uploadUtil.uploadMedia(UploadDownUtils.TYPE_IMAGE, news.getNewsMasterArticle().getBasicThumbnails(),request);
 		//保存图文封面相关信息,并赋给uploadNewsBean
 		uploadNewsBean.setThumb_media_id(thumb_media_id);
 		uploadNewsBean.setAuthor(news.getNewsMasterArticle().getArticleAuthor()); //图文作者
-	//	uploadNewsBean.setContent_source_url(news.getNewsMasterArticle().getArticleUrl()); //在图文消息页面点击“阅读原文”后的页面
+		uploadNewsBean.setContent_source_url(BasicUtil.getApp().getAppHostUrl()+File.separator+IParserRegexConstant.HTML_SAVE_PATH+File.separator+BasicUtil.getAppId()+File.separator+IParserRegexConstant.MOBILE+File.separator+news.getNewsMasterArticle().getArticleUrl()); //在图文消息页面点击“阅读原文”后的页面
 		uploadNewsBean.setDigest(news.getNewsMasterArticle().getBasicDescription()); //封面描述
 		uploadNewsBean.setShow_cover_pic(UploadNewsBeanCoverPicEnum.SHOW_COVER_PIC); //显示封面
 		//创建图文实体列表,动态添加上传图文素材实体
@@ -116,18 +125,43 @@ public class NewsEntityUtils extends BaseBeanUtils{
 				return null;
 			}
 			for(int i=1;i<=articleList.size();i++){		
+				String content = articleList.get(i-1).getArticleContent();
+				content = replaceAllImage(content,uploadUtil,request);
 				//动态创建空的实体,增加newBeanList的长度，以用于赋值   子图文标题  子图文内容
-				uploadNewsBeanList.add(new UploadNewsBean(articleList.get(i-1).getBasicTitle(),articleList.get(i-1).getArticleContent()));			
+				uploadNewsBeanList.add(new UploadNewsBean(articleList.get(i-1).getBasicTitle(),content));			
 				//保存子图文相关信息,并赋给uploadNewsBean
 				String tm_id = uploadUtil.uploadMedia(UploadDownUtils.TYPE_IMAGE,articleList.get(i-1).getBasicThumbnails(),request); //每个子图文的缩略图唯一ID
 				uploadNewsBeanList.get(i).setThumb_media_id(tm_id); //字图文缩略图唯一ID
 				uploadNewsBeanList.get(i).setAuthor(articleList.get(i-1).getArticleAuthor()); //子图文作者
-		//		uploadNewsBeanList.get(i).setContent_source_url(articleList.get(i-1).getArticleUrl()); //子图文链接地址
+				uploadNewsBeanList.get(i).setContent_source_url(BasicUtil.getApp().getAppHostUrl()+File.separator+IParserRegexConstant.HTML_SAVE_PATH+File.separator+BasicUtil.getAppId()+File.separator+IParserRegexConstant.MOBILE+File.separator+articleList.get(i-1).getArticleUrl()); //子图文链接地址
 				uploadNewsBeanList.get(i).setDigest(articleList.get(i-1).getBasicDescription()); //子图文描述
 				uploadNewsBeanList.get(i).setShow_cover_pic(UploadNewsBeanCoverPicEnum.SHOW_COVER_PIC); //显示封面
 			}
 		}
 		return uploadNewsBeanList;
+	}
+	
+	/**
+	 * 将内容中的图片全部上传到微信素材，并且用返回的图片路径替换原有的路径
+	 * @param content 原始内容
+	 * @param uploadUtil 微信上传工具类
+	 * @param request
+	 * @return 替换后的内容
+	 */
+	public static String replaceAllImage(String content,UploadDownUtils uploadUtil,HttpServletRequest request) {
+	    Pattern p = Pattern.compile("<img\\b[^>]*\\bsrc\\b\\s*=\\s*('|\")?([^'\"\n\r\f>]+(\\.jpg|\\.bmp|\\.eps|\\.gif|\\.mif|\\.miff|\\.png|\\.tif|\\.tiff|\\.svg|\\.wmf|\\.jpe|\\.jpeg|\\.dib|\\.ico|\\.tga|\\.cut|\\.pic)\\b)[^>]*>", Pattern.CASE_INSENSITIVE);
+	    Matcher m = p.matcher(content);
+	    String quote = null;
+	    String src = null;
+	    while (m.find()) {
+	        quote = m.group(1);
+	        src = (quote == null || quote.trim().length() == 0) ? m.group(2).split("\\s+")[0] : m.group(2);
+	        String _upload = uploadUtil.uploadImg(src, request);
+	        LOG.debug("替换内容图片："+src+"->"+_upload);
+	        content = content.replace(src,_upload);
+	    }
+	    
+	    return content;
 	}
 	
 }

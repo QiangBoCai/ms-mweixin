@@ -93,6 +93,7 @@ public class MessageAction extends BaseAction{
 		int appId = this.getAppId(request);
 		//获取要发送的内容
 		String content = request.getParameter("content");		
+				
 		//若内容为空，返回错误信息
 		if(StringUtil.isBlank(content)){
 			this.outJson(response, ModelCode.WEIXIN_MESSAGE, false, this.getResString("err.empty",this.getResString("weixin.message.content")));
@@ -148,6 +149,7 @@ public class MessageAction extends BaseAction{
 		int appId = this.getAppId(request);
 		//获取素材ID，已在前台进行转化
 		String contentStr = request.getParameter("content");
+		String openId = request.getParameter("openId"); //如果openid存在表示单独发，弥补不能给用户单独发素材内容的需求
 		//判断字符串是否转化为了int型
 		if(!StringUtil.isInteger(contentStr)){
 			this.outJson(response, null, false);
@@ -173,28 +175,39 @@ public class MessageAction extends BaseAction{
 			this.outJson(response, null, false);
 			return;
 		}
-		//获取所有用户集合
-		List<WeixinPeopleEntity> weixinPeopleList = this.queryUserInfoList(appId,weixinId);
-		//创建空的微信用户ArrayList数组,用于当前用户发送消息失败后将其压进数组
-		List<WeixinPeopleEntity> weixinPeopleFailList = new ArrayList<WeixinPeopleEntity>();
-		//创建空的weixinPeople集合,将发送成功的实体add进List中
-		List<WeixinPeopleEntity> weixinPeopleSucessList = new ArrayList<WeixinPeopleEntity>();
-		//遍历所有用户的openId伪群发文本消息,openId为用户在微信中的唯一标识
-		for(int i=0;i<weixinPeopleList.size();i++){
-			//遍历openId伪群发文本消息,,发送成功为true，失败为false
-			Boolean bool = messageUtil.sendNewsToUser(weixinPeopleList.get(i).getWeixinPeopleOpenId(),newsBeanList);
-			LOG.debug("群发后的返回值============"+bool);
-			//如果发送不成功，将该用户add进发送失败用户数组中
-			if(!bool){
-				//将发送失败的用户动态添加到数组中
-				weixinPeopleFailList.add(weixinPeopleList.get(i));
-			}else{
-				//将发送成功的用户add进weixinPeopleArrayList
-				weixinPeopleSucessList.add(weixinPeopleList.get(i));
+		
+		if(StringUtil.isBlank(openId)) {
+			//获取所有用户集合
+			List<WeixinPeopleEntity> weixinPeopleList = this.queryUserInfoList(appId,weixinId);
+			//创建空的微信用户ArrayList数组,用于当前用户发送消息失败后将其压进数组
+			List<WeixinPeopleEntity> weixinPeopleFailList = new ArrayList<WeixinPeopleEntity>();
+			//创建空的weixinPeople集合,将发送成功的实体add进List中
+			List<WeixinPeopleEntity> weixinPeopleSucessList = new ArrayList<WeixinPeopleEntity>();
+			//遍历所有用户的openId伪群发文本消息,openId为用户在微信中的唯一标识
+			for(int i=0;i<weixinPeopleList.size();i++){
+				//遍历openId伪群发文本消息,,发送成功为true，失败为false
+				Boolean bool = messageUtil.sendNewsToUser(weixinPeopleList.get(i).getWeixinPeopleOpenId(),newsBeanList);
+				LOG.debug("群发后的返回值============"+bool);
+				//如果发送不成功，将该用户add进发送失败用户数组中
+				if(!bool){
+					//将发送失败的用户动态添加到数组中
+					weixinPeopleFailList.add(weixinPeopleList.get(i));
+				}else{
+					//将发送成功的用户add进weixinPeopleArrayList
+					weixinPeopleSucessList.add(weixinPeopleList.get(i));
+				}
 			}
+			LOG.debug("成功发送:"+weixinPeopleSucessList.size());
+			LOG.debug("失败发送:"+weixinPeopleFailList.size());			
+			//返回的数组包含了所有发送失败的用户及发送成功的用户，以便提示哪几个用户接收不到消息
+			this.outJson(response, ModelCode.WEIXIN_MESSAGE, true,JSONObject.toJSONString(weixinPeopleFailList),JSONObject.toJSONString(weixinPeopleSucessList));
+			return;
+		} else {
+			Boolean bool = messageUtil.sendNewsToUser(openId,newsBeanList);
+			LOG.debug("单独发送素材：" + bool);
+			this.outJson(response, ModelCode.WEIXIN_MESSAGE, bool);
 		}
-		//返回的数组包含了所有发送失败的用户及发送成功的用户，以便提示哪几个用户接收不到消息
-		this.outJson(response, ModelCode.WEIXIN_MESSAGE, true,JSONObject.toJSONString(weixinPeopleFailList),JSONObject.toJSONString(weixinPeopleSucessList));		
+		
 	}
 	
 	/**
@@ -217,7 +230,7 @@ public class MessageAction extends BaseAction{
 	 * @return 群发消息界面
 	 */
 	@RequestMapping("/index")
-	public String sendMessage(){
+	public String index(){
 		return Const.VIEW+"/weixin/message/index";
 	}
 	

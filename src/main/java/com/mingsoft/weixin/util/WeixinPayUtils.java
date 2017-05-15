@@ -62,6 +62,10 @@ public class WeixinPayUtils extends BaseUtils {
 		return  null;
 	}
 	
+	public static void main(String[] args) {
+		WeixinPayUtils xp = new WeixinPayUtils("wx7cce6e06b8270c8a","af260b6712031d3872e4426172c78d78");
+		xp.unifiedorder("<xml><appid>wx7cce6e06b8270c8a</appid><body>test</body><mch_id>10077218</mch_id><nonce_str>01464997306646184619079699638934</nonce_str><notify_url>/weixin/pay/notify.do</notify_url><openid>oj92muPpYS1EH4egg7AhNYEKbz7I</openid><out_trade_no>1413791082923</out_trade_no><spbill_create_ip>127.0.0.1</spbill_create_ip><time_start>1494665489081</time_start><total_fee>1000</total_fee><trade_type>JSAPI</trade_type><sign>15864FA2FBA179D1ED0F21DFDB79FE19</sign></xml>");
+	}
 	/**
 	 * 该接口提供所有微信支付订单的查询</br>
 	 * 商户可以通过该接口主动查询订单状态</br>
