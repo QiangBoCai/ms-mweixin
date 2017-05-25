@@ -1,178 +1,144 @@
-/**
-The MIT License (MIT) * Copyright (c) 2017 铭飞科技
-
- * Permission is hereby granted, free of charge, to any person obtaining a copy of
- * this software and associated documentation files (the "Software"), to deal in
- * the Software without restriction, including without limitation the rights to
- * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
- * the Software, and to permit persons to whom the Software is furnished to do so,
- * subject to the following conditions:
-
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
-
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
- * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
- * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
- * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
- * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- *//**
- * 
- */
 package com.mingsoft.weixin.entity;
 
 import com.mingsoft.base.entity.BaseEntity;
 
-/**
- * 铭飞科技微信
- * Copyright: Copyright (c) 2014 - 2015
- * @author 成卫雄   QQ:330216230
- * Comments:网页授权2.0实体
- * Create Date:2014-10-7
- * Modification history:
+ /**
+ * 微信网页2.0授权表实体
+ * @author 铭飞开发团队
+ * @version 
+ * 版本号：1.0.0<br/>
+ * 创建日期：2017-5-25 22:04:59<br/>
+ * 历史修订：<br/>
  */
 public class OauthEntity extends BaseEntity {
 
-	/**
-	 * 自增长ID
-	 */
-	private int oauthId;
+	private static final long serialVersionUID = 1495721099246L;
 	
 	/**
-	 * 微信基础信息Id
+	 * 
 	 */
-	private int oauthWeixinId;
-	
+	private Integer oauthWeixinId; 
+	/**
+	 * 子增长ID
+	 */
+	private Integer oauthId; 
 	/**
 	 * 关联微信应用ID
 	 */
-	private int oauthAppId;
-	
-	/**'
+	private Integer oauthAppId; 
+	/**
 	 * 授权成功重定向地址
 	 */
-	private String oauthSuccessUrl;
-	
+	private String oauthSuccessUrl; 
 	/**
-	 * 授权失败或者错误重定向地址
+	 * 授权失败者或错误重定向地址
 	 */
-	private String oauthErrorUrl;
-	
-	/**
-	 * 授权类型
-	 * 1.弹出授权界面可以获取到用户的详细信息
-	 * 2.不弹出授权界面只能获取到用户的openId
-	 */
-	private int oauthType;
-	
+	private String oauthErrorUrl; 
 	/**
 	 * 授权描述
 	 */
-	private String oauthDescription;
-
-	public int getOauthWeixinId() {
-		return oauthWeixinId;
-	}
-
-	public void setOauthWeixinId(int oauthWeixinId) {
+	private String oauthDescription; 
+	/**
+	 * 授权类型。1.弹出授权界面 2.不弹出授权界面
+	 */
+	private Integer oauthType; 
+	
+	/**
+	 * 设置
+	 */
+	public void setOauthWeixinId(Integer oauthWeixinId) {
 		this.oauthWeixinId = oauthWeixinId;
 	}
 
 	/**
-	 * 获取oauthId
-	 * @return  oauthId
+	 * 获取
 	 */
-	public int getOauthId() {
-		return oauthId;
+	public Integer getOauthWeixinId() {
+		return this.oauthWeixinId;
 	}
-
+	
 	/**
-	 * 设置oauthId
-	 * @param oauthId
+	 * 设置子增长ID
 	 */
-	public void setOauthId(int oauthId) {
+	public void setOauthId(Integer oauthId) {
 		this.oauthId = oauthId;
 	}
 
 	/**
-	 * 获取oauthAppId
-	 * @return  oauthAppId
+	 * 获取子增长ID
 	 */
-	public int getOauthAppId() {
-		return oauthAppId;
+	public Integer getOauthId() {
+		return this.oauthId;
 	}
-
+	
 	/**
-	 * 设置oauthAppId
-	 * @param oauthAppId
+	 * 设置关联微信应用ID
 	 */
-	public void setOauthAppId(int oauthAppId) {
+	public void setOauthAppId(Integer oauthAppId) {
 		this.oauthAppId = oauthAppId;
 	}
 
 	/**
-	 * 获取oauthSuccessUrl
-	 * @return  oauthSuccessUrl
+	 * 获取关联微信应用ID
 	 */
-	public String getOauthSuccessUrl() {
-		return oauthSuccessUrl;
+	public Integer getOauthAppId() {
+		return this.oauthAppId;
 	}
-
+	
 	/**
-	 * 设置oauthSuccessUrl
-	 * @param oauthSuccessUrl
+	 * 设置授权成功重定向地址
 	 */
 	public void setOauthSuccessUrl(String oauthSuccessUrl) {
 		this.oauthSuccessUrl = oauthSuccessUrl;
 	}
 
 	/**
-	 * 获取oauthErrorUrl
-	 * @return  oauthErrorUrl
+	 * 获取授权成功重定向地址
 	 */
-	public String getOauthErrorUrl() {
-		return oauthErrorUrl;
+	public String getOauthSuccessUrl() {
+		return this.oauthSuccessUrl;
 	}
-
+	
 	/**
-	 * 设置oauthErrorUrl
-	 * @param oauthErrorUrl
+	 * 设置授权失败者或错误重定向地址
 	 */
 	public void setOauthErrorUrl(String oauthErrorUrl) {
 		this.oauthErrorUrl = oauthErrorUrl;
 	}
 
 	/**
-	 * 获取oauthType
-	 * @return  oauthType
+	 * 获取授权失败者或错误重定向地址
 	 */
-	public int getOauthType() {
-		return oauthType;
+	public String getOauthErrorUrl() {
+		return this.oauthErrorUrl;
+	}
+	
+	/**
+	 * 设置授权描述
+	 */
+	public void setOauthDescription(String oauthDescription) {
+		this.oauthDescription = oauthDescription;
 	}
 
 	/**
-	 * 设置oauthType
-	 * @param oauthType
+	 * 获取授权描述
 	 */
-	public void setOauthType(int oauthType) {
+	public String getOauthDescription() {
+		return this.oauthDescription;
+	}
+	
+	/**
+	 * 设置授权类型。1.弹出授权界面 2.不弹出授权界面
+	 */
+	public void setOauthType(Integer oauthType) {
 		this.oauthType = oauthType;
 	}
 
 	/**
-	 * 获取oauthDescription
-	 * @return  oauthDescription
+	 * 获取授权类型。1.弹出授权界面 2.不弹出授权界面
 	 */
-	public String getOauthDescription() {
-		return oauthDescription;
-	}
-
-	/**
-	 * 设置oauthDescription
-	 * @param oauthDescription
-	 */
-	public void setOauthDescription(String oauthDescription) {
-		this.oauthDescription = oauthDescription;
+	public Integer getOauthType() {
+		return this.oauthType;
 	}
 	
 }

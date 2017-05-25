@@ -1,5 +1,5 @@
 /**
-The MIT License (MIT) * Copyright (c) 2017 铭飞科技
+The MIT License (MIT) * Copyright (c) 2016 铭飞科技
 
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -17,73 +17,39 @@ The MIT License (MIT) * Copyright (c) 2017 铭飞科技
  * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- */package com.mingsoft.weixin.biz.impl;
+ */
 
+package com.mingsoft.weixin.biz.impl;
 
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.mingsoft.base.biz.impl.BaseBizImpl;
 import com.mingsoft.base.dao.IBaseDao;
-import com.mingsoft.util.PageUtil;
+import com.mingsoft.util.*;
+import java.util.*;
+import com.mingsoft.weixin.entity.OauthEntity;
 import com.mingsoft.weixin.biz.IOauthBiz;
 import com.mingsoft.weixin.dao.IOauthDao;
-import com.mingsoft.weixin.entity.OauthEntity;
 
 /**
- * 铭飞科技-微信
- * Copyright: Copyright (c) 2014 - 2015
- * @author 成卫雄  QQ:330216230
- * Comments:微信网页2.0授权业务层
- * Create Date:2014-10-7
- * Modification history:
+ * 微信网页2.0授权表管理持久化层
+ * @author 铭飞开发团队
+ * @version 
+ * 版本号：1.0.0<br/>
+ * 创建日期：2017-5-25 22:04:59<br/>
+ * 历史修订：<br/>
  */
-@Service("oauthBiz")
-public class OauthBizImpl extends BaseBizImpl implements IOauthBiz{
+ @Service("oauthBizImpl")
+public class OauthBizImpl extends BaseBizImpl implements IOauthBiz {
 
-	/**
-	 * 注入网页授权持久化层
-	 */
+	
 	@Autowired
 	private IOauthDao oauthDao;
-
-	@Override
-	public IBaseDao getDao() {
-		return this.oauthDao;
-	}
 	
 	
-	/**
-	 * 根据id批量删除授权
-	 * @param ids 需要删除的授权ID数组
-	 */
-	@Override
-	public void deleteByIds(int[] ids) {
+		@Override
+	protected IBaseDao getDao() {
 		// TODO Auto-generated method stub
-		this.oauthDao.deleteByIds(ids);
-	}
-	
-
-	/**
-	 * 根据微信ID和分页参数查询授权列表
-	 * @param weixinId 微信ID
-	 * @param page 分页参数
-	 */
-	@Override
-	public List<OauthEntity> queryList(int appId,int weixinId,PageUtil page) {
-		// TODO Auto-generated method stub
-		return this.oauthDao.queryList(appId,weixinId, page);
-	}
-	
-
-	/**
-	 * 根据微信ID查询授权总数
-	 * @param appId 应用ID
-	 * @param weixinId 微信ID
-	 */
-	@Override
-	public int queryCount(int appId,int weixinId) {
-		// TODO Auto-generated method stub
-		return this.oauthDao.queryCount(appId,weixinId);
-	}
+		return oauthDao;
+	} 
 }
