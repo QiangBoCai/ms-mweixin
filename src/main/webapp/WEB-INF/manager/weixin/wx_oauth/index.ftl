@@ -1,7 +1,7 @@
 <@ms.html5>
 	<@ms.nav title="授权管理"></@ms.nav>
 	<@ms.searchForm name="searchForm" isvalidation=true>
-    		<@ms.text name="oauthDescription" label="授权描述" validation={"required":"true","maxlength":"50","data-bv-maxlesizength-message":"关键词长度不能超过五十个字符长度!"} />
+    		<@ms.text name="oauthDescription" label="授权描述" validation={"required":"true","maxlength":"50","data-bv-maxlesizength-message":"描述长度不能超过五十个字符长度!"} />
 			<@ms.searchFormButton>
 				 <@ms.queryButton onclick="search()"/> 
 			</@ms.searchFormButton>			
