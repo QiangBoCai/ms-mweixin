@@ -38,6 +38,8 @@ import com.mingsoft.weixin.entity.WeixinPeopleEntity;
 import com.mingsoft.weixin.util.OauthUtils;
 import com.mingsoft.weixin.util.bean.WeixinPeopleEntityUtils;
 
+import net.mingsoft.basic.util.BasicUtil;
+
 /**
  * 授权通用地址,主要用户手机段微信wap页面授权</br>
  * state扩展字段，长度为128长度,详细见微信开发接口</br>
@@ -102,7 +104,7 @@ public class OauthServlet extends BaseServlet {
 		//将用户的openId压入session:weixn_people_session
 		this.setPeopleBySession(req, weixinPeople);
 		//将微信实体压入session:weinxin_session
-		this.setWeixinSession(req,com.mingsoft.weixin.constant.SessionConst.WEIXIN_SESSION,weixin);
+		this.setWeixinSession(req,com.mingsoft.weixin.constant.SessionConst.WEIXIN_SESSION,weixin); 
 		
 		logger.debug("-----------------------授权获得openid:" + userMap.get("openid"));
 		req.setAttribute("openId", userMap.get("openid").toString());

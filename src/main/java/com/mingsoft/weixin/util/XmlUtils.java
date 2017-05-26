@@ -697,7 +697,7 @@ public class XmlUtils {
 		//生成签名
 		String sign = getPaySign(params, key);
 		
-		LOG.debug(sign);
+		LOG.debug("支付sign:"+sign);
 		wp.setSign(sign);
 		StringBuffer sb = new StringBuffer();
 		sb.append("<xml>");
@@ -722,7 +722,7 @@ public class XmlUtils {
 		sb.append("<trade_type>").append(wp.getTradeType()).append("</trade_type>");
 		sb.append("<sign>").append(wp.getSign()).append("</sign>");
 		sb.append("</xml>");
-		LOG.debug(sb.toString());
+		LOG.debug("支付xml:"+sb.toString());
 		return sb.toString();
 	}
 	

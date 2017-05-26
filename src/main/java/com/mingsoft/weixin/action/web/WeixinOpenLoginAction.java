@@ -34,10 +34,13 @@ import com.mingsoft.util.StringUtil;
 import com.mingsoft.weixin.action.BaseAction;
 import com.mingsoft.weixin.biz.IWeixinBiz;
 import com.mingsoft.weixin.biz.IWeixinPeopleBiz;
+import com.mingsoft.weixin.constant.SessionConst;
 import com.mingsoft.weixin.entity.WeixinEntity;
 import com.mingsoft.weixin.entity.WeixinPeopleEntity;
 import com.mingsoft.weixin.util.WeixinOpenLoginUtil;
 import com.mingsoft.weixin.util.bean.WeixinPeopleEntityUtils;
+
+import net.mingsoft.basic.util.BasicUtil;
 
 /**
  * 

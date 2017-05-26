@@ -53,29 +53,6 @@ public abstract class BaseAction extends com.mingsoft.people.action.BaseAction {
 	}
 
 	/**
-	 * 按照微信的需求生成支付key
-	 * 
-	 * @param params
-	 *            参数
-	 * @param key
-	 *            商户交易key
-	 * @return 支付key
-	 */
-	protected String getPaySign(Map<String, String> params, String key) {
-		// 签名步骤一：按字典序排序参数
-		Map<String, String> temp = StringUtil.sortMapByKey(params);
-		// 签名步骤二：在string后加入KEY
-		String sign = StringUtil.buildUrl("", temp).replace("?", "") + "&key=" + key;
-		LOG.debug("=====getPaySign:" + sign);
-		// 签名步骤三：MD5加密
-		sign = MD5Util.MD5Encode(sign, "utf8");
-		// 签名步骤四：所有字符转为大写
-		sign = sign.toUpperCase();
-		LOG.debug("====sigin:" + sign);
-		return sign;
-	}
-
-	/**
 	 * 设置微信session
 	 * 
 	 * @param request

@@ -31,7 +31,8 @@ import com.mingsoft.base.constant.e.BaseSessionEnum;
  */
 public enum SessionConst  implements BaseSessionEnum {
 	
-	WEIXIN_SESSION("weixin_session");
+	WEIXIN_SESSION("weixin_session"),
+	WEIXIN_PEOPLE_SESSION("weixin_people_session");
 	
 	/**
 	 * 设置session常量
