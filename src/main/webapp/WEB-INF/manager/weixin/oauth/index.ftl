@@ -1,5 +1,5 @@
 <@ms.html5>
-	<@ms.nav title="授权管理"></@ms.nav>
+	<@ms.nav title="微信网页2.0授权表管理"></@ms.nav>
 	<@ms.searchForm name="searchForm" isvalidation=true>
     		<@ms.text name="oauthDescription" label="授权描述" validation={"required":"true","maxlength":"50","data-bv-maxlesizength-message":"描述长度不能超过五十个字符长度!"} />
 			<@ms.searchFormButton>
@@ -26,7 +26,7 @@
 		</table>
 	</@ms.panel>
 	
-	<@ms.modal  modalName="delOauthSpider" title="授权数据删除" >
+	<@ms.modal  modalName="delOauth" title="授权数据删除" >
 		<@ms.modalBody>删除此授权
 			<@ms.modalButton>
 				<!--模态框按钮组-->
@@ -43,54 +43,57 @@
 			contentType : "application/x-www-form-urlencoded",
 			queryParamsType : "undefined",
 			toolbar: "#toolbar",
-	    	columns: [{ checkbox: true},{
-	    		field:'oauthWeixinId',
-	    		title:'微信编号',
-	    		width:'22',
-	    		align:'center'
-	    	},{
+	    	columns: [{ checkbox: true},
+	    	{
+	        	field: 'oauthWeixinId',
+	        	title: '微信编号',
+	        	width:'10',
+	        	align: 'center'
+	        },{
 	        	field: 'oauthId',
-	        	title: '权限ID',
-	        	width:'22',
+	        	title: '子增长ID',
+	        	width:'10',
 	        	align: 'center',
 	        	formatter:function(value,row,index) {
 	        		var url = "${managerPath}/weixin/oauth/form.do?oauthId="+row.oauthId;
 	        		return "<a href=" +url+ " target='_self'>" + value + "</a>";
 	        	}
-	    	}, {
-	        	field: 'oauthAppId',
-	        	title: '用户编号',
-	        	width:'22',
-	        	align:'right'
-	    	}, {
-	        	field: 'oauthSuccessUrl',
-	        	title: '授权成功地址',
-	        	width:'200'
 	    	},{
+	        	field: 'oauthAppId',
+	        	title: '关联微信应用ID',
+	        	width:'10',
+	        	align: 'right'
+	        },{
+	        	field: 'oauthSuccessUrl',
+	        	title: '授权成功重定向地址',
+	        	width:'200',
+	        	align: 'left'
+	        },{
 	        	field: 'oauthErrorUrl',
-	        	title: '授权失败地址',
-	        	width:'200'
-		        },{
-		        	field:'oauthDescription',
-		        	title:'授权描述',
-		        	width:'200'
-		        },{
-		        	field:'oauthType',
-		        	title:'授权类型',
-		        	width:'100',
-		        	align:'center',
-		        	formatter:function(value,row,index) {
-		        		switch(value) {
-		        			case 1:
-		        			return "弹出授权界面";break;
-		        			case 2:
-		        			return "不弹出授权界面";break;
-		        		}
+	        	title: '授权失败者或错误重定向地址',
+	        	width:'200',
+	        	align: 'left'
+	        },{
+	        	field: 'oauthDescription',
+	        	title: '授权描述',
+	        	width:'100',
+	        	align: 'left'
+	        },{
+	        	field: 'oauthType',
+	        	title: '授权类型',
+	        	width:'100',
+	        	align: 'center',
+	        	formatter:function(value,row,index) {
+		        	switch(value) {
+		        		case 1:
+		        		return "弹出授权界面";break;
+		        		case 2:
+		        		return "不弹出授权界面";break;
 		        	}
-	    		}]
-			})
-		})
-	
+		        }
+	        }]
+	    })
+	})
 	//增加按钮
 	$("#addOauthBtn").click(function(){
 		location.href ="${managerPath}/weixin/oauth/form.do"; 
@@ -104,7 +107,7 @@
 		if(rows.length <= 0){
 			<@ms.notify msg="请选择需要删除的记录" type="warning"/>
 		}else{
-			$(".delOauthSpider").modal();
+			$(".delOauth").modal();
 		}
 	})
 	

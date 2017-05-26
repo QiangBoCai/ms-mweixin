@@ -1,16 +1,16 @@
 <@ms.html5>
-	 <@ms.nav title="权限信息编辑" back=true>
+	 <@ms.nav title="微信网页2.0授权表编辑" back=true>
     	<@ms.saveButton  onclick="save()"/>
     </@ms.nav>
     <@ms.panel>
     	<@ms.form name="oauthForm" isvalidation=true>
-    		<@ms.text label="微信编号:" name="oauthWeixinId" value="${oauthEntity.oauthWeixinId?default('')}" width="240px;" placeholder="请输入微信编号" validation={"required":"true","maxlength":"50","data-bv-stringlength-message":"微信编号长度不能超过五十个字符长度!", "data-bv-notempty-message":"必填项目"}/>
     		<@ms.hidden name="oauthId" value="${oauthEntity.oauthId?default('')}"/>
-    		<@ms.text label="用户编号:" name="oauthAppId" value="${oauthEntity.oauthAppId?default('')}" width="240px;" placeholder="请输入用户编号" validation={"required":"true","maxlength":"50","data-bv-stringlength-message":"用户编号长度不能超过五十个字符长度!", "data-bv-notempty-message":"必填项目"}/>
-    		<@ms.text label="授权成功地址:" name="oauthSuccessUrl" value="${oauthEntity.oauthSuccessUrl?default('')}" width="240px;" placeholder="请输入授权成功地址" validation={"required":"true","maxlength":"50","data-bv-stringlength-message":"授权成功的地址长度不能超过五十个字符长度!", "data-bv-notempty-message":"必填项目"}/>
-    		<@ms.text label="授权失败地址:" name="oauthErrorUrl" value="${oauthEntity.oauthErrorUrl?default('')}" width="240px;" placeholder="请输入授权失败地址" validation={"required":"true","maxlength":"50","data-bv-stringlength-message":"授权失败的地址长度不能超过五十个字符长度!", "data-bv-notempty-message":"必填项目"}/>
-    		<@ms.text label="权限描述:" name="oauthDescription" value="${oauthEntity.oauthDescription?default('')}" width="240px;" placeholder="请输入对应的权限描述" validation={"required":"true","maxlength":"50","data-bv-stringlength-message":"权限描述长度不能超过五十个字符长度!", "data-bv-notempty-message":"必填项目"}/>
-    		<@ms.select name="oauthType" label="权限类型:" list=os  value="" listKey="key" listValue="Value" width="240"/>
+    		<@ms.number label="微信编号" name="oauthWeixinId" value="${oauthEntity.oauthWeixinId?default('')}" width="240px;" placeholder="请输入微信编号" validation={"required":"true","maxlength":"50","data-bv-stringlength-message":"微信编号长度不能超过五十个字符长度!", "data-bv-notempty-message":"必填项目"}/>
+    		<@ms.number label="关联微信应用ID" name="oauthAppId" value="${oauthEntity.oauthAppId?default('')}" width="240px;" placeholder="请输入关联微信应用ID" validation={"required":"true","maxlength":"50","data-bv-stringlength-message":"关联微信应用ID长度不能超过五十个字符长度!", "data-bv-notempty-message":"必填项目"}/>
+    		<@ms.text label="授权成功重定向地址" name="oauthSuccessUrl" value="${oauthEntity.oauthSuccessUrl?default('')}"  width="240px;" placeholder="请输入授权成功重定向地址" validation={"required":"true","maxlength":"50","data-bv-stringlength-message":"授权成功重定向地址长度不能超过五十个字符长度!", "data-bv-notempty-message":"必填项目"}/>
+    		<@ms.text label="授权失败者或错误重定向地址" name="oauthErrorUrl" value="${oauthEntity.oauthErrorUrl?default('')}"  width="240px;" placeholder="请输入授权失败者或错误重定向地址" validation={"required":"true","maxlength":"50","data-bv-stringlength-message":"授权失败者或错误重定向地址长度不能超过五十个字符长度!", "data-bv-notempty-message":"必填项目"}/>
+    		<@ms.text label="授权描述" name="oauthDescription" value="${oauthEntity.oauthDescription?default('')}"  width="240px;" placeholder="请输入授权描述" validation={"required":"true","maxlength":"50","data-bv-stringlength-message":"授权描述长度不能超过五十个字符长度!", "data-bv-notempty-message":"必填项目"}/>
+    		<@ms.select label="授权类型" list=os name="oauthType" value="" listKey="key" listValue="Value" width="240px;"/>
     	</@ms.form>
     </@ms.panel>
 </@ms.html5>
