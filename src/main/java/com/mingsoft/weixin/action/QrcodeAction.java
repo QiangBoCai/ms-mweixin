@@ -217,15 +217,6 @@ public class QrcodeAction extends com.mingsoft.weixin.action.BaseAction{
 			this.outJson(response, null, false, getResString("err.length", this.getResString("qrcode.description"), "1", "200"));
 			return;			
 		}
-		//验证二维码生成时间的值是否合法			
-		if(StringUtil.isBlank(qrcode.getQrcodeTime())){
-			this.outJson(response, null,false,getResString("err.empty", this.getResString("qrcode.time")));
-			return;			
-		}
-		if(!StringUtil.checkLength(qrcode.getQrcodeTime()+"", 1, 19)){
-			this.outJson(response, null, false, getResString("err.length", this.getResString("qrcode.time"), "1", "19"));
-			return;			
-		}
 		//验证二维码到期时间，最大为1800，以秒为单位(只有临时二维码才有该值)的值是否合法			
 		if(StringUtil.isBlank(qrcode.getQrcodeExpireTime())){
 			this.outJson(response, null,false,getResString("err.empty", this.getResString("qrcode.expire.time")));
@@ -336,15 +327,7 @@ public class QrcodeAction extends com.mingsoft.weixin.action.BaseAction{
 			this.outJson(response, null, false, getResString("err.length", this.getResString("qrcode.description"), "1", "200"));
 			return;			
 		}
-		//验证二维码生成时间的值是否合法			
-		if(StringUtil.isBlank(qrcode.getQrcodeTime())){
-			this.outJson(response, null,false,getResString("err.empty", this.getResString("qrcode.time")));
-			return;			
-		}
-		if(!StringUtil.checkLength(qrcode.getQrcodeTime()+"", 1, 19)){
-			this.outJson(response, null, false, getResString("err.length", this.getResString("qrcode.time"), "1", "19"));
-			return;			
-		}
+		
 		//验证二维码到期时间，最大为1800，以秒为单位(只有临时二维码才有该值)的值是否合法			
 		if(StringUtil.isBlank(qrcode.getQrcodeExpireTime())){
 			this.outJson(response, null,false,getResString("err.empty", this.getResString("qrcode.expire.time")));

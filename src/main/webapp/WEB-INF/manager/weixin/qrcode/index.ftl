@@ -56,7 +56,7 @@
 	        	field: 'qrcodeTitle',
 	        	title: '二维码名称',
 	        	width:'50',
-	        	align: 'center'
+	        	align: 'left'
 	        },{
 	        	field: 'qrcodeValue',
 	        	title: '二维码的场景值',
@@ -69,9 +69,9 @@
 	        	align: 'center',
 	        	formatter:function(value,row,index) {
 		        	switch(value) {
-		        		case 1:
+		        		case 0:
 		        		return "永久二维码";break;
-		        		case 2:
+		        		case 1:
 		        		return "临时二维码";break;
 		        	}
 		        }
@@ -79,12 +79,12 @@
 	        	field: 'qrcodeAppId',
 	        	title: '二维码所属应用ID',
 	        	width:'10',
-	        	align: 'center'
+	        	align: 'right'
 	        },{
 	        	field: 'qrcodeDescription',
 	        	title: '二维码描述',
 	        	width:'200',
-	        	align: 'center'
+	        	align: 'left'
 	        },{
 	        	field: 'qrcodeTime',
 	        	title: '二维码生成时间',
@@ -94,7 +94,7 @@
 	        	field: 'qrcodeExpireTime',
 	        	title: '二维码到期时间',
 	        	width:'10',
-	        	align: 'center'
+	        	align: 'right'
 	        },{
 	        	field: 'qrcodeWeixinId',
 	        	title: '微信编号',

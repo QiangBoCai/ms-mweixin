@@ -10,7 +10,8 @@
     		<@ms.select label="二维码类型" list=os name="qrcodeType" value="" listKey="key" listValue="Value" width="240px;"/>
     		<@ms.number label="二维码所属应用ID" name="qrcodeAppId" value="${qrcodeEntity.qrcodeAppId?default('')}" width="240px;" placeholder="请输入二维码所属应用ID" validation={"required":"true","maxlength":"50","data-bv-stringlength-message":"二维码所属应用ID长度不能超过五十个字符长度!", "data-bv-notempty-message":"必填项目"}/>
     		<@ms.text label="二维码描述" name="qrcodeDescription" value="${qrcodeEntity.qrcodeDescription?default('')}"  width="240px;" placeholder="请输入二维码描述" validation={"required":"true","maxlength":"50","data-bv-stringlength-message":"二维码描述长度不能超过五十个字符长度!", "data-bv-notempty-message":"必填项目"}/>
-    		<@ms.number label="二维码到期时间" name="qrcodeExpireTime" value="${qrcodeEntity.qrcodeExpireTime?default('')}" width="240px;" placeholder="请输入二维码到期时间，最大为1800，以秒为单位(只有临时二维码才有该值)" validation={"required":"true","maxlength":"50","data-bv-stringlength-message":"二维码到期时间，最大为1800，以秒为单位(只有临时二维码才有该值)长度不能超过五十个字符长度!", "data-bv-notempty-message":"必填项目"}/>
+    		<@ms.text label="二维码生成时间" name="qrcodeTime" value="${qrcodeEntity.qrcodeTime?string('yyyy-MM-dd HH:mm:ss')}"  width="240px;" placeholder="请输入二维码生成时间" validation={"required":"true","maxlength":"50","data-bv-stringlength-message":"二维码生成时间长度不能超过五十个字符长度!", "data-bv-notempty-message":"必填项目"}/>
+    		<@ms.number label="二维码到期时间" name="qrcodeExpireTime" value="${qrcodeEntity.qrcodeExpireTime?default('')}" width="240px;" placeholder="请输入二维码到期时间" validation={"required":"true","maxlength":"50","data-bv-stringlength-message":"二维码到期时间，最大为1800，以秒为单位(只有临时二维码才有该值)长度不能超过五十个字符长度!", "data-bv-notempty-message":"必填项目"}/>
     		<@ms.number label="微信编号" name="qrcodeWeixinId" value="${qrcodeEntity.qrcodeWeixinId?default('')}" width="240px;" placeholder="请输入微信编号" validation={"required":"true","maxlength":"50","data-bv-stringlength-message":"微信编号长度不能超过五十个字符长度!", "data-bv-notempty-message":"必填项目"}/>
     	</@ms.form>
     </@ms.panel>

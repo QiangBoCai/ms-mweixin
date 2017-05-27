@@ -2,6 +2,10 @@ package com.mingsoft.weixin.entity;
 
 import java.util.Date;
 
+import javax.ws.rs.FormParam;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.mingsoft.base.entity.BaseEntity;
 
  /**
@@ -43,6 +47,7 @@ public class QrcodeEntity extends BaseEntity {
 	/**
 	 * 二维码生成时间
 	 */
+	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	private Date qrcodeTime; 
 	/**
 	 * 二维码到期时间，最大为1800，以秒为单位(只有临时二维码才有该值)
