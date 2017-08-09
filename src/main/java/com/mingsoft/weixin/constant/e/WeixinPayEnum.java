@@ -32,6 +32,7 @@ import com.mingsoft.base.constant.e.BaseEnum;
 public enum WeixinPayEnum implements BaseEnum{
 	JSAPI("JSAPI"),
 	NATIVE("NATIVE"),
+	MWEB("MWEB"),
 	APP("APP");
 	WeixinPayEnum(Object code) {
 		this.code = code;

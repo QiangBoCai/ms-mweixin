@@ -394,7 +394,6 @@ public class XmlUtils {
 	 * @return map数据
 	 */
 	public static Map<String,Object> getXmlPayUnifiedOrder(String xml) {
-		LOG.debug("getXmlPayUnifiedOrder xml:"+ xml);
 		if (StringUtil.isBlank(xml)) {
 			return null;
 		}
@@ -416,7 +415,7 @@ public class XmlUtils {
 					param.put("sign", XmlUtils.getString(xml, "sign"));
 					param.put("err_code", XmlUtils.getString(xml, "err_code"));	
 					param.put("err_code_des", XmlUtils.getString(xml, "err_code_des"));
-		
+					param.put("result_code", XmlUtils.getString(xml, "result_code"));
 				} else {
 					param.put("return_code", returnCode);
 					param.put("return_msg", XmlUtils.getString(xml, "return_msg"));	

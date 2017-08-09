@@ -52,38 +52,53 @@ import net.mingsoft.basic.util.BasicUtil;
 @WebServlet(urlPatterns="/weixin/oauth")
 public class OauthServlet extends BaseServlet {
 	
+	/**
+	 * 用户授权登录
+	 * https://open.weixin.qq.com/connect/oauth2/authorize?appid=&redirect_uri=http://wtp.mingsoft.net/weixin/oaut&response_type=code&scope=snsapi_base&state=1#wechat_redirect
+	 */
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {	
 		String code = req.getParameter("code"); //用户同意授权就可以获得
-		String state = req.getParameter("state");
-		logger.debug("获取的code:"+code+"------获取state:"+state);
+		String state = req.getParameter("state"); //state 与 weixinId两个参数二选一
+		String wxId = req.getParameter("weixinId"); //微信编号
+		int weixinId = 0;
+		if(!StringUtil.isBlank(wxId)) {
+			weixinId = Integer.valueOf(wxId);
+		}
+		String url = req.getParameter("url"); //重定向地址
+		LOG.debug("授权请求：code:"+code+" state:"+state+" weixinId:"+weixinId);
 		
-		if(StringUtil.isBlank(state) || StringUtil.isBlank(code)){
-			logger.debug("关键性参数错误");
+		
+		if(StringUtil.isBlank(code)){
+			LOG.error("关键性参数错误");
 			//返回错误地址
 			resp.sendRedirect(req.getContextPath()+"/500/error.do");
 			return ;
 		}
 		
-		//网页授权2.0业务层
-		IOauthBiz oauthBiz = (IOauthBiz) getBean(req.getServletContext(),"oauthBiz");
-		
-		//根据解析到的state查询网页2.0授权信息
-		OauthEntity oauth = (OauthEntity) oauthBiz.getEntity(Integer.parseInt(state));
-		
-		if(oauth == null){
-			logger.debug("关键性参数错误");
-			//返回错误地址
-			resp.sendRedirect(req.getContextPath()+"/500/error.do");
-			return ;			
+		OauthEntity oauth = null;
+		if(!StringUtil.isBlank(state)) {
+			//网页授权2.0业务层
+			IOauthBiz oauthBiz = (IOauthBiz) getBean(req.getServletContext(),"oauthBiz");
+			
+			//根据解析到的state查询网页2.0授权信息
+			oauth = (OauthEntity) oauthBiz.getEntity(Integer.parseInt(state));
+			
+			if(oauth == null){
+				logger.debug("关键性参数错误");
+				//返回错误地址
+				resp.sendRedirect(req.getContextPath()+"/500/error.do");
+				return ;			
+			}	
+			
+			//微信基础信息ID
+			weixinId = oauth.getOauthWeixinId();
 		}
+
 		
 		//微信基础信息业务层
 		IWeixinBiz weixinBiz = (IWeixinBiz) getBean(req.getServletContext(), "weixinBiz");
-
-		//微信基础信息ID
-		int weixinId = oauth.getOauthWeixinId();
 		WeixinEntity weixin = weixinBiz.getEntityById(weixinId);
 		
 		//获取用户openid
@@ -106,10 +121,14 @@ public class OauthServlet extends BaseServlet {
 		//将微信实体压入session:weinxin_session
 		this.setWeixinSession(req,com.mingsoft.weixin.constant.SessionConst.WEIXIN_SESSION,weixin); 
 		
-		logger.debug("-----------------------授权获得openid:" + userMap.get("openid"));
+		LOG.debug("-----------------------授权获得openid:" + userMap.get("openid"));
 		req.setAttribute("openId", userMap.get("openid").toString());
-		logger.debug("重定向地址："+oauth.getOauthSuccessUrl());
-		resp.sendRedirect(req.getContextPath()+StringUtil.buildUrl(oauth.getOauthSuccessUrl(), "openId="+userMap.get("openid")));
+		if(oauth!=null) { //通过授权管理链接
+			LOG.debug("重定向地址："+oauth.getOauthSuccessUrl());
+			resp.sendRedirect(req.getContextPath()+StringUtil.buildUrl(oauth.getOauthSuccessUrl(), "openId="+userMap.get("openid")));
+		} else { //动态链接
+			resp.sendRedirect(req.getContextPath()+StringUtil.buildUrl(url, "openId="+userMap.get("openid")));
+		}
 	}
 	
 }
