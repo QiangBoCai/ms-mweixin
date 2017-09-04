@@ -154,7 +154,7 @@ public class WeixinPeopleBizImpl  extends PeopleUserBizImpl implements IWeixinPe
 			//获取新增用户的用户ＩＤ
 			int peopleId = weixinPeople.getPeopleId();
 			weixinPeople.setPeopleId(peopleId);//保存用户ID
-			weixinPeople.setPeopleUserPeopleId(peopleId);//保存people_user表的用户ID
+			weixinPeople.setPuPeopleId(peopleId);//保存people_user表的用户ID
 			return weixinPeople;
 		}else{
 			return weixinPeopleEntity;
@@ -182,10 +182,10 @@ public class WeixinPeopleBizImpl  extends PeopleUserBizImpl implements IWeixinPe
 	@Override
 	public Boolean recursionImportPeople(WeixinEntity weixin,String openId,int userNum){
 		//若微信不存在
-		if(weixin == null || weixin.getWeixinId()<=0 || weixin.getAppId()<=0 || StringUtil.isBlank(weixin.getWeixinAppSecret()) || StringUtil.isBlank(weixin.getWeixinAppID())){
+		if(weixin == null || weixin.getWeixinId()<=0 || weixin.getAppId()<=0 || StringUtil.isBlank(weixin.getWeixinAppSecret()) || StringUtil.isBlank(weixin.getWeixinAppId())){
 			return false;
 		}
-		UserUtils userUtils = new UserUtils(weixin.getWeixinAppID(),weixin.getWeixinAppSecret());
+		UserUtils userUtils = new UserUtils(weixin.getWeixinAppId(),weixin.getWeixinAppSecret());
 		List<Map<String,Object>> listMap = userUtils.queryAllUserInfo(openId,userNum);
 		if(listMap == null || listMap.size() == 0){
 			return false;
@@ -199,13 +199,12 @@ public class WeixinPeopleBizImpl  extends PeopleUserBizImpl implements IWeixinPe
 			weixinPeople.setWeixinPeopleAppId(weixin.getAppId());//微信用户应用ID
 			weixinPeople.setWeixinPeopleWeixinId(weixin.getWeixinId());//微信用户微信ID
 			weixinPeople.setWeixinPeopleOpenId(userInfoMap.get("openid").toString());//微信用户OpenId，用户在微信的唯一识别字段
-			weixinPeople.setPeopleUserSex(Integer.parseInt(userInfoMap.get("sex").toString()));//用户性别
+			weixinPeople.setPuSex(Integer.parseInt(userInfoMap.get("sex").toString()));//用户性别
 			weixinPeople.setWeixinPeopleCity(userInfoMap.get("city").toString());//微信用户所在城市
 			weixinPeople.setWeixinPeopleHeadimgUrl(userInfoMap.get("headimgurl").toString());//微信用户头像
-			weixinPeople.setPeopleUserNickName(StringUtil.checkStr(userInfoMap.get("nickname").toString()));//用户昵称
+			weixinPeople.setPuNickname(StringUtil.checkStr(userInfoMap.get("nickname").toString()));//用户昵称
 			weixinPeople.setWeixinPeopleProvince(userInfoMap.get("province").toString());//微信用户所在省份
 			weixinPeople.setWeixinPeopleState(WeixinPeopleEntity.WEIXIN_PEOPLE_WATCH);//微信用户所在市
-			weixinPeople.setPeopleUserAppId(weixin.getAppId());//people_user表的用户应用ID
 			weixinPeople.setPeopleAppId(weixin.getAppId());//people表单用户应用ID
 			weixinPeople.setPeopleDateTime(new Date());	//用户注册时间
 			list.add(weixinPeople);

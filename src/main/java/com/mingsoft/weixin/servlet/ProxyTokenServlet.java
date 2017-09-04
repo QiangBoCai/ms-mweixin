@@ -65,8 +65,8 @@ public class ProxyTokenServlet extends BaseServlet {
 		}
 		
 		//根据管理员ID查询该微信信息
-		IWeixinBiz weixinBiz = (IWeixinBiz) getBean(request.getServletContext(), "weixinBiz");
-		WeixinEntity wx = weixinBiz.getEntityById(Integer.parseInt(weixinId));
+		IWeixinBiz weixinBiz = (IWeixinBiz) getBean(request.getServletContext(),IWeixinBiz.class);
+		WeixinEntity wx = (WeixinEntity)weixinBiz.getEntity(Integer.parseInt(weixinId));
 		logger.debug("proxy url" +wx.getWeixinProxyUrl());
 		if (!StringUtil.isBlank(wx.getWeixinProxyUrl())) {
 			Result rs = Proxy.get(wx.getWeixinProxyUrl(), null,this.assemblyRequestMap(request));
@@ -92,8 +92,8 @@ public class ProxyTokenServlet extends BaseServlet {
 		}
 		
 		//根据管理员ID查询该微信信息
-		IWeixinBiz weixinBiz = (IWeixinBiz) getBean(request.getServletContext(), "weixinBiz");
-		WeixinEntity wx  = weixinBiz.getEntityById(Integer.parseInt(weixinId));
+		IWeixinBiz weixinBiz = (IWeixinBiz) getBean(request.getServletContext(),IWeixinBiz.class);
+		WeixinEntity wx = (WeixinEntity)weixinBiz.getEntity(Integer.parseInt(weixinId));
 		if (!StringUtil.isBlank(wx.getWeixinProxyUrl())) {
 			Map<String,String> param = new HashMap<String,String>();
 			param.put("t",weixinId);

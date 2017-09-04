@@ -67,7 +67,7 @@ public class WeixinEntity extends BaseEntity {
 	/**
 	 * 应用编号
 	 */
-	private String weixinAppID;
+	private String weixinAppId;
 	
 	/**
 	 * 应用授权码
@@ -217,15 +217,15 @@ public class WeixinEntity extends BaseEntity {
 	/**
 	 * @return the winxinAppID
 	 */
-	public String getWeixinAppID() {
-		return weixinAppID;
+	public String getWeixinAppId() {
+		return weixinAppId;
 	}
 
 	/**
 	 * @param weixinAppID the winxinAppID to set
 	 */
-	public void setWeixinAppID(String weixinAppID) {
-		this.weixinAppID = weixinAppID;
+	public void setWeixinAppId(String weixinAppId) {
+		this.weixinAppId = weixinAppId;
 	}
 
 	/**

@@ -95,14 +95,14 @@ public class MenuAction extends BaseAction{
 			//取出微信实体
 			WeixinEntity weixin = this.getWeixinSession(request);
 			//若微信或微信相关字段为空
-			if(weixin == null || weixin.getWeixinId()<=0 || StringUtil.isBlank(weixin.getWeixinAppSecret()) || StringUtil.isBlank(weixin.getWeixinAppID())){
+			if(weixin == null || weixin.getWeixinId()<=0 || StringUtil.isBlank(weixin.getWeixinAppSecret()) || StringUtil.isBlank(weixin.getWeixinAppId())){
 				this.outJson(response, null, false);
 				return;
 			}
 			//获取微信ID
 			int weixinId = weixin.getWeixinId();
 			//引入菜单工具类
-			MenuUtils menuUtils = new MenuUtils(weixin.getWeixinAppID(),weixin.getWeixinAppSecret());
+			MenuUtils menuUtils = new MenuUtils(weixin.getWeixinAppId(),weixin.getWeixinAppSecret());
 			//生成微信菜单，判断正确/错误
 			Boolean temp = menuUtils.setMenu(this.menuBiz.queryMenu(appId,weixinId));
 			this.outJson(response, null, temp);			
@@ -123,12 +123,12 @@ public class MenuAction extends BaseAction{
 		//取出微信实体
 		WeixinEntity weixin = this.getWeixinSession(request);
 		//若微信或微信相关字段为空
-		if(weixin == null || weixin.getWeixinId()<=0 || StringUtil.isBlank(weixin.getWeixinAppSecret()) || StringUtil.isBlank(weixin.getWeixinAppID())){
+		if(weixin == null || weixin.getWeixinId()<=0 || StringUtil.isBlank(weixin.getWeixinAppSecret()) || StringUtil.isBlank(weixin.getWeixinAppId())){
 			this.outJson(response, null, false);
 			return;
 		}
 		//引入菜单工具类
-		MenuUtils menuUtils = new MenuUtils(weixin.getWeixinAppID(),weixin.getWeixinAppSecret());
+		MenuUtils menuUtils = new MenuUtils(weixin.getWeixinAppId(),weixin.getWeixinAppSecret());
 		try {
 			//清除微信菜单
 			Boolean temp = menuUtils.removeMenu();

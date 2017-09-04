@@ -118,6 +118,11 @@ public abstract class BaseUtils {
 	protected final static String GET_USERDATA_BYOPENID ="https://api.weixin.qq.com/cgi-bin/user/info?access_token=";
 	
 	/**
+	 * 获取 ticket 必须拼接type参数
+	 */
+	protected final static String GET_TICKET = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=";
+	
+	/**
 	 * 通过code换取网页授权access_token;使用时应携带参数：
 	 *		appid:必须携带, 公众号的唯一标识
 	 *		secret:必须携带,公众号的appsecret

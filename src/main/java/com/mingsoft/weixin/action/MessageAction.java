@@ -83,7 +83,7 @@ public class MessageAction extends BaseAction{
 		//获取微信实体
 		WeixinEntity weixin = this.getWeixinSession(request);
 		//若微信或者微信相关数据不存在
-		if(weixin == null || weixin.getWeixinId()<=0 || StringUtil.isBlank(weixin.getWeixinAppSecret()) || StringUtil.isBlank(weixin.getWeixinAppID())){
+		if(weixin == null || weixin.getWeixinId()<=0 || StringUtil.isBlank(weixin.getWeixinAppSecret()) || StringUtil.isBlank(weixin.getWeixinAppId())){
 			this.outJson(response, ModelCode.WEIXIN_MESSAGE, false, this.getResString("weixin.not.found"));
 			return;
 		}
@@ -100,7 +100,7 @@ public class MessageAction extends BaseAction{
 			return;
 		}
 		//获取伪群发工具类
-		MessageUtils messageUtil = new MessageUtils(weixin.getWeixinAppID(),weixin.getWeixinAppSecret());
+		MessageUtils messageUtil = new MessageUtils(weixin.getWeixinAppId(),weixin.getWeixinAppSecret());
 		//获取微信所有用户集合
 		List<WeixinPeopleEntity> weixinPeopleList = this.queryUserInfoList(appId,weixinId);
 		//创建空的weixinPeople集合,将发送失败的实体add进List中
@@ -137,12 +137,12 @@ public class MessageAction extends BaseAction{
 		//获取微信实体
 		WeixinEntity weixin = this.getWeixinSession(request);
 		//若微信或者微信相关字段不存在
-		if(weixin == null || weixin.getWeixinId()<=0 || StringUtil.isBlank(weixin.getWeixinAppSecret()) || StringUtil.isBlank(weixin.getWeixinAppID())){
+		if(weixin == null || weixin.getWeixinId()<=0 || StringUtil.isBlank(weixin.getWeixinAppSecret()) || StringUtil.isBlank(weixin.getWeixinAppId())){
 			this.outJson(response, ModelCode.WEIXIN_MESSAGE, false, this.getResString("weixin.not.found"));
 			return;
 		}
 		//获取伪群发工具类
-		MessageUtils messageUtil = new MessageUtils(weixin.getWeixinAppID(),weixin.getWeixinAppSecret());
+		MessageUtils messageUtil = new MessageUtils(weixin.getWeixinAppId(),weixin.getWeixinAppSecret());
 		//获取微信ID
 		int weixinId = weixin.getWeixinId();
 		//获取应用ID
@@ -251,11 +251,11 @@ public class MessageAction extends BaseAction{
 		//获取微信
 		WeixinEntity weixin = this.getWeixinSession(request);
 		//若微信不存在
-		if(weixin == null|| StringUtil.isBlank(weixin.getWeixinAppSecret()) || StringUtil.isBlank(weixin.getWeixinAppID())){
+		if(weixin == null|| StringUtil.isBlank(weixin.getWeixinAppSecret()) || StringUtil.isBlank(weixin.getWeixinAppId())){
 			this.outJson(response, ModelCode.WEIXIN_MESSAGE, false, this.getResString("weixin.not.found"));
 			return;
 		}
-		MessageUtils messageUtil = new MessageUtils(weixin.getWeixinAppID(),weixin.getWeixinAppSecret());
+		MessageUtils messageUtil = new MessageUtils(weixin.getWeixinAppId(),weixin.getWeixinAppSecret());
 		//获取要发送的内容
 		String content = request.getParameter("content");		
 		//若内容为空

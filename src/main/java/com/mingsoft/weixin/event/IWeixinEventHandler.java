@@ -217,9 +217,9 @@ public abstract class IWeixinEventHandler implements IWeixinEventType {
 		//判读是否是微信自定义消息模板
 		if(passiveMessage.isMessageTemplage()) {
 //			WeixinEntity weixin = this.weixinBiz.getEntityByAppId(this.appId);
-			WeixinEntity weixin = this.weixinBiz.getEntityById(this.weixinId);
+			WeixinEntity weixin = (WeixinEntity)this.weixinBiz.getEntity(this.weixinId);
 			MessageTemplateEntity mte = (MessageTemplateEntity) messageTemplateBiz.getEntity(passiveMessage.getPassiveMessageMessageId());
-			new MessageTemplateUtils(weixin.getWeixinAppID(),weixin.getWeixinAppSecret()).sendToUser(this.fromUserName, mte.getMessageTemplateTemplateId(),mte.getMessageTemplateUrl(), "", mte.getMessageTemplateTitle(), mte.getMessageTemplateTitleColor(), mte.getMessageTemplateRemark(),  mte.getMessageTemplateRemarkColor(), mte.getMessageTemplateKeyword().split("\\|"));
+			new MessageTemplateUtils(weixin.getWeixinAppId(),weixin.getWeixinAppSecret()).sendToUser(this.fromUserName, mte.getMessageTemplateTemplateId(),mte.getMessageTemplateUrl(), "", mte.getMessageTemplateTitle(), mte.getMessageTemplateTitleColor(), mte.getMessageTemplateRemark(),  mte.getMessageTemplateRemarkColor(), mte.getMessageTemplateKeyword().split("\\|"));
 			return null;
 		}
 
@@ -278,23 +278,22 @@ public abstract class IWeixinEventHandler implements IWeixinEventType {
 
 		// 查询该微信号的appId和appSecret
 //		WeixinEntity weixin = this.weixinBiz.getEntityByAppId(this.appId);
-		WeixinEntity weixin = this.weixinBiz.getEntityById(this.weixinId);
+		WeixinEntity weixin = (WeixinEntity)this.weixinBiz.getEntity(this.weixinId);
 		weixinPeople.setWeixinPeopleOpenId(this.fromUserName);
 		weixinPeople.setWeixinPeopleAppId(this.appId);
 		weixinPeople.setWeixinPeopleWeixinId(this.weixinId);
 
-		UserUtils userUtil = new UserUtils(weixin.getWeixinAppID(), weixin.getWeixinAppSecret());
+		UserUtils userUtil = new UserUtils(weixin.getWeixinAppId(), weixin.getWeixinAppSecret());
 		Map<String, Object> userInfoMap = userUtil.syncUserInfo(this.fromUserName);
 		
 		// 构造用户基本信息
 		if (userInfoMap != null) {
-			weixinPeople.setPeopleUserSex(Integer.parseInt(userInfoMap.get("sex").toString()));
+			weixinPeople.setPuSex(Integer.parseInt(userInfoMap.get("sex").toString()));
 			weixinPeople.setWeixinPeopleCity(userInfoMap.get("city").toString());
 			weixinPeople.setWeixinPeopleHeadimgUrl(userInfoMap.get("headimgurl").toString());
-			weixinPeople.setPeopleUserNickName(userInfoMap.get("nickname").toString());
+			weixinPeople.setPuNickname(userInfoMap.get("nickname").toString());
 			weixinPeople.setWeixinPeopleProvince(userInfoMap.get("province").toString());
 			weixinPeople.setPeopleAppId(this.appId);
-			weixinPeople.setPeopleUserAppId(this.appId);
 		} else {
 			logger.error("获取用户基础信息失败!");
 		}

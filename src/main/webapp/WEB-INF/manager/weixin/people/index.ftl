@@ -3,7 +3,7 @@
     	<!--title对应板块名称-->
         <@ms.nav title="微信用户"></@ms.nav>
         <@ms.searchForm   name="searchForm" action="">
-			<@ms.text label="用户昵称"  name="peopleUserNickName" value="" title="请输入用户昵称"  placeholder="请输入用户昵称"/>
+			<@ms.text label="用户昵称"  name="puNickname" value="" title="请输入用户昵称"  placeholder="请输入用户昵称"/>
 			<@ms.searchFormButton>
 				<@ms.queryButton id="submitSearch"/>								
 			</@ms.searchFormButton>
@@ -51,7 +51,7 @@
 			    formatter:function(value,row,index){return "<img src=" + row.weixinPeopleHeadimgUrl + " style='border-radius:12px;width:25px;height:25px;'>"}
 			}, {
 			    align:'left',
-			    field: 'peopleUserNickName',
+			    field: 'puNickname',
 			    title: '用户昵称'
 			},{
 			   	align:'center',

@@ -68,11 +68,11 @@ public class MessageMassAction extends BaseAction{
 		//获取微信对象
 		WeixinEntity weixin = this.getWeixinSession(request);
 		//若微信不存在
-		if(weixin == null || StringUtil.isBlank(weixin.getWeixinAppSecret()) || StringUtil.isBlank(weixin.getWeixinAppID())){
+		if(weixin == null || StringUtil.isBlank(weixin.getWeixinAppSecret()) || StringUtil.isBlank(weixin.getWeixinAppId())){
 			return;
 		}
 		//引入messageMass的工具类
-		MessageMassUtils messageMassUtils = new MessageMassUtils(weixin.getWeixinAppID(),weixin.getWeixinAppSecret());
+		MessageMassUtils messageMassUtils = new MessageMassUtils(weixin.getWeixinAppId(),weixin.getWeixinAppSecret());
 		//获取图文素材ID
 		String contentStr = BasicUtil.getString("content");
 		String gourpId = BasicUtil.getString("gourpId",null);
@@ -120,10 +120,10 @@ public class MessageMassAction extends BaseAction{
 		String openId = request.getParameter("openId");
 		WeixinEntity weixin = this.getWeixinSession(request);
 		//若微信不存在
-		if(weixin == null || StringUtil.isBlank(weixin.getWeixinNo()) || StringUtil.isBlank(weixin.getWeixinAppSecret()) || StringUtil.isBlank(weixin.getWeixinAppID())){
+		if(weixin == null || StringUtil.isBlank(weixin.getWeixinNo()) || StringUtil.isBlank(weixin.getWeixinAppSecret()) || StringUtil.isBlank(weixin.getWeixinAppId())){
 			return;
 		}
-		MessageMassUtils messageMassUtils = new MessageMassUtils(weixin.getWeixinAppID(),weixin.getWeixinAppSecret());
+		MessageMassUtils messageMassUtils = new MessageMassUtils(weixin.getWeixinAppId(),weixin.getWeixinAppSecret());
 		//content为图文素材ID
 		String contentStr = request.getParameter("content");
 		//判断字符串是否转化为了int型
@@ -162,7 +162,7 @@ public class MessageMassAction extends BaseAction{
 	 * @return 图文素材所对应的唯一ID
 	 */
 	private String uploadNews(HttpServletRequest request,WeixinEntity weixin,NewsEntity news){
-		UploadDownUtils uploadownUitls = new UploadDownUtils(weixin.getWeixinAppID(),weixin.getWeixinAppSecret());
+		UploadDownUtils uploadownUitls = new UploadDownUtils(weixin.getWeixinAppId(),weixin.getWeixinAppSecret());
 		//将素材实体转化为上传所需要的素材实体列表
 		List<UploadNewsBean> uploadNewsBeanList = NewsEntityUtils.newsEnttiyToUploadNewsBeanList(weixin,news,request);
 		if(uploadNewsBeanList == null || uploadNewsBeanList.size()==0){

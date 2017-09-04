@@ -53,50 +53,7 @@ public class WeixinBizImpl extends BaseBizImpl implements IWeixinBiz {
 		return this.weixinDao;
 	}
 
-	/**
-	 * 根据公众号原始id获取的微信实体
-	 * @param weixinOriginId 微信原始id
-	 * @param weixinId 微信ID
-	 * @return 微信基础信息
-	 */
-	@Override
-	public WeixinEntity getWeixinEntityByWeixinOriginIdAndWeixinId(String weixinOriginId,int weixinId) {
-		return this.weixinDao.getEntity(null,weixinId,weixinOriginId);
-	}
 
-	/**
-	 * 根据自增长Id查询微信基础信息
-	 * @param weixinId 自增长Id
-	 * @return 微信基础信息
-	 */
-	@Override
-	public WeixinEntity getEntityById(int weixinId) {
-		return this.weixinDao.getEntity(null,weixinId,null);
-	}
-	
-	
-	/**
-	 * 根据微信ID查找微信实体集合
-	 * @param appId 应用编号
-	 * @param page 分页条件
-	 * @return 微信实体集合
-	 */
-	@Override
-	public List<WeixinEntity> queryAllByAppId(int appId,PageUtil page) {
-		List<WeixinEntity> weixinlist  = weixinDao.queryList(appId,page);
-		return weixinlist;
-	}
-	
-
-	/**
-	 * 根据应用ID查询该应用下的微信数量
-	 * @param appId 应用ID
-	 * @return 微信数量
-	 */
-	public int getCountByAppId(int appId){
-		return this.weixinDao.getCountByAppId(appId);
-	}
-	
 	/**
 	 * 根据微信ID集合批量删除微信
 	 * @param ids 微信ID集合

@@ -54,14 +54,13 @@ public class WeixinPeopleEntityUtils extends BaseBeanUtils{
 			return null;
 		}
 		WeixinPeopleEntity weixinPeopleEntity = new WeixinPeopleEntity();
-		weixinPeopleEntity.setPeopleUserNickName(userMap.get("nickname").toString());
-		weixinPeopleEntity.setPeopleUserSex(Integer.parseInt(userMap.get("sex").toString()));
+		weixinPeopleEntity.setPuNickname(userMap.get("nickname").toString());
+		weixinPeopleEntity.setPuSex(Integer.parseInt(userMap.get("sex").toString()));
 		weixinPeopleEntity.setWeixinPeopleProvince(userMap.get("province").toString());
-		weixinPeopleEntity.setPeopleUserIcon(userMap.get("headimgurl").toString());//用户头像
+		weixinPeopleEntity.setPuIcon(userMap.get("headimgurl").toString());//用户头像
 		weixinPeopleEntity.setWeixinPeopleCity(userMap.get("city").toString());
 		weixinPeopleEntity.setWeixinPeopleHeadimgUrl(userMap.get("headimgurl").toString());
 		weixinPeopleEntity.setWeixinPeopleState(WeixinPeopleEntity.WEIXIN_PEOPLE_OPEN);
-		weixinPeopleEntity.setPeopleUserAppId(peopleAppId);
 		weixinPeopleEntity.setPeopleAppId(peopleAppId);
 		weixinPeopleEntity.setWeixinPeopleAppId(peopleAppId);
 		weixinPeopleEntity.setWeixinPeopleWeixinId(weixinId);
@@ -84,14 +83,13 @@ public class WeixinPeopleEntityUtils extends BaseBeanUtils{
 		WeixinPeopleEntity weixinPeopleEntity = new WeixinPeopleEntity();
 		//判断授权方式是否为:snsapi_userinfo,是否可获取到用户的详细信息
 		if(!StringUtil.isBlank(userMap.get(OauthUtils.SCOPE)) && userMap.get(OauthUtils.SCOPE).toString().equals(OauthUtils.SCOPE_USERINFO)){
-			weixinPeopleEntity.setPeopleUserNickName(userMap.get("nickname").toString());
-			weixinPeopleEntity.setPeopleUserSex(Integer.parseInt(userMap.get("sex").toString()));
+			weixinPeopleEntity.setPuNickname(userMap.get("nickname").toString());
+			weixinPeopleEntity.setPuSex(Integer.parseInt(userMap.get("sex").toString()));
 			weixinPeopleEntity.setWeixinPeopleProvince(userMap.get("province").toString());
 			weixinPeopleEntity.setWeixinPeopleCity(userMap.get("city").toString());
 			weixinPeopleEntity.setWeixinPeopleHeadimgUrl(userMap.get("headimgurl").toString());
 		}
 		weixinPeopleEntity.setWeixinPeopleState(WeixinPeopleEntity.WEIXIN_PEOPLE_OAUTH_WATCH);
-		weixinPeopleEntity.setPeopleUserAppId(peopleAppId);
 		weixinPeopleEntity.setPeopleAppId(peopleAppId);
 		weixinPeopleEntity.setWeixinPeopleAppId(peopleAppId);
 		weixinPeopleEntity.setWeixinPeopleWeixinId(weixinId);

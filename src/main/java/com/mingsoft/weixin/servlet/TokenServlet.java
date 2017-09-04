@@ -70,9 +70,8 @@ public class TokenServlet extends BaseServlet {
 		}
 		
 		//根据管理员ID查询该微信信息
-		IWeixinBiz weixinBiz = (IWeixinBiz) getBean(request.getServletContext(), "weixinBiz");
-		//根据微信自增长Id查询微信基础信息
-		WeixinEntity wx = weixinBiz.getEntityById(Integer.parseInt(weixinId));
+		IWeixinBiz weixinBiz = (IWeixinBiz) getBean(request.getServletContext(),IWeixinBiz.class);
+		WeixinEntity wx = (WeixinEntity)weixinBiz.getEntity(Integer.parseInt(weixinId));
 		
 		logger.debug(wx.getWeixinName());
 		if (wx == null) {
@@ -120,8 +119,8 @@ public class TokenServlet extends BaseServlet {
 			return;
 		}	
 		//查询微信应用ID
-		IWeixinBiz weixinBiz = (IWeixinBiz) getBean(request.getServletContext(), "weixinBiz");
-		WeixinEntity weixin = weixinBiz.getEntityById(Integer.parseInt(weixinId));
+		IWeixinBiz weixinBiz = (IWeixinBiz) getBean(request.getServletContext(),IWeixinBiz.class);
+		WeixinEntity weixin = (WeixinEntity)weixinBiz.getEntity(Integer.parseInt(weixinId));
 		if(weixin == null || weixin.getAppId() == 0){
 			response.getWriter().print("err params mms appId");
 			return;

@@ -137,7 +137,7 @@ public class WeixinAction extends BaseAction {
 			return this.redirectBack(request, true);
 		}
 		// 得到实体信息
-		WeixinEntity weixin = weixinBiz.getEntityById(weixinId);
+		WeixinEntity weixin = (WeixinEntity)weixinBiz.getEntity(weixinId);
 		// 获取应用编号
 		int appId = this.getAppId(request);
 		mode.addAttribute("appId", appId);
@@ -162,7 +162,7 @@ public class WeixinAction extends BaseAction {
 		}
 		mode.addAttribute("weixinId", weixinId);
 		// 根据微信ID获取微信实体
-		WeixinEntity weixin = this.weixinBiz.getEntityById(weixinId);
+		WeixinEntity weixin = (WeixinEntity)this.weixinBiz.getEntity(weixinId);
 		// 获取公众号名称
 		String weixinName = weixin.getWeixinName();
 		// 压入微信公众号名称

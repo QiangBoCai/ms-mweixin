@@ -37,14 +37,15 @@ import com.mingsoft.weixin.util.WeixinOpenLoginUtil;
 
 /**
  * 
- * 项目名称
+ *  微信 ，过期方法，推荐使用使用OauthAction
  * @author 铭飞开发团队
  * @version 
  * 版本号：100-000-000<br/>
- * 创建日期：2017年3月20日<br/>
+ * 创建日期：2017年8月17日<br/>
  * 历史修订：<br/>
  */
 @WebServlet("/weixin/open/login")
+@Deprecated
 public class OpenLoginServlet extends BaseServlet{
 	
 	/**
@@ -75,8 +76,8 @@ public class OpenLoginServlet extends BaseServlet{
 		int weixinId = oauth.getOauthWeixinId();
 		
 		//根据微信ID查询授权地址
-		IWeixinBiz weixinBiz = (IWeixinBiz) this.getBean(request.getServletContext(),"weixinBiz");
-		WeixinEntity weixin = weixinBiz.getEntityById(weixinId);
+		IWeixinBiz weixinBiz = (IWeixinBiz) getBean(request.getServletContext(),IWeixinBiz.class);
+		WeixinEntity weixin = (WeixinEntity)weixinBiz.getEntity(weixinId);
 		if(oauth == null){
 			logger.debug("----------WeixinEntity null err");
 			//返回错误地址
@@ -92,7 +93,7 @@ public class OpenLoginServlet extends BaseServlet{
 		}
 		
 		//拼装微信从定向授权地址
-		String oauthUrl = WeixinOpenLoginUtil.getLoginUrl(weixin.getWeixinAppID(),weixinOauthUrl+Const.OAUTH_OPEN_UEL,oauthId);
+		String oauthUrl = WeixinOpenLoginUtil.getLoginUrl(weixin.getWeixinAppId(),weixinOauthUrl+Const.OAUTH_OPEN_UEL,oauthId);
 		logger.debug("weixin open oauth:"+oauthUrl);
 		//发起重定向请求
 		response.sendRedirect(oauthUrl);

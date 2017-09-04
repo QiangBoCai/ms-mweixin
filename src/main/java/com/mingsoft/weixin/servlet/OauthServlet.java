@@ -41,15 +41,16 @@ import com.mingsoft.weixin.util.bean.WeixinPeopleEntityUtils;
 import net.mingsoft.basic.util.BasicUtil;
 
 /**
- * 授权通用地址,主要用户手机段微信wap页面授权</br>
- * state扩展字段，长度为128长度,详细见微信开发接口</br>
- * @author killfen
+ * 
+ *  微信 ，过期方法，推荐使用使用OauthAction
+ * @author 铭飞开发团队
  * @version 
  * 版本号：100-000-000<br/>
- * 创建日期：2015年8月30日 下午5:05:09<br/>
+ * 创建日期：2017年8月17日<br/>
  * 历史修订：<br/>
  */
 @WebServlet(urlPatterns="/weixin/oauth")
+@Deprecated
 public class OauthServlet extends BaseServlet {
 	
 	/**
@@ -80,7 +81,7 @@ public class OauthServlet extends BaseServlet {
 		OauthEntity oauth = null;
 		if(!StringUtil.isBlank(state)) {
 			//网页授权2.0业务层
-			IOauthBiz oauthBiz = (IOauthBiz) getBean(req.getServletContext(),"oauthBiz");
+			IOauthBiz oauthBiz = (IOauthBiz) getBean(req.getServletContext(),IOauthBiz.class);
 			
 			//根据解析到的state查询网页2.0授权信息
 			oauth = (OauthEntity) oauthBiz.getEntity(Integer.parseInt(state));
@@ -98,11 +99,11 @@ public class OauthServlet extends BaseServlet {
 
 		
 		//微信基础信息业务层
-		IWeixinBiz weixinBiz = (IWeixinBiz) getBean(req.getServletContext(), "weixinBiz");
-		WeixinEntity weixin = weixinBiz.getEntityById(weixinId);
+		IWeixinBiz weixinBiz = (IWeixinBiz) getBean(req.getServletContext(),IWeixinBiz.class);
+		WeixinEntity weixin = (WeixinEntity)weixinBiz.getEntity(weixinId);
 		
 		//获取用户openid
-		OauthUtils au = new OauthUtils(weixin.getWeixinAppID(),weixin.getWeixinAppSecret());
+		OauthUtils au = new OauthUtils(weixin.getWeixinAppId(),weixin.getWeixinAppSecret());
 		Map<String,Object> userMap = au.getUser(code);
 		WeixinPeopleEntity weixinPeopleEntity = WeixinPeopleEntityUtils.userInfoToWeixinPeople(userMap,weixin.getAppId(),weixin.getWeixinId());
 		if(weixinPeopleEntity == null){

@@ -22,13 +22,13 @@
 		
 		<!-- peopleUser开始 -->
 		<result column="PU_PEOPLE_ID" property="peopleId"/><!-- 将实体的ID属性与表的ID字段对接 -->
-		<result column="PU_REAL_NAME" property="peopleUserRealName"/><!--用户的真实名称 -->
-		<result column="PU_ADDRESS" property="peopleUserAddress"/><!-- 用户地址 -->
-		<result column="PU_ICON" property="peopleUserIcon"/><!-- 用户头像 -->
-		<result column="PU_NICKNAME" property="peopleUserNickName"/><!-- 用户昵称 -->
-		<result column="PU_SEX" property="peopleUserSex"/><!-- 用户性别0.未知;1.男;2.女 -->
-		<result column="PU_BIRTHDAY" property="peopleUserBirthday"/><!-- 用户生日 -->
-		<result column="PU_APP_ID" property="peopleUserAppId"/><!-- 用户应用ID -->
+		<result column="PU_REAL_NAME" property="puRealName"/><!--用户的真实名称 -->
+		<result column="PU_ADDRESS" property="puAddress"/><!-- 用户地址 -->
+		<result column="PU_ICON" property="puIcon"/><!-- 用户头像 -->
+		<result column="PU_NICKNAME" property="puNickname"/><!-- 用户昵称 -->
+		<result column="PU_SEX" property="puSex"/><!-- 用户性别0.未知;1.男;2.女 -->
+		<result column="PU_BIRTHDAY" property="puBirthday"/><!-- 用户生日 -->
+		<result column="PU_APP_ID" property="puAppId"/><!-- 用户应用ID -->
 		<!-- peopleUser结束 -->
 		
 		<!-- people开始 -->
@@ -99,7 +99,7 @@
 		<where>
 			<if test="weixinPeopleAppId != null">and wp.PW_APP_ID = #{weixinPeopleAppId}</if>			
 			<if test="weixinPeopleWeixinId != null">and wp.PW_WEIXIN_ID = #{weixinPeopleWeixinId}</if>
-			<if test="peopleUserNickName != null">and PU.PU_NICKNAME like concat('%',#{peopleUserNickName},'%')</if>
+			<if test="puNickname != null">and PU.PU_NICKNAME like concat('%',#{puNickname},'%')</if>
 		</where>
 	</select>
 	

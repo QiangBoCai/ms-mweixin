@@ -200,7 +200,7 @@
 				//对外连接的合法性判断
 				var source_url = $.trim($("input[name='source_url']").val());
 				if(source_url.length!=0 && source_url!=null && source_url!=undefined){
-					source_url = source_url.match(/http:\/\/.+/);
+					source_url = source_url.match(/(http|https):\/\/.+/);
 					if(source_url == null){
 						<@ms.notify msg="外连接为http格式!" type="warning"/>
 						return;

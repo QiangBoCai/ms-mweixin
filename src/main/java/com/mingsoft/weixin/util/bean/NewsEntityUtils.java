@@ -102,7 +102,7 @@ public class NewsEntityUtils extends BaseBeanUtils{
 	 * @return 微信上传图文消息实体
 	 */
 	public static List<UploadNewsBean> newsEnttiyToUploadNewsBeanList(WeixinEntity weixin,NewsEntity news,HttpServletRequest request){
-		UploadDownUtils uploadUtil = new UploadDownUtils(weixin.getWeixinAppID(), weixin.getWeixinAppSecret());	
+		UploadDownUtils uploadUtil = new UploadDownUtils(weixin.getWeixinAppId(), weixin.getWeixinAppSecret());	
 		//创建uploadNewsBean实体,并赋予上传素材封面必要的参数
 		UploadNewsBean uploadNewsBean = new UploadNewsBean(news.getNewsMasterArticle().getBasicTitle(), replaceAllImage(news.getNewsMasterArticle().getArticleContent(),uploadUtil,request));
 		//得到单图文or多图文的封面图片唯一ID

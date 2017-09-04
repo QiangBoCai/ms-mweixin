@@ -36,14 +36,16 @@ import com.mingsoft.weixin.util.WeixinOpenLoginUtil;
 import com.mingsoft.weixin.util.bean.WeixinPeopleEntityUtils;
 
 /**
- * 微信开放平台用户授权登录
- * @author 成卫雄(qq:330216230)
+ * 
+ *  微信 ，过期方法，推荐使用使用OauthAction
+ * @author 铭飞开发团队
  * @version 
  * 版本号：100-000-000<br/>
- * 创建日期：2015年8月28日 上午9:18:15<br/>
+ * 创建日期：2017年8月17日<br/>
  * 历史修订：<br/>
  */
 @WebServlet("/weixin/open/oauth")
+@Deprecated
 public class OpenOauthServlet extends BaseServlet{
 
 	@Override
@@ -78,7 +80,7 @@ public class OpenOauthServlet extends BaseServlet{
 		IWeixinBiz weixinBiz = (IWeixinBiz) this.getBean(request.getServletContext(),"weixinBiz");
 		//查询微信详细信息
 		int weixinId = oauthEntity.getOauthWeixinId();
-		WeixinEntity weixinEntity = weixinBiz.getEntityById(weixinId);
+		WeixinEntity weixinEntity = (WeixinEntity)weixinBiz.getEntity(weixinId);
 		if(weixinEntity == null){
 			logger.error("-----未查询到对应授权的微信基础信息！");
 			//返回错误地址
@@ -87,7 +89,7 @@ public class OpenOauthServlet extends BaseServlet{
 		}
 		
 		//获取微信用户信息
-		WeixinOpenLoginUtil weixinOpenUtil = new WeixinOpenLoginUtil(weixinEntity.getWeixinAppID(),weixinEntity.getWeixinAppSecret());
+		WeixinOpenLoginUtil weixinOpenUtil = new WeixinOpenLoginUtil(weixinEntity.getWeixinAppId(),weixinEntity.getWeixinAppSecret());
 		String userInfoJson = weixinOpenUtil.getUserInfo(code);
 		WeixinPeopleEntity weixinPeopleEntity = WeixinPeopleEntityUtils.userInfoToWeixinPeople(userInfoJson, weixinEntity.getAppId(), weixinEntity.getWeixinId());
 		if(weixinPeopleEntity ==  null){

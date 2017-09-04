@@ -97,7 +97,11 @@ public abstract class BaseAction extends com.mingsoft.people.action.BaseAction {
 			link = app.getAppHostUrl() + "/" + link;
 		}
 		WeixinEntity weixin = this.getWeixinSession(request);
-		String url = OauthUtils.builderOauthUrl(link, state, isUserInfo, weixin.getWeixinAppID());
+		if(weixin==null) {
+			LOG.error("非微信环境下调用");
+			return "";
+		}
+		String url = OauthUtils.builderOauthUrl(link, state, isUserInfo, weixin.getWeixinAppId());
 		LOG.debug("oauthUrl:" + url);
 		return url;
 	}

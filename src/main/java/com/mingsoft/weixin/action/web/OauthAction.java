@@ -88,7 +88,7 @@ public class OauthAction extends BaseAction{
 		//获取授权成功后跳转的地址
 		String url = BasicUtil.getString("url");
 		//获取微信ID
-		String weixinId = request.getParameter("weixinId");
+		String appId = request.getParameter("appId");
 		
 		if(StringUtil.isBlank(code)) {
 			model.addAttribute(Const.ERROR, "授权失败(code)");
@@ -103,15 +103,17 @@ public class OauthAction extends BaseAction{
 		}
 		
 		
-		if(StringUtil.isBlank(weixinId)) {
+		if(StringUtil.isBlank(appId)) {
 			model.addAttribute(Const.ERROR, "没有指定微信编号(weixinId)");
-			LOG.debug("没有指定微信编号(weixinId)");
+			LOG.debug("没有指定微信appId(appId)");
 			return "redirect:"+Const.ERROR_500;	
 		}
 		
 		
 		//查询微信详细信息
-		WeixinEntity weixinEntity = weixinBiz.getEntityById(Integer.parseInt(weixinId));
+		WeixinEntity temp = new WeixinEntity();
+		temp.setWeixinAppId(appId);
+		WeixinEntity weixinEntity = (WeixinEntity)weixinBiz.getEntity(temp);
 		if(weixinEntity == null){
 			LOG.error("未查询到对应授权的微信基础信息！");
 			model.addAttribute(Const.ERROR, "未查询到对应授权的微信基础信息");
@@ -120,7 +122,7 @@ public class OauthAction extends BaseAction{
 		}
 		
 		//获取微信用户信息
-		WeixinOpenLoginUtil weixinOpenUtil = new WeixinOpenLoginUtil(weixinEntity.getWeixinAppID(),weixinEntity.getWeixinAppSecret());
+		WeixinOpenLoginUtil weixinOpenUtil = new WeixinOpenLoginUtil(weixinEntity.getWeixinAppId(),weixinEntity.getWeixinAppSecret());
 		String userInfoJson = weixinOpenUtil.getUserInfo(code);
 		WeixinPeopleEntity weixinPeopleEntity = WeixinPeopleEntityUtils.userInfoToWeixinPeople(userInfoJson, weixinEntity.getAppId(), weixinEntity.getWeixinId());
 		if(weixinPeopleEntity ==  null){
@@ -133,10 +135,16 @@ public class OauthAction extends BaseAction{
 		WeixinPeopleEntity weixinPeople = weixinPeopleBiz.checkSoleWeixinPeople(weixinPeopleEntity);
 		
 		PeopleEntity people = (PeopleEntity)peopleBiz.getEntity(weixinPeople.getPeopleId());
-		//将用户的openId压入session:weixn_people_session
-		this.setPeopleBySession(request, people);
-		//将微信实体压入session:weinxin_session
-		this.setWeixinSession(request,com.mingsoft.weixin.constant.SessionConst.WEIXIN_SESSION,weixinEntity);
+		if(people != null) {
+			//将用户的openId压入session:weixn_people_session
+			this.setPeopleBySession(request, people);
+			this.setWeixinSession(request, com.mingsoft.weixin.constant.SessionConst.WEIXIN_PEOPLE_SESSION,weixinPeople);
+			//将微信实体压入session:weinxin_session
+			this.setWeixinSession(request,com.mingsoft.weixin.constant.SessionConst.WEIXIN_SESSION,weixinEntity);
+		} else {
+			LOG.error("数据存在异常，微信模块存在数据，用户模版没有对应数据导致");
+		}
+		
 		return "redirect:"+url;			
 	}
 	
