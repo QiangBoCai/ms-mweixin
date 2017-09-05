@@ -6,27 +6,30 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.ConnectException;
 import java.net.URL;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+
+import org.apache.log4j.Logger;
+import org.springframework.cache.Cache.ValueWrapper;
+import org.springframework.cache.ehcache.EhCacheCacheManager;
 
 import com.alibaba.fastjson.JSONObject;
 import com.mingsoft.util.MD5Util;
 import com.mingsoft.util.StringUtil;
 
-import java.security.cert.CertificateException;  
-import java.security.cert.X509Certificate;  
-  
-import javax.net.ssl.X509TrustManager; 
+import net.mingsoft.basic.util.SpringUtil;
 
 class AccessToken {
-	
+
 	private int expiresIn;
-	
+
 	private String token;
 
 	public int getExpiresIn() {
@@ -44,98 +47,105 @@ class AccessToken {
 	public void setToken(String token) {
 		this.token = token;
 	}
-	
+
 }
 
-class Config {  
-	  
-    private String appId;     //公众号appId  
-    private String nonceStr; //随机字串  
-    private String signature;//获取到的签名  
-    private String ticket;   //获取到的凭证  
-    private String timestamp;//时间戳  
-      
-    public String getAppId() {  
-        return appId;  
-    }  
-    public String getNonceStr() {  
-        return nonceStr;  
-    }  
-    public String getSignature() {  
-        return signature;  
-    }  
-    public String getTicket() {  
-        return ticket;  
-    }  
-    public String getTimestamp() {  
-        return timestamp;  
-    }  
-    public void setAppId(String appId) {  
-        this.appId = appId;  
-    }  
-    public void setNonceStr(String nonceStr) {  
-        this.nonceStr = nonceStr;  
-    }  
-    public void setSignature(String signature) {  
-        this.signature = signature;  
-    }  
-    public void setTicket(String ticket) {  
-        this.ticket = ticket;  
-    }  
-    public void setTimestamp(String timestamp) {  
-        this.timestamp = timestamp;  
-    }  
-      
+class Config {
+
+	private String appId; // 公众号appId
+	private String nonceStr; // 随机字串
+	private String signature;// 获取到的签名
+	private String ticket; // 获取到的凭证
+	private String timestamp;// 时间戳
+
+	public String getAppId() {
+		return appId;
+	}
+
+	public String getNonceStr() {
+		return nonceStr;
+	}
+
+	public String getSignature() {
+		return signature;
+	}
+
+	public String getTicket() {
+		return ticket;
+	}
+
+	public String getTimestamp() {
+		return timestamp;
+	}
+
+	public void setAppId(String appId) {
+		this.appId = appId;
+	}
+
+	public void setNonceStr(String nonceStr) {
+		this.nonceStr = nonceStr;
+	}
+
+	public void setSignature(String signature) {
+		this.signature = signature;
+	}
+
+	public void setTicket(String ticket) {
+		this.ticket = ticket;
+	}
+
+	public void setTimestamp(String timestamp) {
+		this.timestamp = timestamp;
+	}
+
 }
 
-class MyX509TrustManager implements X509TrustManager {  
-    public void checkClientTrusted(X509Certificate[] chain, String authType)  
-            throws CertificateException  
-          {  
-          }  
-  
-          public void checkServerTrusted(X509Certificate[] chain, String authType)  
-            throws CertificateException  
-          {  
-          }  
-  
-          public X509Certificate[] getAcceptedIssuers()  
-          {  
-            return null;  
-          }  
-}  
+class MyX509TrustManager implements X509TrustManager {
+	public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+	}
 
+	public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+	}
 
-class Ticket {  
-	  
-    private int expiresIn;//凭证有效时间,单位：秒  
-    private String ticket;//获取到的凭证  
-      
-    public int getExpiresIn() {  
-        return expiresIn;  
-    }  
-    public String getTicket() {  
-        return ticket;  
-    }  
-    public void setExpiresIn(int expiresIn) {  
-        this.expiresIn = expiresIn;  
-    }  
-    public void setTicket(String ticket) {  
-        this.ticket = ticket;  
-    }  
-          
+	public X509Certificate[] getAcceptedIssuers() {
+		return null;
+	}
+}
+
+class Ticket {
+
+	private int expiresIn;// 凭证有效时间,单位：秒
+	private String ticket;// 获取到的凭证
+
+	public int getExpiresIn() {
+		return expiresIn;
+	}
+
+	public String getTicket() {
+		return ticket;
+	}
+
+	public void setExpiresIn(int expiresIn) {
+		this.expiresIn = expiresIn;
+	}
+
+	public void setTicket(String ticket) {
+		this.ticket = ticket;
+	}
+
 }
 
 /**
- * 微信项目 
+ * 微信项目
+ * 
  * @author 铭飞开发团队
- * @version 
- * 版本号：100-000-000<br/>
- * 创建日期：2016年9月4日<br/>
- * 历史修订：<br/>
+ * @version 版本号：100-000-000<br/>
+ *          创建日期：2016年9月4日<br/>
+ *          历史修订：<br/>
  */
 public class WeixinUtil {
 
+	public static Logger LOG = Logger.getLogger(WeixinUtil.class);
 
 	// 获取access_token的接口地址(GET) 限200次/天
 	public final static String ACCESS_TOKEN_URL = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET";
@@ -166,7 +176,7 @@ public class WeixinUtil {
 			} catch (Exception e) {
 				accessToken = null;
 				// 获取token失败
-				Logger.getAnonymousLogger().info("获取token失败 errcode:{} errmsg:{}" + jsonObject.getInteger("errcode")
+				LOG.info("获取token失败 errcode:{} errmsg:{}" + jsonObject.getInteger("errcode")
 						+ jsonObject.getString("errmsg"));
 			}
 		}
@@ -196,13 +206,16 @@ public class WeixinUtil {
 
 	/**
 	 * 获取ticket
-	 * @param token 调用getAccessToken可获得
-	 * @param type 
+	 * 
+	 * @param token
+	 *            调用getAccessToken可获得
+	 * @param type
 	 * @return
 	 */
-	public static Ticket getTicket(String token,String type) {
+	public static Ticket getTicket(String token, String type) {
 		Ticket ticket = null;
 		String requestUrl = JSAPI_TICKET_URL.replace("ACCESS_TOKEN", token).replace("TYPE", type);
+		LOG.debug("ticket url:" + requestUrl);
 		JSONObject jsonObject = httpRequest(requestUrl, "GET", null);
 		// 如果请求成功
 		if (null != jsonObject) {
@@ -213,42 +226,60 @@ public class WeixinUtil {
 			} catch (Exception e) {
 				ticket = null;
 				// 获取token失败
-				Logger.getAnonymousLogger().info("获取ticket失败 errcode:{} errmsg:{}" + jsonObject.getInteger("errcode")
+				LOG.info("获取ticket失败 errcode:{} errmsg:{}" + jsonObject.getInteger("errcode")
 						+ jsonObject.getString("errmsg"));
 			}
 		}
 		return ticket;
 	}
-	
+
 	/**
 	 * 获取签名配置信息
-	 * @param appId 微信 appid
-	 * @param appsecret 微信密钥
-	 * @param type ticket类型
+	 * 
+	 * @param appId
+	 *            微信 appid
+	 * @param appsecret
+	 *            微信密钥
+	 * @param type
+	 *            ticket类型
 	 * @return
 	 */
-    public static String getSignatureConfig(String appId,String appsecret,String type){  
-        String nonceStr = StringUtil.randomNumber(16);
-        String timestamp = String.valueOf(System.currentTimeMillis() / 1000); 
-        //获取access_token  
-        String token = WeixinUtil.getAccessToken(appId, appsecret).getToken();  
-        //access_token换取jsapi_ticket  
-        String ticket = WeixinUtil.getTicket(token,type).getTicket();  
-        //字典排序的签名参数  
-        String params = "jsapi_ticket=%s&noncestr=%s&timestamp=%s";  
-        params = String.format(params, ticket, nonceStr, timestamp);  
-        //对string1进行sha1签名，得到signature  
-        String signature = MD5Util.MD5Encode(params, "utf8");
-        
-        //最后组装json数据  
-        Config config = new Config();  
-        config.setAppId(appId);  
-        config.setTicket(ticket);  
-        config.setNonceStr(nonceStr);  
-        config.setSignature(signature);  
-        config.setTimestamp(timestamp);  
-        return JSONObject.toJSONString(config);  
-    }  
+	public static String getSignatureConfig(String appId, String appsecret, String type, String url) {
+		EhCacheCacheManager cacheManager = SpringUtil.getBean(EhCacheCacheManager.class);
+		org.springframework.cache.Cache cache = cacheManager.getCache("weixin");
+
+		String nonceStr = StringUtil.randomNumber(16);
+		String timestamp = String.valueOf(System.currentTimeMillis() / 1000);
+		ValueWrapper vw = cache.get("ticket");
+		String ticket = "";
+		if (vw == null || vw.get() == null) {
+			// 获取access_token
+			String token = WeixinUtil.getAccessToken(appId, appsecret).getToken();
+			// access_token换取jsapi_ticket
+			ticket = WeixinUtil.getTicket(token, type).getTicket();
+			cache.put("ticket", ticket);
+			LOG.debug("缓存ticket:" + ticket);
+		} else {
+			ticket = vw.get().toString();
+			LOG.debug("读取缓存ticket:" + ticket);
+		}
+		// 字典排序的签名参数
+		String params = "jsapi_ticket=%s&noncestr=%s&timestamp=%s&url=%s";
+		params = String.format(params, ticket, nonceStr, timestamp, url);
+		// 对string1进行sha1签名，得到signature
+		LOG.debug("params" + params);
+		String signature = org.apache.commons.codec.digest.DigestUtils.shaHex(params);
+		LOG.debug("signature:" + signature);
+
+		// 最后组装json数据
+		Config config = new Config();
+		config.setAppId(appId);
+		config.setTicket(ticket);
+		config.setNonceStr(nonceStr);
+		config.setSignature(signature);
+		config.setTimestamp(timestamp);
+		return JSONObject.toJSONString(config);
+	}
 
 	/**
 	 * 发起https请求并获取结果
@@ -310,10 +341,10 @@ public class WeixinUtil {
 			httpUrlConn.disconnect();
 			jsonObject = JSONObject.parseObject(buffer.toString());
 		} catch (ConnectException ce) {
-			Logger.getAnonymousLogger().info("Weixin server connection timed out.");
+			LOG.info("Weixin server connection timed out.");
 		} catch (Exception e) {
-			Logger.getAnonymousLogger().info("信任管理器请求时..." + e);
+			LOG.info("信任管理器请求时..." + e);
 		}
 		return jsonObject;
 	}
-}  
+}

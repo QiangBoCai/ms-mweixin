@@ -22,6 +22,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.Cache.ValueWrapper;
+import org.springframework.cache.ehcache.EhCacheCacheManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,6 +46,7 @@ import com.mingsoft.weixin.util.WeixinUtil;
 import com.mingsoft.weixin.util.bean.WeixinPeopleEntityUtils;
 
 import net.mingsoft.basic.util.BasicUtil;
+import net.mingsoft.basic.util.SpringUtil;
 
 /**
  * 微信对外接口
@@ -60,7 +63,6 @@ public class WeixinAction extends BaseAction{
 	@Autowired
 	private IWeixinBiz weixinBiz;
 	
-	
 	/**
 	 * 微信js config获取方式
 	 * @param appId 微信 appid
@@ -75,6 +77,7 @@ public class WeixinAction extends BaseAction{
 	public void config(HttpServletRequest request,HttpServletResponse response,RedirectAttributes model){
 		//获取微信ID
 		String appId = request.getParameter("appId");
+		String url = request.getParameter("url");
 		
 		String ticketType = BasicUtil.getString("ticketType", "jsapi");
 		
@@ -94,8 +97,8 @@ public class WeixinAction extends BaseAction{
 			//返回错误地址
 			this.outJson(response, false,"没有对应appid的微信记录");
 			return;
-		}
-		this.outJson(response, WeixinUtil.getSignatureConfig(weixinEntity.getWeixinAppId(), weixinEntity.getWeixinAppSecret(),ticketType));
+		} 
+		this.outJson(response, WeixinUtil.getSignatureConfig(weixinEntity.getWeixinAppId(), weixinEntity.getWeixinAppSecret(),ticketType,url));
 	}
 	
 }
