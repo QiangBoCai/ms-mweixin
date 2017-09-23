@@ -4,7 +4,7 @@
 	<sql id="column_list">
 		WP.PW_APP_ID,WP.PW_WEIXIN_ID,WP.PW_OPEN_ID,WP.PW_PEOPLE_ID,WP.PW_PEOPLE_STATE,WP.PW_HEADIMG_URL,WP.PW_CITY,WP.PW_PROVINCE,
 		P.PEOPLE_ID,P.PEOPLE_PHONE,P.PEOPLE_NAME,P.PEOPLE_PASSWORD,P.PEOPLE_DATETIME,P.PEOPLE_APP_ID,P.PEOPLE_MAIL,
-	 	PU.PU_PEOPLE_ID,PU.PU_REAL_NAME,PU.PU_ADDRESS,PU.PU_ICON,PU.PU_NICKNAME,PU.PU_SEX,PU.PU_BIRTHDAY,PU.PU_APP_ID			
+	 	PU.PU_PEOPLE_ID,PU.PU_REAL_NAME,PU.PU_ADDRESS,PU.PU_ICON,PU.PU_NICKNAME,PU.PU_SEX,PU.PU_BIRTHDAY		
 	</sql>
 	
 	<!-- 字段绑定开始 -->
@@ -28,7 +28,6 @@
 		<result column="PU_NICKNAME" property="puNickname"/><!-- 用户昵称 -->
 		<result column="PU_SEX" property="puSex"/><!-- 用户性别0.未知;1.男;2.女 -->
 		<result column="PU_BIRTHDAY" property="puBirthday"/><!-- 用户生日 -->
-		<result column="PU_APP_ID" property="puAppId"/><!-- 用户应用ID -->
 		<!-- peopleUser结束 -->
 		
 		<!-- people开始 -->
