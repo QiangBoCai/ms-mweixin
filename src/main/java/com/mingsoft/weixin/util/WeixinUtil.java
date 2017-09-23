@@ -245,7 +245,7 @@ public class WeixinUtil {
 	 * @return
 	 */
 	public static String getSignatureConfig(String appId, String appsecret, String type, String url) {
-		EhCacheCacheManager cacheManager = SpringUtil.getBean(EhCacheCacheManager.class);
+		EhCacheCacheManager cacheManager = (EhCacheCacheManager) SpringUtil.getBean(EhCacheCacheManager.class);
 		org.springframework.cache.Cache cache = cacheManager.getCache("weixin");
 
 		String nonceStr = StringUtil.randomNumber(16);
