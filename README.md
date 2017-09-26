@@ -12,12 +12,4 @@
 
 ```
 #源码方式使用
-直接将在MStore下载的源代码解压覆盖到项目中，编译并运行
-
-#数据库文件导入
-将doc/ms-mweixin.sql数据到db-mcms-open(mcms系统对应到数据库) 注意：如果已经安装过，可以跳过该过程；
-
-#初始化
-先登录后台系统，在地址输入安装链接；http://cms后台管理地址/weixin/initWeixin.do 
-例如:http://localhost:8080/mcms/ms/login.do ，安装对应地址为：http://localhost:8080/mcms/ms/weixin/initWeixin.do 
-提示安装成功后返回主界面就可以看到微信菜单
+https://github.com/ming-soft/ms-mweixin
