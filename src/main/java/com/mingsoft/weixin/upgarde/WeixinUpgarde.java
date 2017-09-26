@@ -14,7 +14,7 @@ import com.mingsoft.basic.entity.ModelEntity;
 import com.mingsoft.basic.entity.RoleModelEntity;
 import com.mingsoft.util.AESUtil;
 import com.mingsoft.util.StringUtil;
-import com.mingsoft.weixin.action.BaseAction;
+import com.mingsoft.basic.action.BaseAction;
 
 import net.mingsoft.base.util.PropertiesUtil;
 import net.mingsoft.base.util.SpringUtil;
@@ -79,11 +79,11 @@ public class WeixinUpgarde  extends BaseAction {
 			roleModel2.setRoleId(this.getManagerBySession(request).getManagerRoleID());
 			list.add(roleModel2);
 			roleModelBiz.saveEntity(list);
+			result.setResult(true);
 			result.setResultMsg("安装成功");
 	    }else{
 	    	result.setResult(false);
 			result.setResultMsg("当前系统已安装该插件！");
-			return result;	
 	    }
 		return result;
 	}
