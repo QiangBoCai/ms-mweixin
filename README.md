@@ -6,7 +6,7 @@
 <dependency>
   <groupId>net.mingsoft</groupId>
   <artifactId>ms-mweixin</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.0.5-SNAPSHOT</version>
   <type>war</type>
 </dependency>
 
