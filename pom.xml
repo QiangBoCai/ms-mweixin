@@ -8,7 +8,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>net.mingsoft</groupId>
 	<artifactId>ms-mweixin</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.0.5-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>${project.groupId}:${project.artifactId}</name>
 	<description>ms-mweixin tools Library</description>
@@ -49,15 +49,10 @@
 		<java.version>1.7</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<ms.base.version>1.0.2-SNAPSHOT</ms.base.version>
-		<ms.basic.version>1.0.3-SNAPSHOT</ms.basic.version>
-		<ms.mdiy.version>1.0.2-SNAPSHOT</ms.mdiy.version>
-		<ms.mcms.version>4.6.0-SNAPSHOT</ms.mcms.version>
-		<ms.mpeople.version>1.0.0-SNAPSHOT</ms.mpeople.version>
-		<ms.mbank.version>1.0.0-SNAPSHOT</ms.mbank.version>
-		<ms.mail.version>1.0.0-SNAPSHOT</ms.mail.version>
-		<ms.mattention.version>1.0.0-SNAPSHOT</ms.mattention.version>
-		<ms.morder.version>1.0.0-SNAPSHOT</ms.morder.version>
-		<ms.mcomment.version>1.0.0-SNAPSHOT</ms.mcomment.version>
+		<ms.basic.version>1.0.4-SNAPSHOT</ms.basic.version>
+		<ms.mdiy.version>1.0.3-SNAPSHOT</ms.mdiy.version>
+		<ms.mcms.version>4.6.1-SNAPSHOT</ms.mcms.version>
+		<ms.mpeople.version>1.0.2-SNAPSHOT</ms.mpeople.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -117,59 +112,7 @@
 			<version>${ms.mpeople.version}</version>
 			<type>war</type>
 		</dependency>
-		<dependency>
-			<groupId>net.mingsoft</groupId>
-			<artifactId>ms-mbank</artifactId>
-			<version>${ms.mbank.version}</version>
-			<classifier>classes</classifier>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>net.mingsoft</groupId>
-			<artifactId>ms-mbank</artifactId>
-			<version>${ms.mbank.version}</version>
-			<type>war</type>
-		</dependency>
-		<dependency>
-			<groupId>net.mingsoft</groupId>
-			<artifactId>ms-morder</artifactId>
-			<version>${ms.morder.version}</version>
-			<classifier>classes</classifier>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>net.mingsoft</groupId>
-			<artifactId>ms-morder</artifactId>
-			<version>${ms.morder.version}</version>
-			<type>war</type>
-		</dependency>
-
-		<dependency>
-			<groupId>net.mingsoft</groupId>
-			<artifactId>ms-mattention</artifactId>
-			<version>${ms.mattention.version}</version>
-			<classifier>classes</classifier>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>net.mingsoft</groupId>
-			<artifactId>ms-mattention</artifactId>
-			<version>${ms.mattention.version}</version>
-			<type>war</type>
-		</dependency>
-		<dependency>
-			<groupId>net.mingsoft</groupId>
-			<artifactId>ms-mcomment</artifactId>
-			<version>${ms.mcomment.version}</version>
-			<classifier>classes</classifier>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>net.mingsoft</groupId>
-			<artifactId>ms-mcomment</artifactId>
-			<version>${ms.mcomment.version}</version>
-			<type>war</type>
-		</dependency>
+		
 	</dependencies>
 
 	<build>
@@ -268,8 +211,8 @@
 					<attachClasses>true</attachClasses>
 					 <failOnMissingWebXml>false</failOnMissingWebXml>
 					<warSourceExcludes> */web.xml,static</warSourceExcludes>
-					<packagingExcludes>WEB-INF/web.xml,ms.install,html/,static/,temp,upgrader,WEB-INF/lib/,templets/,WEB-INF/classes/*.xml,WEB-INF/classes/*.properties,*.sh</packagingExcludes>
-					 <overlays>
+					<!-- packagingExcludes>WEB-INF/web.xml,ms.install,html/,static/,temp,upgrader,WEB-INF/lib/,templets/,WEB-INF/classes/*.xml,WEB-INF/classes/*.properties,*.sh</packagingExcludes>
+					 < overlays>
 						<overlay>
 							<groupId>net.mingsoft</groupId>
 							<artifactId>ms-basic</artifactId>
@@ -284,20 +227,7 @@
 								<exclude>*/</exclude>
 							</excludes>
 						</overlay>
-						<overlay>
-							<groupId>net.mingsoft</groupId>
-							<artifactId>ms-mcomment</artifactId>
-							<excludes>
-								<exclude>*/</exclude>
-							</excludes>
-						</overlay>
-						<overlay>
-							<groupId>net.mingsoft</groupId>
-							<artifactId>ms-morder</artifactId>
-							<excludes>
-								<exclude>*/</exclude>
-							</excludes>
-						</overlay>
+						
 						<overlay>
 							<groupId>net.mingsoft</groupId>
 							<artifactId>ms-mcms</artifactId>
@@ -305,21 +235,7 @@
 								<exclude>*/</exclude>
 							</excludes>
 						</overlay>
-						<overlay>
-							<groupId>net.mingsoft</groupId>
-							<artifactId>ms-mbank</artifactId>
-							<excludes>
-								<exclude>*/</exclude>
-							</excludes>
-						</overlay>
-						<overlay>
-							<groupId>net.mingsoft</groupId>
-							<artifactId>ms-mattention</artifactId>
-							<excludes>
-								<exclude>*/</exclude>
-							</excludes>
-						</overlay>
-
+						
 						<overlay>
 							<groupId>net.mingsoft</groupId>
 							<artifactId>ms-mpeople</artifactId>
@@ -327,7 +243,7 @@
 								<exclude>*/</exclude>
 							</excludes>
 						</overlay>
-					</overlays>
+					</overlays-->
 				</configuration>
 			</plugin>
 			<plugin>
